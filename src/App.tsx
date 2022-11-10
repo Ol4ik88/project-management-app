@@ -15,7 +15,7 @@ export default function App() {
       <header className="App-header">
         <Container className="text-center">
           <h1 onClick={() => changeLanguage('ru')}>Start project.</h1>
-          {t('title')}
+          <p>{t('title')}</p>
         </Container>
       </header>
     </div>
