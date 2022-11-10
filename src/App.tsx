@@ -2,11 +2,15 @@ import PrivateRoute from 'components/routing/PrivateRoute';
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
+import { Container } from 'react-bootstrap';
+
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>Start project.</p>
+        <Container className="text-center">
+          <h1>Start project.</h1>
+        </Container>
       </header>
       <Routes>
         <Route path="/" element={<p>Welcome page</p>} />
