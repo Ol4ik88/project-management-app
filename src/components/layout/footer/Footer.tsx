@@ -1,38 +1,45 @@
 import React from 'react';
-import { Container } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import logo from 'assets/rs_school.svg';
 
+const devs = [
+  {
+    link: 'https://github.com/rincewizz',
+    name: 'Gleb Roskin',
+  },
+  {
+    link: 'https://github.com/Ol4ik88',
+    name: 'Olga Slapik',
+  },
+  {
+    link: 'https://github.com/yura703',
+    name: 'Yury Lapitski',
+  },
+];
 function Footer() {
-  const devs = [
-    {
-      link: 'https://github.com/rincewizz',
-      name: 'Gleb Roskin',
-    },
-    {
-      link: 'https://github.com/Ol4ik88',
-      name: 'Olga Slapik',
-    },
-    {
-      link: 'https://github.com/yura703',
-      name: 'Yury Lapitski',
-    },
-  ];
   return (
     <footer className="row-fluid text-bg-info p-3 shadow">
       <Container className="text-center container-sm">
-        <div className="row row-cols-5">
-          <a href="https://rs.school/react/" className="col">
-            <img src={logo} className="img-fluid" width="80px" />
-          </a>
+        <Row className="row-cols-5">
+          <Col>
+            <a href="https://rs.school/react/">
+              <img src={logo} className="img-fluid" width="80px" alt="logo" />
+            </a>
+          </Col>
           {devs.map((dev) => (
-            <div key={dev.name}>
-              <a href={dev.link} className="col text-decoration-none link-dark">
+            <Col key={dev.name}>
+              <a
+                href={dev.link}
+                className="text-decoration-none link-dark"
+                target="_blank"
+                rel="noreferrer"
+              >
                 {dev.name}
               </a>
-            </div>
+            </Col>
           ))}
-          <div className="col">© 2022</div>
-        </div>
+          <Col>© 2022</Col>
+        </Row>
       </Container>
     </footer>
   );
