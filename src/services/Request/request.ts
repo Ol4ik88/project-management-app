@@ -1,3 +1,5 @@
+const allowedStatusCode = [200, 400, 401, 404, 409];
+
 const request = async <T>(
   url: string,
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
@@ -10,12 +12,11 @@ const request = async <T>(
 ) => {
   const response = await fetch(url, { method, body, headers });
 
-  if (!response.ok) {
+  if (allowedStatusCode.indexOf(response.status) === -1) {
     throw new Error(`Could not fetch ${url}, status: ${response.status}`);
   }
 
-  const data = (await response.json()) as T;
-  return data;
+  return (await response.json()) as T;
 };
 
 export default request;

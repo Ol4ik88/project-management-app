@@ -4,6 +4,12 @@ export interface IUser {
   login: string;
 }
 
+export interface IUserDto {
+  name: string;
+  login: string;
+  password: string;
+}
+
 export interface IBoard {
   _id: string;
   title: string;
