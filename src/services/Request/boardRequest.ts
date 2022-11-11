@@ -2,19 +2,28 @@ import { IBoard, IErrorResponse } from 'types/Interfaces';
 import request from './request';
 import { URL } from '../../utils/constants';
 
-const getBoards = async (): Promise<IBoard[] | undefined> => {
-  return await request(`${URL}boards`, 'GET');
+const getBoards = async (token: string): Promise<IBoard[] | []> => {
+  return await request(`${URL}boards`, 'GET', undefined, {
+    'Content-type': 'application/json',
+    Authorization: `Bearer ${token}`,
+  });
 };
 
 const getBoardById = async (boardId: string, token: string): Promise<IBoard | IErrorResponse> => {
   return await request(`${URL}boards/${boardId}`, 'GET', undefined, {
     'Content-type': 'application/json',
-    Authorization: `Berear ${token}`,
+    Authorization: `Bearer ${token}`,
   });
 };
 
-const createBoard = async (board: Omit<IBoard, '_id'>): Promise<IBoard | IErrorResponse> => {
-  return request(`${URL}boards`, 'POST', JSON.stringify(board));
+const createBoard = async (
+  board: Omit<IBoard, '_id'>,
+  token: string
+): Promise<IBoard | IErrorResponse> => {
+  return request(`${URL}boards`, 'POST', JSON.stringify(board), {
+    'Content-type': 'application/json',
+    Authorization: `Bearer ${token}`,
+  });
 };
 
 const updateBoard = async (
@@ -24,23 +33,29 @@ const updateBoard = async (
 ): Promise<IBoard | IErrorResponse> => {
   return await request(`${URL}boards/${boardId}`, 'PUT', JSON.stringify(board), {
     'Content-type': 'application/json',
-    Authorization: `Berear ${token}`,
+    Authorization: `Bearer ${token}`,
   });
 };
 
 const deleteBoard = async (boardId: string, token: string) => {
   return await request(`${URL}boards/${boardId}`, 'DELETE', undefined, {
     'Content-type': 'application/json',
-    Authorization: `Berear ${token}`,
+    Authorization: `Bearer ${token}`,
   });
 };
 
-const getBoardsSet = async (boardsId: string[]): Promise<IBoard[]> => {
-  return await request(`${URL}boardsSet/${boardsId}`, 'GET');
+const getBoardsSet = async (boardsId: string[], token: string): Promise<IBoard[]> => {
+  return await request(`${URL}boardsSet/${boardsId}`, 'GET', undefined, {
+    'Content-type': 'application/json',
+    Authorization: `Bearer ${token}`,
+  });
 };
 
-const getBoardsSetByUserId = async (userId: string): Promise<IBoard[]> => {
-  return await request(`${URL}boardsSet/${userId}`, 'GET');
+const getBoardsSetByUserId = async (userId: string, token: string): Promise<IBoard[]> => {
+  return await request(`${URL}boardsSet/${userId}`, 'GET', undefined, {
+    'Content-type': 'application/json',
+    Authorization: `Bearer ${token}`,
+  });
 };
 
 export {
