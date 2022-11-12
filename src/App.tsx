@@ -7,6 +7,7 @@ import './i18n/config';
 import { useTranslation } from 'react-i18next';
 import { Boards } from 'views/boards';
 import { store } from 'store/store';
+import Footer from 'components/layout/footer/Footer';
 
 export default function App() {
   const { t, i18n } = useTranslation();
@@ -17,44 +18,47 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <div className="App">
+      <div className="min-vh-100 d-flex flex-column">
         <header className="App-header">
           <Container className="text-center">
             <h1 onClick={() => changeLanguage('ru')}>Start project.</h1>
             <p>{t('title')}</p>
           </Container>
         </header>
-        <Routes>
-          <Route path="/" element={<p>Welcome page</p>} />
-          <Route path="/login" element={<p>Sign in</p>} />
-          <Route path="/registration" element={<p>Sign up</p>} />
-          <Route path="/brds" element={<Boards />} />
-          <Route
-            path="/boards"
-            element={
-              <PrivateRoute>
-                <p>Boards</p>
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/boards/:boardId"
-            element={
-              <PrivateRoute>
-                <p>Board ID</p>
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              <PrivateRoute>
-                <p>profile</p>
-              </PrivateRoute>
-            }
-          />
-          <Route path="*" element={<p>404</p>} />
-        </Routes>
+        <main className="flex-grow-1 px-3">
+          <Routes>
+            <Route path="/" element={<p>Welcome page</p>} />
+            <Route path="/login" element={<p>Sign in</p>} />
+            <Route path="/registration" element={<p>Sign up</p>} />
+            <Route path="/brds" element={<Boards />} />
+            <Route
+              path="/boards"
+              element={
+                <PrivateRoute>
+                  <p>Boards</p>
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/boards/:boardId"
+              element={
+                <PrivateRoute>
+                  <p>Board ID</p>
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <PrivateRoute>
+                  <p>profile</p>
+                </PrivateRoute>
+              }
+            />
+            <Route path="*" element={<p>404</p>} />
+          </Routes>
+        </main>
+        <Footer />
       </div>
     </Provider>
   );
