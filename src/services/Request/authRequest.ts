@@ -18,4 +18,4 @@ const userSignUp = async (user: IUserDto): Promise<IUser> => {
   return request(`${URL}auth/signup`, 'POST', JSON.stringify(user));
 };
 
-export { userSignIn, userSignUp };
+export default { userSignIn, userSignUp };
