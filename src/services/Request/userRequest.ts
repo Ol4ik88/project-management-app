@@ -34,4 +34,4 @@ const deleteUser = async (userId: string, token: string) => {
   });
 };
 
-export { getUsers, getUserById, updateUser, deleteUser };
+export default { getUsers, getUserById, updateUser, deleteUser };

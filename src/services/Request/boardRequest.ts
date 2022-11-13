@@ -58,7 +58,7 @@ const getBoardsSetByUserId = async (userId: string, token: string): Promise<IBoa
   });
 };
 
-export {
+export default {
   getBoards,
   getBoardById,
   createBoard,
