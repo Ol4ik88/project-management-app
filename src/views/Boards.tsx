@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { boardsSelectors, fetchUserBoards, selectBoards } from 'store/boardsSlice';
 import { AppDispatch } from 'store/store';
 
-export function MainPage() {
+export function Boards() {
   const dispatch = useDispatch<AppDispatch>();
   const { error, status } = useSelector(selectBoards);
   const total = useSelector(boardsSelectors.selectTotal);
@@ -20,7 +20,7 @@ export function MainPage() {
   }, [dispatch]);
 
   return (
-    <Container>
+    <Container className="mt-5">
       {status === 'failed' && <Alert variant={'danger'}>{error}</Alert>}
       {status === 'loading' && <div>Loading...</div>}
       {total > 0 && status !== 'failed' && <BoardsList />}
