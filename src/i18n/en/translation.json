@@ -1,5 +1,12 @@
 {
-    "title": "Welcome to react using react-i18next fully type-safe",
+  "signIn":"SIGN IN",
+  "signUp":"SIGN UP",
+  "signOut":"SIGN OUT",
+  "boards":"BOARDS",
+  "addBoard":"ADD BOARD",
+  "profile":"PROFILE",
+  "lang": "EN",
+  "title": "Welcome to react using react-i18next fully type-safe",
     "description": {
       "part1": "This is a simple example.",
       "part2": "😉"
