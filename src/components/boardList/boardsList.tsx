@@ -22,7 +22,7 @@ export function BoardsList() {
               <Card.Title>{entities[id]?.title} </Card.Title>
               <Card.Text>{'description'}</Card.Text>
               <div className="text-end">
-                <Button variant="success" size="sm" onClick={() => handleClickEdit(String(id))}>
+                <Button variant="warning" size="sm" onClick={() => handleClickEdit(String(id))}>
                   edit
                 </Button>{' '}
                 <Button variant="danger" size="sm" onClick={() => handleClickDelete(String(id))}>

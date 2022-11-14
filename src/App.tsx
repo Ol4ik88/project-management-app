@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { Container } from 'react-bootstrap';
 import './i18n/config';
 import { useTranslation } from 'react-i18next';
-import { MainPage } from 'views/MainPage';
+import { Boards } from 'views/Boards';
 import { store } from 'store/store';
 import Footer from 'components/layout/footer/Footer';
 import Header from 'components/layout/header/Header';
@@ -22,16 +22,10 @@ export default function App() {
       <div className="min-vh-100 d-flex flex-column">
         <header className="App-header">
           <Header />
-          <Container className="text-center">
-            <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ut aperiam assumenda quas ad
-              consequuntur deleniti nostrum
-            </p>
-          </Container>
         </header>
         <main className="flex-grow-1 px-3">
           <Routes>
-            <Route path="/" element={<MainPage />} />
+            <Route path="/" element={<p>Welcome page</p>} />
             <Route path="/welcome" element={<p>Welcome page</p>} />
             <Route path="/login" element={<p>Sign in</p>} />
             <Route path="/registration" element={<p>Sign up</p>} />
