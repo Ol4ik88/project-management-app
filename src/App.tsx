@@ -1,11 +1,11 @@
 import PrivateRoute from 'components/routing/PrivateRoute';
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Link } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { Container } from 'react-bootstrap';
 import './i18n/config';
 import { useTranslation } from 'react-i18next';
-import { Boards } from 'views/boards';
+import { MainPage } from 'views/MainPage';
 import { store } from 'store/store';
 import Footer from 'components/layout/footer/Footer';
 import Header from 'components/layout/header/Header';
@@ -31,7 +31,8 @@ export default function App() {
         </header>
         <main className="flex-grow-1 px-3">
           <Routes>
-            <Route path="/" element={<p>Welcome page</p>} />
+            <Route path="/" element={<MainPage />} />
+            <Route path="/welcome" element={<p>Welcome page</p>} />
             <Route path="/login" element={<p>Sign in</p>} />
             <Route path="/registration" element={<p>Sign up</p>} />
             <Route

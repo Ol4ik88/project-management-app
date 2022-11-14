@@ -2,7 +2,9 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from './store';
 import { AuthState } from './types';
 
-const initialState: AuthState = { auth: {}, status: 'idle', error: null };
+const tmpToken =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNzBlZjg2NGFlMTZjNzJhNzNhYWIxNSIsImxvZ2luIjoidXNlciIsImlhdCI6MTY2ODQxNDI1NiwiZXhwIjoxNjY4NDU3NDU2fQ.w_2hoDSbNk6rhWHcRNlKYN_xLIYfGx_xaER7pdMrMHE';
+const initialState: AuthState = { auth: { token: tmpToken }, status: 'idle', error: null };
 
 export const signin = createAsyncThunk(
   'auth/signin',
