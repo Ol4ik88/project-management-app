@@ -37,7 +37,7 @@ const updateBoard = async (
   });
 };
 
-const deleteBoard = async (boardId: string, token: string) => {
+const deleteBoard = async (boardId: string, token: string): Promise<IBoard> => {
   return await request(`${URL}boards/${boardId}`, 'DELETE', undefined, {
     'Content-type': 'application/json',
     Authorization: `Bearer ${token}`,

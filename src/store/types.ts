@@ -46,7 +46,7 @@ export type BoardsState = {
     [key: string]: Board;
   };
   status?: string;
-  error?: string | null;
+  error?: string;
 };
 
 export type BoardPageState = {
@@ -55,5 +55,5 @@ export type BoardPageState = {
     [key: string]: Board;
   };
   status?: string;
-  error?: string | null;
+  error?: string;
 };
