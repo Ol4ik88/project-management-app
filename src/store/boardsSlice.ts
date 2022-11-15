@@ -6,7 +6,6 @@ import {
   AnyAction,
 } from '@reduxjs/toolkit';
 import boardRequest from 'services/Request/boardRequest';
-import userRequest from 'services/Request/userRequest';
 import { RootState, store } from './store';
 import { Board, BoardsState } from './types';
 

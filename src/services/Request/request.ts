@@ -11,9 +11,13 @@ const request = async <T>(
   } = { 'Content-type': 'application/json' }
 ) => {
   const response = await fetch(url, { method, body, headers });
-
-  if (allowedStatusCode.indexOf(response.status) === -1) {
-    throw new Error(`Could not fetch ${url}, status: ${response.status}`);
+  if (!response.ok) {
+    if (allowedStatusCode.indexOf(response.status) === -1) {
+      throw new Error(`Could not fetch ${url}, status: ${response.status}`);
+    } else {
+      const errorResponse = await response.json();
+      throw new Error(`${errorResponse.message}, status: ${errorResponse.statusCode}`);
+    }
   }
 
   return (await response.json()) as T;
