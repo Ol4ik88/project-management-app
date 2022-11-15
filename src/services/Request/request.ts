@@ -1,5 +1,3 @@
-const allowedStatusCode = [200, 400, 401, 404, 409];
-
 const request = async <T>(
   url: string,
   method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
@@ -12,12 +10,10 @@ const request = async <T>(
 ) => {
   const response = await fetch(url, { method, body, headers });
   if (!response.ok) {
-    if (allowedStatusCode.indexOf(response.status) === -1) {
-      throw new Error(`Could not fetch ${url}, status: ${response.status}`);
-    } else {
-      const errorResponse = await response.json();
-      throw new Error(`${errorResponse.message}, status: ${errorResponse.statusCode}`);
-    }
+    const errorResponse = await response.json();
+    throw new Error(
+      `Could not fetch ${url}. ${errorResponse.message} (code: ${errorResponse.statusCode})`
+    );
   }
 
   return (await response.json()) as T;
