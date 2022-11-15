@@ -11,5 +11,13 @@
       "part1": "This is a simple example.",
       "part2": "😉"
     },
-    "no boards created": "There are no boards created yet."
+    "no boards created": "There are no boards created yet.",
+    "please sign in": "Please sign in",
+    "name": "Name",
+    "login": "Login",
+    "password": "Password",
+    "error message - name": "Your Name must contain at least 2 letters",
+    "error message - login": "Your Login must contain at least 2 letters",
+    "error message - password": "Your Password must contain at least 5 letters symbols",
+    "sign up": "SIGN UP"
   }

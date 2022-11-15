@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next';
 function Header() {
   const [scrollPosition, setSrollPosition] = useState(0);
   const [barSticky, setBarSticky] = useState(false);
+  const navigate = useNavigate();
 
   const { t, i18n } = useTranslation();
 
@@ -83,7 +84,11 @@ function Header() {
               <NavLink to="/profile" className="nav-link">
                 {t('profile')}
               </NavLink>
-              <Button variant="link" className="text-start nav-link ">
+              <Button
+              onClick={() => {
+                navigate(`/registration`);
+              }}
+              variant="link" className="text-start nav-link ">
                 {t('signOut')}
               </Button>
             </Nav>
