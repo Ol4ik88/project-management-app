@@ -6,7 +6,6 @@ import {
   AnyAction,
 } from '@reduxjs/toolkit';
 import boardRequest from 'services/Request/boardRequest';
-import userRequest from 'services/Request/userRequest';
 import { RootState, store } from './store';
 import { Board, BoardsState } from './types';
 
@@ -45,11 +44,17 @@ export const fetchBoardById = createAsyncThunk(
     return { _id: 'boardId', title: 'boardTitle', owner: 'ownerId', users: [] };
   }
 );
-export const createBoard = createAsyncThunk(
+export const createBoard = createAsyncThunk<
+  Board,
+  { title: string; owner: string; users: string[] },
+  { state: RootState }
+>(
   'boards/createBoard',
   async ({ title, owner, users }: { title: string; owner: string; users: string[] }, thunkAPI) => {
-    // const response = await api.createBoard();
-    return { _id: 'boardId', title: 'boardTitle', owner: 'ownerId', users: [] };
+    const token = thunkAPI.getState().auth.auth.token ?? '';
+    const response = await boardRequest.createBoard({ owner, title, users }, token);
+
+    return response;
   }
 );
 export const updateBoard = createAsyncThunk(

@@ -2,16 +2,10 @@ import { IErrorResponse, IUser, IUserDto } from 'types/Interfaces';
 import request from './request';
 import { URL } from '../../utils/constants';
 
-const userSignIn = async (user: Omit<IUserDto, 'name'>): Promise<string | IErrorResponse> => {
-  const res: { token: string } | IErrorResponse = await request(
-    `${URL}auth/signin`,
-    'POST',
-    JSON.stringify(user)
-  );
+const userSignIn = async (user: Omit<IUserDto, 'name'>): Promise<string> => {
+  const res: { token: string } = await request(`${URL}auth/signin`, 'POST', JSON.stringify(user));
 
-  if ('token' in res) {
-    return res.token;
-  } else return res;
+  return res.token;
 };
 
 const userSignUp = async (user: IUserDto): Promise<IUser> => {
