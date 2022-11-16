@@ -3,19 +3,20 @@ import React, { useEffect } from 'react';
 import { Alert, Container } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { selectAuth } from 'store/authSlice';
 import { boardsSelectors, fetchUserBoards, selectBoards } from 'store/boardsSlice';
 import { AppDispatch } from 'store/store';
 
 export function Boards() {
   const dispatch = useDispatch<AppDispatch>();
   const { error, status } = useSelector(selectBoards);
+  const authState = useSelector(selectAuth);
   const total = useSelector(boardsSelectors.selectTotal);
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
     if (status === 'idle') {
-      dispatch(fetchUserBoards({ userId: '6370ef864ae16c72a73aab15' }));
+      dispatch(fetchUserBoards({ userId: authState?.auth._id ?? '' }));
     }
   }, [dispatch]);
 
