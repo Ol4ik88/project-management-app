@@ -1,35 +1,29 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Container, FloatingLabel } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { signup } from 'store/authSlice';
+import { AppDispatch } from 'store/store';
 import { IUserDto } from 'types/Interfaces';
 
 function RegistrationForm() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
 
   const {
     register,
     formState: { errors },
     handleSubmit,
-    reset,
   } = useForm<IUserDto>();
 
   const onSubmit: SubmitHandler<IUserDto> = (data) => {
-    const { name, login, password } = data;
-
-    console.log(data);
-
-    // dispatch(
-    //   addCards({
-    //     id: uuid(),
-    //     file: data.file[0].name,
-    //     ...{ firstName, lastName, date, country, gender },
-    //   })
-    // );
-
-    reset();
+    dispatch(signup(data));
+    navigate(-1);
   };
 
   return (
@@ -41,7 +35,7 @@ function RegistrationForm() {
           src="https://cdn.icon-icons.com/icons2/1303/PNG/512/checkform_85890.png"
           alt="Bootstrap 5"
         />
-        <h1 className="mb-3 fs-3 fw-normal text-center">{t('please sign in')}</h1>
+        <h1 className="mb-3 fs-3 fw-normal text-center">{t('please sign up')}</h1>
       </div>
 
       <Form className="container col-md-6 center-block" onSubmit={handleSubmit(onSubmit)}>

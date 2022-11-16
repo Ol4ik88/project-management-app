@@ -38,6 +38,10 @@ function Header() {
   }, []);
   const isAuth = true;
 
+  function navigateTo(url: string) {
+    navigate(url);
+  }
+
   return (
     <Navbar
       bg={barSticky ? 'light' : 'info'}
@@ -85,10 +89,10 @@ function Header() {
                 {t('profile')}
               </NavLink>
               <Button
-              onClick={() => {
-                navigate(`/registration`);
-              }}
-              variant="link" className="text-start nav-link ">
+                onClick={() => navigateTo(`/registration`)}
+                variant="link"
+                className="text-start nav-link "
+              >
                 {t('signOut')}
               </Button>
             </Nav>
