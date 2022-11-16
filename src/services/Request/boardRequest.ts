@@ -16,10 +16,7 @@ const getBoardById = async (boardId: string, token: string): Promise<IBoard | IE
   });
 };
 
-const createBoard = async (
-  board: Omit<IBoard, '_id'>,
-  token: string
-): Promise<IBoard | IErrorResponse> => {
+const createBoard = async (board: Omit<IBoard, '_id'>, token: string): Promise<IBoard> => {
   return request(`${URL}boards`, 'POST', JSON.stringify(board), {
     'Content-type': 'application/json',
     Authorization: `Bearer ${token}`,
