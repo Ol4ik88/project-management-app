@@ -1,11 +1,15 @@
+export type JwtPayload = { id: string; login: string; exp: number };
+
+export type UserState = {
+  _id?: string;
+  login?: string;
+  name?: string;
+  token?: string;
+  exp?: number;
+};
+
 export type AuthState = {
-  auth: {
-    _id?: string;
-    login?: string;
-    name?: string;
-    token?: string;
-    exp?: number;
-  };
+  auth: UserState;
   status?: string;
   error?: string | null;
 };
