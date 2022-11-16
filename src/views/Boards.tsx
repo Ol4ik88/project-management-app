@@ -1,4 +1,5 @@
 import { BoardsList } from 'components/boardList/boardsList';
+import { CreateBoardForm } from 'components/forms/createBoardForm';
 import React, { useEffect } from 'react';
 import { Alert, Container } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
@@ -22,11 +23,12 @@ export function Boards() {
 
   return (
     <Container className="mt-5">
+      <CreateBoardForm />
       {status === 'failed' && <Alert variant={'danger'}>{error}</Alert>}
       {status === 'loading' && <div>Loading...</div>}
       {total > 0 && status !== 'failed' && <BoardsList />}
       {total === 0 && status === 'succeeded' && (
-        <Alert variant={'info'}>{t('no boards created')}</Alert>
+        <Alert variant={'info'}>{t('board.no boards created')}</Alert>
       )}
     </Container>
   );
