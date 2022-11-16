@@ -19,5 +19,7 @@
     "error message - name": "Your Name must contain at least 2 letters",
     "error message - login": "Your Login must contain at least 2 letters",
     "error message - password": "Your Password must contain at least 5 letters symbols",
-    "sign up": "SIGN UP"
+    "sign up": "SIGN UP",
+    "registration error": "Registration error",
+    "registration successfull":"registration has been successfully completed"
   }

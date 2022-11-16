@@ -23,11 +23,11 @@ function RegistrationForm() {
 
   const onSubmit: SubmitHandler<IUserDto> = (data) => {
     dispatch(signup(data));
-    navigate(-1);
+    navigate('/login');
   };
 
   return (
-    <Container className="container mt-5 col-md-6 center-block">
+    <Container className="container position-absolute top-50 start-50 translate-middle col-md-6 center-block">
       <div className="container mt-5 col-md-6 d-flex justify-content-center align-items-center flex-column">
         <img
           width="50"
