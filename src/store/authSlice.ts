@@ -5,7 +5,7 @@ import { AuthState, JwtPayload, UserState } from './types';
 import jwt_decode from 'jwt-decode';
 
 const tmpToken =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNzBlZjg2NGFlMTZjNzJhNzNhYWIxNSIsImxvZ2luIjoidXNlciIsImlhdCI6MTY2ODUwOTA3MSwiZXhwIjoxNjY4NTUyMjcxfQ.HPLoR90m66iMInuPunFuHx0-oq2BB4CQcJEUPtQ_WFY';
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNzBlZjg2NGFlMTZjNzJhNzNhYWIxNSIsImxvZ2luIjoidXNlciIsImlhdCI6MTY2ODU5OTI5NCwiZXhwIjoxNjY4NjQyNDk0fQ.zUKQOsGd2tjZLjV7dfQoFgLWpE5ryWzb6es_XmAymCs';
 const tmpUserId = '6370ef864ae16c72a73aab15';
 
 function isRejectedAction(action: AnyAction) {

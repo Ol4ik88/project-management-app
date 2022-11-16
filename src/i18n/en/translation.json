@@ -6,10 +6,9 @@
   "addBoard":"ADD BOARD",
   "profile":"PROFILE",
   "lang": "EN",
-  "title": "Welcome to react using react-i18next fully type-safe",
-    "description": {
-      "part1": "This is a simple example.",
-      "part2": "😉"
-    },
+  "board": {
+    "board title": "Board title",
+    "board description": "Board description",
     "no boards created": "There are no boards created yet."
-  }
+  }  
+}
