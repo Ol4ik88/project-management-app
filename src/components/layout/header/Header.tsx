@@ -114,7 +114,7 @@ function Header() {
         </Container>
       </Navbar>
       {isOpen && (
-        <ModalWindow modalTitle="Add board" show={isOpen} onHide={() => setIsOpen(false)}>
+        <ModalWindow modalTitle={t('addBoard')} show={isOpen} onHide={() => setIsOpen(false)}>
           <div> form</div>
         </ModalWindow>
       )}
