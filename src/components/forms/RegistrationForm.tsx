@@ -55,7 +55,7 @@ function RegistrationForm() {
         <img
           width="50"
           className="mb-4 bootstrap-logo"
-          src="https://cdn.icon-icons.com/icons2/1303/PNG/512/checkform_85890.png"
+          src="https://cdn.icon-icons.com/icons2/2793/PNG/512/compose_edit_modify_icon_177769.png"
           alt="Bootstrap 5"
         />
         <h1 className="mb-3 fs-3 fw-normal text-center">{t('sign-up.please sign up')}</h1>

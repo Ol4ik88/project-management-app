@@ -38,8 +38,8 @@ function Header() {
   }, []);
   const isAuth = true;
 
-  function navigateTo(url: string) {
-    navigate(url);
+  function navigateToRegistration() {
+    navigate('/registration');
   }
 
   return (
@@ -89,7 +89,7 @@ function Header() {
                 {t('profile')}
               </NavLink>
               <Button
-                onClick={() => navigateTo(`/registration`)}
+                onClick={navigateToRegistration}
                 variant="link"
                 className="text-start nav-link "
               >
