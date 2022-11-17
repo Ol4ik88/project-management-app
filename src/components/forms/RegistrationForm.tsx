@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, Container, FloatingLabel } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -9,7 +9,8 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { IUserDto } from 'types/Interfaces';
 import { AppDispatch } from 'store/store';
-import { selectAuth, signup } from 'store/authSlice';
+import { resetState, selectAuth, signup } from 'store/authSlice';
+import icon from '../../assets/registaration_icon.svg';
 
 function RegistrationForm() {
   const [completed, setCompleted] = useState(false);
@@ -22,15 +23,25 @@ function RegistrationForm() {
     register,
     formState: { errors },
     handleSubmit,
+    reset,
   } = useForm<IUserDto>();
+
+  useEffect(() => {
+    if (completed) {
+      setTimeout(() => {
+        if (status === 'succeeded') {
+          navigate('/login');
+        } else {
+          dispatch(resetState('idle'));
+          reset();
+        }
+      }, 3000);
+    }
+  }, [completed, dispatch, navigate, reset, status]);
 
   const onSubmit: SubmitHandler<IUserDto> = (data) => {
     dispatch(signup(data));
     setCompleted(true);
-
-    setTimeout(() => {
-      navigate('/login');
-    }, 3000);
   };
 
   return (
@@ -52,12 +63,7 @@ function RegistrationForm() {
       </div>
 
       <div className="container mt-5 col-md-6 d-flex justify-content-center align-items-center flex-column">
-        <img
-          width="50"
-          className="mb-4 bootstrap-logo"
-          src="https://cdn.icon-icons.com/icons2/2793/PNG/512/compose_edit_modify_icon_177769.png"
-          alt="Bootstrap 5"
-        />
+        <img width="50" className="mb-4 bootstrap-logo" src={icon} alt="registration" />
         <h1 className="mb-3 fs-3 fw-normal text-center">{t('sign-up.please sign up')}</h1>
       </div>
 

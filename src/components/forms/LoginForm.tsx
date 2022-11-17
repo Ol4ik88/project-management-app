@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, Container, FloatingLabel } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -9,7 +9,8 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { IUserDto } from 'types/Interfaces';
 import { AppDispatch } from 'store/store';
-import { selectAuth, signin } from 'store/authSlice';
+import { resetState, selectAuth, signin } from 'store/authSlice';
+import icon from '../../assets/login_icon.svg';
 
 function LoginForm() {
   const [completed, setCompleted] = useState(false);
@@ -19,6 +20,7 @@ function LoginForm() {
   const dispatch = useDispatch<AppDispatch>();
 
   type loginType = Omit<IUserDto, 'name'>;
+
   const {
     register,
     formState: { errors },
@@ -26,18 +28,22 @@ function LoginForm() {
     reset,
   } = useForm<loginType>();
 
+  useEffect(() => {
+    if (completed) {
+      setTimeout(() => {
+        if (status === 'succeeded') {
+          navigate('/');
+        } else {
+          dispatch(resetState('idle'));
+          reset();
+        }
+      }, 3000);
+    }
+  }, [completed, dispatch, navigate, reset, status]);
+
   const onSubmit: SubmitHandler<loginType> = (data) => {
     dispatch(signin(data));
     setCompleted(true);
-
-    setTimeout(() => {
-      if (status === 'succeeded') {
-        navigate('/');
-      } else {
-        setCompleted(false);
-        reset();
-      }
-    }, 3000);
   };
 
   return (
@@ -59,12 +65,7 @@ function LoginForm() {
       </div>
 
       <div className="container mt-5 col-md-6 d-flex justify-content-center align-items-center flex-column">
-        <img
-          width="50"
-          className="mb-4 bootstrap-logo"
-          src="https://cdn.icon-icons.com/icons2/2793/PNG/512/login_icon_177834.png"
-          alt="Bootstrap 5"
-        />
+        <img width="50" className="mb-4 bootstrap-logo" src={icon} alt="login" />
         <h1 className="mb-3 fs-3 fw-normal text-center">{t('sign-in.please sign in')}</h1>
       </div>
 

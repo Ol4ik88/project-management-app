@@ -20,7 +20,7 @@
     "error message - login": "Логин долен содержать не менее 2 символов",
     "error message - password": "Пароль должен содержать не менее 5 символов",
     "sign up": "РЕГИСТРАЦИЯ",
-    "registration error":"Ошибка регистрации",
+    "registration error":"Логин уже существует",
     "registration successfull":"Регистрация завершена успешно",
     "loading":"Загрузка..."
   },

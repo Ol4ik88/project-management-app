@@ -20,7 +20,7 @@
     "error message - login": "Your Login must contain at least 2 letters",
     "error message - password": "Your Password must contain at least 5 letters symbols",
     "sign up": "SIGN UP",
-    "registration error": "Registration error",
+    "registration error": "Login already exist",
     "registration successfull":"Registration is successful",
     "loading":"Loading..."
   },
