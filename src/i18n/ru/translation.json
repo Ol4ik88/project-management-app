@@ -6,6 +6,8 @@
   "addBoard":"ДОБАВИТЬ ДОСКУ",
   "profile":"ПРОФИЛЬ",
   "lang": "Ру",
+  "edit":"ИЗМЕНИТЬ",
+  "delete":"УДАЛИТЬ",
   "board": {
     "board title": "Заголовок доски",
     "board description": "Описание доски",

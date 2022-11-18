@@ -35,7 +35,7 @@ export function Board() {
         </Alert>
       )}
 
-      <BoardTitle />
+      <BoardTitle boardId={boardId as string} />
       <BoardField />
     </Container>
   );

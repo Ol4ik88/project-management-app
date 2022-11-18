@@ -6,6 +6,8 @@
   "addBoard":"ADD BOARD",
   "profile":"PROFILE",
   "lang": "EN",
+  "edit":"EDIT",
+  "delete":"DELETE",
   "board": {
     "board title": "Board title",
     "board description": "Board description",
