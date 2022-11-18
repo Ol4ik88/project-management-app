@@ -41,11 +41,7 @@ export default function App() {
             />
             <Route
               path="/boards/:boardId"
-              element={
-                <PrivateRoute>
-                  <p>Board ID</p>
-                </PrivateRoute>
-              }
+              element={<PrivateRoute>{<p>Board page</p>}</PrivateRoute>}
             />
             <Route
               path="/profile"

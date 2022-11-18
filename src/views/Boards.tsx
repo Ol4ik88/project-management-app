@@ -19,7 +19,7 @@ export function Boards() {
     if (status === 'idle') {
       dispatch(fetchUserBoards({ userId: authState?.auth._id ?? '' }));
     }
-  }, [dispatch]);
+  }, [dispatch, status]);
 
   return (
     <Container className="mt-5">
