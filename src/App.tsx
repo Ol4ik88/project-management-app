@@ -6,6 +6,7 @@ import { Container } from 'react-bootstrap';
 import './i18n/config';
 import { useTranslation } from 'react-i18next';
 import { Boards } from 'views/Boards';
+import { Board } from 'views/Board';
 import { store } from 'store/store';
 import Footer from 'components/layout/footer/Footer';
 import Header from 'components/layout/header/Header';
@@ -42,7 +43,7 @@ export default function App() {
               path="/boards/:boardId"
               element={
                 <PrivateRoute>
-                  <p>Board ID</p>
+                  <Board />
                 </PrivateRoute>
               }
             />
