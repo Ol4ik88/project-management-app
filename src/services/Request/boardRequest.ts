@@ -24,8 +24,8 @@ const createBoard = async (board: Omit<IBoard, '_id'>, token: string): Promise<I
 };
 
 const updateBoard = async (
-  board: Omit<IBoard, '_id'>,
   boardId: string,
+  board: Omit<IBoard, '_id'>,
   token: string
 ): Promise<IBoard | IErrorResponse> => {
   return await request(`${URL}boards/${boardId}`, 'PUT', JSON.stringify(board), {

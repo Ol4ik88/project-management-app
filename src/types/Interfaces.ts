@@ -31,7 +31,7 @@ export interface ITask {
   boardId: string;
   columnId: string;
   description: string;
-  userId: number;
+  userId: string;
   users: string[];
 }
 
