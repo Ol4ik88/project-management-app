@@ -12,7 +12,7 @@
     "no boards created": "Доски еще не созданы."
   },
   "sign-up": {
-    "please sign up": "Пожалуйста зарегистрируйтесь",
+    "please sign up": "РЕГИСТРАЦИЯ",
     "name": "Имя",
     "login": "Логин",
     "password": "Пароль",
@@ -20,8 +20,20 @@
     "error message - login": "Логин долен содержать не менее 2 символов",
     "error message - password": "Пароль должен содержать не менее 5 символов",
     "sign up": "РЕГИСТРАЦИЯ",
-    "registration error":"Ошибка регистрации",
+    "registration error":"Логин уже существует",
     "registration successfull":"Регистрация завершена успешно",
     "loading":"Загрузка..."
-  }  
+  },
+  "sign-in": {
+    "please sign in": "ВХОД",
+    "login": "Логин",
+    "password": "Пароль",
+    "error message - name": "Имя должно содержать не менее 2 символов",
+    "error message - login": "Логин долен содержать не менее 2 символов",
+    "error message - password": "Пароль должен содержать не менее 5 символов",
+    "sign in": "ВХОД",
+    "error":"Ошибка авторизации",
+    "successfull":"Авторизация завершена успешно",
+    "loading":"Загрузка..."
+  }    
 }

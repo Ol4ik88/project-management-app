@@ -55,7 +55,12 @@ export const fetchUserById = createAsyncThunk(
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    resetState(state, action: PayloadAction<string>) {
+      state.status = action.payload;
+      state.error = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(signin.fulfilled, (state, action) => {
@@ -81,3 +86,5 @@ export const {} = authSlice.actions;
 export const selectAuth = (state: RootState) => state.auth;
 
 export default authSlice.reducer;
+
+export const { resetState } = authSlice.actions;
