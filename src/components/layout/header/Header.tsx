@@ -12,17 +12,21 @@ import imgAddBoard from 'assets/add_board.svg';
 import '../../../i18n/config';
 import { useTranslation } from 'react-i18next';
 import ModalWindow from 'components/modal/ModalWindow';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectAuth, signOut } from 'store/authSlice';
+import { AppDispatch } from 'store/store';
 
 export interface ISetContent {
   setContentModal: (content: JSX.Element) => void;
 }
 
 function Header() {
+  const dispatch = useDispatch<AppDispatch>();
+  const { auth } = useSelector(selectAuth);
   const [scrollPosition, setSrollPosition] = useState(0);
   const [barSticky, setBarSticky] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-
   const { t, i18n } = useTranslation();
 
   const handleScroll = () => {
@@ -42,9 +46,9 @@ function Header() {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-  const isAuth = true;
 
   function navigateToRegistration() {
+    dispatch(signOut());
     navigate('/registration');
   }
 
@@ -70,7 +74,7 @@ function Header() {
               />
             </NavLink>
           </Navbar.Brand>
-          {isAuth && (
+          {auth.token && (
             <Button variant="light" onClick={() => setIsOpen(true)}>
               <img src={imgAddBoard} width="30" height="30" className="me-2" />
               <span className="d-none d-sm-inline">{t('addBoard')}</span>
@@ -78,7 +82,7 @@ function Header() {
           )}
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav" className="flex-grow-0">
-            {!isAuth ? (
+            {!auth.token ? (
               <Nav className="me-2">
                 <NavLink to="/login" className="nav-link">
                   {t('signIn')}
@@ -95,6 +99,9 @@ function Header() {
                 <NavLink to="/profile" className="nav-link">
                   {t('profile')}
                 </NavLink>
+                <Navbar.Text className={'text-white'}>
+                  {auth.name?.toLocaleUpperCase() || auth.login?.toLocaleUpperCase()}
+                </Navbar.Text>
                 <Button
                   onClick={navigateToRegistration}
                   variant="link"

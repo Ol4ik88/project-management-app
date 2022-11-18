@@ -43,16 +43,7 @@ export type BoardsState = {
   entities: {
     [key: string]: Board;
   };
-  status?: string;
-  error?: string;
-};
-
-export type BoardPageState = {
-  ids: string[] | number[];
-  entities: {
-    [key: string]: Board;
-  };
-  status?: string;
+  status: string;
   error?: string;
 };
 
