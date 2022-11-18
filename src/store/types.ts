@@ -29,9 +29,6 @@ export type Column = {
   title: string;
   order: number;
   boardId: string;
-  // tasks: {
-  //   [key: string]: Task;
-  // };
 };
 
 export type Board = {
@@ -39,9 +36,6 @@ export type Board = {
   title: string;
   owner: string;
   users: string[];
-  // columns?: {
-  //   [key: string]: Column;
-  // };
 };
 
 export type BoardsState = {
@@ -61,3 +55,31 @@ export type BoardPageState = {
   status?: string;
   error?: string;
 };
+
+export type ColumnsState = {
+  ids: string[];
+  entities: {
+    [key: string]: Column;
+  };
+  error?: string;
+  statuses: { [key: string]: string };
+};
+
+export type TasksState = {
+  ids: string[] | number[];
+  entities: {
+    [key: string]: Task;
+  };
+  error?: string;
+  statuses: { [key: string]: string };
+};
+
+export type SignUpProps = {
+  name: string;
+  login: string;
+  password: string;
+};
+
+export type UpdateBoardProps = Omit<Board, '_id'> & { boardId: string };
+export type UpdateColumnProps = Omit<Column, '_id'> & { columnId: string };
+export type UpdateTaskProps = Omit<Task, '_id'> & { taskId: string; newColumnId: string };

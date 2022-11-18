@@ -9,6 +9,7 @@ import { Boards } from 'views/Boards';
 import { store } from 'store/store';
 import Footer from 'components/layout/footer/Footer';
 import Header from 'components/layout/header/Header';
+import { Board } from 'views/Board';
 
 export default function App() {
   const { t, i18n } = useTranslation();
@@ -41,7 +42,7 @@ export default function App() {
               path="/boards/:boardId"
               element={
                 <PrivateRoute>
-                  <p>Board ID</p>
+                  <Board />
                 </PrivateRoute>
               }
             />
