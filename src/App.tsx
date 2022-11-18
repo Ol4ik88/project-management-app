@@ -9,7 +9,8 @@ import { Boards } from 'views/Boards';
 import { store } from 'store/store';
 import Footer from 'components/layout/footer/Footer';
 import Header from 'components/layout/header/Header';
-import { Board } from 'views/Board';
+import { Registration } from 'views/Registration';
+import { Login } from 'views/Login';
 
 export default function App() {
   const { t, i18n } = useTranslation();
@@ -28,8 +29,8 @@ export default function App() {
           <Routes>
             <Route path="/" element={<p>Welcome page</p>} />
             <Route path="/welcome" element={<p>Welcome page</p>} />
-            <Route path="/login" element={<p>Sign in</p>} />
-            <Route path="/registration" element={<p>Sign up</p>} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/registration" element={<Registration />} />
             <Route
               path="/boards"
               element={
@@ -40,11 +41,7 @@ export default function App() {
             />
             <Route
               path="/boards/:boardId"
-              element={
-                <PrivateRoute>
-                  <Board />
-                </PrivateRoute>
-              }
+              element={<PrivateRoute>{<p>Board page</p>}</PrivateRoute>}
             />
             <Route
               path="/profile"
