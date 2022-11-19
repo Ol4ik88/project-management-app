@@ -6,10 +6,16 @@
   "addBoard":"ADD BOARD",
   "profile":"PROFILE",
   "lang": "EN",
+  "close":"close",
+  "cancel": "cancel",
   "board": {
     "board title": "Board title",
     "board description": "Board description",
-    "no boards created": "There are no boards created yet."
+    "no boards created": "There are no boards created yet.",
+    "create board button": "Create",
+    "delete board button": "Remove",
+    "remove board title": "remove board",
+    "remove board message": "Are you sure you want to remove this board?"
   },
   "sign-up": {
     "please sign up": "Please sign up",

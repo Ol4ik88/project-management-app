@@ -15,6 +15,7 @@ import ModalWindow from 'components/modal/ModalWindow';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectAuth, signOut } from 'store/authSlice';
 import { AppDispatch } from 'store/store';
+import { CreateBoardForm } from 'components/forms/createBoardForm';
 
 export interface ISetContent {
   setContentModal: (content: JSX.Element) => void;
@@ -131,7 +132,7 @@ function Header() {
       </Navbar>
       {isOpen && (
         <ModalWindow modalTitle={t('addBoard')} show={isOpen} onHide={() => setIsOpen(false)}>
-          <div> form</div>
+          <CreateBoardForm onClose={() => setIsOpen(false)} />
         </ModalWindow>
       )}
     </>
