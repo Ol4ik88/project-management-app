@@ -5,16 +5,15 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from 'store/store';
 import edit_icon from '../../assets/registaration_icon.svg';
 import delete_icon from '../../assets/delete_icon.svg';
-import { Task } from 'components/task/task';
 
-export const Column = () => {
+export const Task = () => {
   //const {  } = useSelector();
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const title = 'TITLE BOARD';
 
   return (
-    <Card className="w-25 shadow">
+    <Card className="shadow">
       <Card.Header as="h5">
         {title}
         <Button variant="light" className="col-3">
@@ -25,8 +24,10 @@ export const Column = () => {
         </Button>
       </Card.Header>
       <Card.Body>
-        <Task />
-
+        <Card.Title>Special title treatment</Card.Title>
+        <Card.Text>
+          With supporting text below as a natural lead-in to additional content.
+        </Card.Text>
         <Button variant="primary">Go somewhere</Button>
       </Card.Body>
     </Card>
