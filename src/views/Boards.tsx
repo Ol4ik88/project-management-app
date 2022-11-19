@@ -1,4 +1,4 @@
-import { BoardsList } from 'components/boardList/boardsList';
+import { BoardsList } from 'components/boardList/BoardsList';
 import React, { useEffect } from 'react';
 import { Alert, Container } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';

@@ -13,8 +13,10 @@
     "board description": "Описание доски",
     "no boards created": "Доски еще не созданы.",
     "create board button": "Создать",
+    "update board button": "Изменить",
     "delete board button": "Удалить",
     "remove board title": "Удалить доску",
+    "edit board title": "Изменить доску",
     "remove board message": "Вы уверены, что хотите удалить эту доску?"
   },
   "sign-up": {
