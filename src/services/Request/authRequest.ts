@@ -12,4 +12,11 @@ const userSignUp = async (user: IUserDto): Promise<IUser> => {
   return request(`${URL}auth/signup`, 'POST', JSON.stringify(user));
 };
 
-export default { userSignIn, userSignUp };
+const getUserById = async (userId: string, token: string): Promise<IUser> => {
+  return request(`${URL}users/${userId}`, 'GET', undefined, {
+    'Content-type': 'application/json',
+    Authorization: `Bearer ${token}`,
+  });
+};
+
+export default { userSignIn, userSignUp, getUserById };

@@ -27,7 +27,7 @@ const updateBoard = async (
   boardId: string,
   board: Omit<IBoard, '_id'>,
   token: string
-): Promise<IBoard | IErrorResponse> => {
+): Promise<IBoard> => {
   return await request(`${URL}boards/${boardId}`, 'PUT', JSON.stringify(board), {
     'Content-type': 'application/json',
     Authorization: `Bearer ${token}`,

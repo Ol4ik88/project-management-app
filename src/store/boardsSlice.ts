@@ -6,6 +6,7 @@ import {
   AnyAction,
 } from '@reduxjs/toolkit';
 import boardRequest from 'services/Request/boardRequest';
+import { signOut } from './authSlice';
 import { RootState, store } from './store';
 import { Board, BoardsState, UpdateBoardProps } from './types';
 
@@ -58,8 +59,10 @@ export const createBoard = createAsyncThunk<Board, Omit<Board, '_id'>, { state: 
 export const updateBoard = createAsyncThunk<Board, UpdateBoardProps, { state: RootState }>(
   'boards/updateBoard',
   async ({ boardId, title, owner, users }, thunkAPI) => {
-    // const response = await api.updateBoard();
-    return { _id: 'boardId', title: 'boardTitle', owner: 'ownerId', users: [] };
+    const token = thunkAPI.getState().auth.auth.token ?? '';
+    const response = await boardRequest.updateBoard(boardId, { title, users, owner }, token);
+
+    return response;
   }
 );
 
@@ -75,7 +78,11 @@ export const removeBoard = createAsyncThunk<Board, { boardId: string }, { state:
 export const boardsSlice = createSlice({
   name: 'boards',
   initialState,
-  reducers: {},
+  reducers: {
+    resetBoards(state) {
+      Object.assign(state, initialState);
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchUserBoards.fulfilled, (state, action) => {
@@ -100,6 +107,9 @@ export const boardsSlice = createSlice({
         const { _id, ...changes } = action.payload;
         boardsAdapter.removeOne(state, _id);
       })
+      .addCase(signOut.type, (state, action) => {
+        boardsSlice.caseReducers.resetBoards(state);
+      })
       .addMatcher(isPendingAction, (state, action) => {
         state.status = 'loading';
       })
@@ -112,8 +122,10 @@ export const boardsSlice = createSlice({
 
 export const {} = boardsSlice.actions;
 
-export const selectBoards = (state: RootState) => state.boards;
+export const selectBoards = (state: RootState): BoardsState => state.boards;
 
 export const boardsSelectors = boardsAdapter.getSelectors<RootState>((state) => state.boards);
 
 export default boardsSlice.reducer;
+
+export const { resetBoards } = boardsSlice.actions;
