@@ -1,12 +1,15 @@
-import { AnyAction, createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+  AnyAction,
+  createAction,
+  createAsyncThunk,
+  createSlice,
+  PayloadAction,
+} from '@reduxjs/toolkit';
 import authRequest from 'services/Request/authRequest';
 import { RootState } from './store';
 import { AuthState, JwtPayload, SignUpProps, UserState } from './types';
 import jwt_decode from 'jwt-decode';
-
-const tmpToken =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNzBlZjg2NGFlMTZjNzJhNzNhYWIxNSIsImxvZ2luIjoidXNlciIsImlhdCI6MTY2ODc2OTgwMSwiZXhwIjoxNjY4ODEzMDAxfQ.ylDAYGOE3S0EGjlLnV1BCWCtbgZX68kgldYqDSRmC4E';
-const tmpUserId = '6370ef864ae16c72a73aab15';
+import { IUser } from 'types/Interfaces';
 
 function isRejectedAction(action: AnyAction) {
   return action.type.startsWith('auth/') && action.type.endsWith('rejected');
@@ -14,9 +17,10 @@ function isRejectedAction(action: AnyAction) {
 function isPendingAction(action: AnyAction) {
   return action.type.startsWith('auth/') && action.type.endsWith('/pending');
 }
+export const signOut = createAction('signOut');
 
 const initialState: AuthState = {
-  auth: { token: tmpToken, _id: tmpUserId },
+  auth: {},
   status: 'idle',
   error: null,
 };
@@ -26,9 +30,9 @@ export const signin = createAsyncThunk<UserState, Omit<SignUpProps, 'name'>, { s
   async ({ login, password }, thunkAPI) => {
     const token = await authRequest.userSignIn({ login, password });
     const { id, exp } = jwt_decode<JwtPayload>(token);
+    const user = await authRequest.getUserById(id, token);
 
-    // const response = await api.getUserById();
-    return { _id: id, name: 'IMask', login, token, exp };
+    return { _id: id, name: user.name, login, token, exp };
   }
 );
 
@@ -41,11 +45,12 @@ export const signup = createAsyncThunk<
   return { name, login };
 });
 
-export const fetchUserById = createAsyncThunk(
+export const fetchUserById = createAsyncThunk<IUser, { userId: string }, { state: RootState }>(
   'auth/fetchUserById',
   async ({ userId }: { userId: string }, thunkAPI) => {
-    // const response = await api.signup();
-    return { _id: 'qwerty', name: 'IMask', login: 'IMask' };
+    const token = thunkAPI.getState().auth.auth.token ?? '';
+    const response = await authRequest.getUserById(userId, token);
+    return response;
   }
 );
 
@@ -57,6 +62,9 @@ export const authSlice = createSlice({
       state.status = action.payload;
       state.error = null;
     },
+    resetAuth(state) {
+      Object.assign(state, initialState);
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -67,6 +75,9 @@ export const authSlice = createSlice({
       .addCase(signup.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.auth = action.payload;
+      })
+      .addCase(signOut.type, (state, action) => {
+        authSlice.caseReducers.resetAuth(state);
       })
       .addMatcher(isPendingAction, (state, action) => {
         state.status = 'loading';
