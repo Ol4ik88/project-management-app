@@ -13,8 +13,10 @@
     "board description": "Board description",
     "no boards created": "There are no boards created yet.",
     "create board button": "Create",
+    "update board button": "Edit",
     "delete board button": "Remove",
     "remove board title": "remove board",
+    "edit board title": "Edit board",
     "remove board message": "Are you sure you want to remove this board?"
   },
   "sign-up": {

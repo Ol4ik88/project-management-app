@@ -15,7 +15,7 @@ import ModalWindow from 'components/modal/ModalWindow';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectAuth, signOut } from 'store/authSlice';
 import { AppDispatch } from 'store/store';
-import { CreateBoardForm } from 'components/forms/createBoardForm';
+import { CreateBoardForm } from 'components/forms/CreateBoardForm';
 
 export interface ISetContent {
   setContentModal: (content: JSX.Element) => void;
