@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectAuth } from 'store/authSlice';
 import { boardsSelectors, fetchUserBoards, selectBoards } from 'store/boardsSlice';
 import { AppDispatch } from 'store/store';
+import { useAuthStatus } from 'utils/helpers/authHelper';
 
 export function Boards() {
   const dispatch = useDispatch<AppDispatch>();
@@ -13,9 +14,10 @@ export function Boards() {
   const authState = useSelector(selectAuth);
   const total = useSelector(boardsSelectors.selectTotal);
   const { t, i18n } = useTranslation();
+  const { isAuth } = useAuthStatus();
 
   useEffect(() => {
-    if (status === 'idle') {
+    if (status === 'idle' && isAuth()) {
       dispatch(fetchUserBoards({ userId: authState?.auth._id ?? '' }));
     }
   }, [dispatch, status]);

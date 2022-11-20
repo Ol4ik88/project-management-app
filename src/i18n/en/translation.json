@@ -8,8 +8,6 @@
   "lang": "EN",
   "close":"close",
   "cancel": "cancel",
-  "close":"close",
-  "cancel": "cancel",
   "board": {
     "board title": "Board title",
     "board description": "Board description",
@@ -19,10 +17,6 @@
     "delete board button": "Remove",
     "remove board title": "remove board",
     "edit board title": "Edit board",
-    "remove board message": "Are you sure you want to remove this board?",
-    "create board button": "Create",
-    "delete board button": "Remove",
-    "remove board title": "remove board",
     "remove board message": "Are you sure you want to remove this board?"
   },
   "sign-up": {
