@@ -1,5 +1,4 @@
-import { BoardsList } from 'components/boardList/boardsList';
-import { CreateBoardForm } from 'components/forms/createBoardForm';
+import { BoardsList } from 'components/boardList/BoardsList';
 import React, { useEffect } from 'react';
 import { Alert, Container } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
@@ -19,11 +18,10 @@ export function Boards() {
     if (status === 'idle') {
       dispatch(fetchUserBoards({ userId: authState?.auth._id ?? '' }));
     }
-  }, [dispatch]);
+  }, [dispatch, status]);
 
   return (
     <Container className="mt-5">
-      <CreateBoardForm />
       {status === 'failed' && <Alert variant={'danger'}>{error}</Alert>}
       {status === 'loading' && <div>Loading...</div>}
       {total > 0 && status !== 'failed' && <BoardsList />}

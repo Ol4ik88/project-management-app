@@ -1,61 +1,71 @@
-import { AnyAction, createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+  AnyAction,
+  createAction,
+  createAsyncThunk,
+  createSlice,
+  PayloadAction,
+} from '@reduxjs/toolkit';
 import authRequest from 'services/Request/authRequest';
 import { RootState } from './store';
-import { AuthState, JwtPayload, UserState } from './types';
+import { AuthState, JwtPayload, SignUpProps, UserState } from './types';
 import jwt_decode from 'jwt-decode';
-
-const tmpToken =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNzBlZjg2NGFlMTZjNzJhNzNhYWIxNSIsImxvZ2luIjoidXNlciIsImlhdCI6MTY2ODU5OTI5NCwiZXhwIjoxNjY4NjQyNDk0fQ.zUKQOsGd2tjZLjV7dfQoFgLWpE5ryWzb6es_XmAymCs';
-const tmpUserId = '6370ef864ae16c72a73aab15';
+import { IUser } from 'types/Interfaces';
 
 function isRejectedAction(action: AnyAction) {
-  return action.type.endsWith('rejected');
+  return action.type.startsWith('auth/') && action.type.endsWith('rejected');
 }
 function isPendingAction(action: AnyAction) {
-  return action.type.endsWith('/pending');
+  return action.type.startsWith('auth/') && action.type.endsWith('/pending');
 }
+export const signOut = createAction('signOut');
 
 const initialState: AuthState = {
-  auth: { token: tmpToken, _id: tmpUserId },
+  auth: {},
   status: 'idle',
   error: null,
 };
 
-export const signin = createAsyncThunk<
-  UserState,
-  { login: string; password: string },
-  { state: RootState }
->('auth/signin', async ({ login, password }: { login: string; password: string }, thunkAPI) => {
-  const token = await authRequest.userSignIn({ login, password });
-  const { id, exp } = jwt_decode<JwtPayload>(token);
+export const signin = createAsyncThunk<UserState, Omit<SignUpProps, 'name'>, { state: RootState }>(
+  'auth/signin',
+  async ({ login, password }, thunkAPI) => {
+    const token = await authRequest.userSignIn({ login, password });
+    const { id, exp } = jwt_decode<JwtPayload>(token);
+    const user = await authRequest.getUserById(id, token);
 
-  // const response = await api.getUserById();
-  return { _id: id, name: 'IMask', login, token, exp };
-});
-
-export const signup = createAsyncThunk(
-  'auth/signup',
-  async (
-    { name, login, password }: { name: string; login: string; password: string },
-    thunkAPI
-  ) => {
-    const response = await authRequest.userSignUp({ login, password, name });
-    return { name, login };
+    return { _id: id, name: user.name, login, token, exp };
   }
 );
 
-export const fetchUserById = createAsyncThunk(
+export const signup = createAsyncThunk<
+  Omit<UserState, 'token' | 'exp'>,
+  SignUpProps,
+  { state: RootState }
+>('auth/signup', async ({ name, login, password }, thunkAPI) => {
+  const response = await authRequest.userSignUp({ login, password, name });
+  return { name, login };
+});
+
+export const fetchUserById = createAsyncThunk<IUser, { userId: string }, { state: RootState }>(
   'auth/fetchUserById',
   async ({ userId }: { userId: string }, thunkAPI) => {
-    // const response = await api.signup();
-    return { _id: 'qwerty', name: 'IMask', login: 'IMask' };
+    const token = thunkAPI.getState().auth.auth.token ?? '';
+    const response = await authRequest.getUserById(userId, token);
+    return response;
   }
 );
 
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    resetState(state, action: PayloadAction<string>) {
+      state.status = action.payload;
+      state.error = null;
+    },
+    resetAuth(state) {
+      Object.assign(state, initialState);
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(signin.fulfilled, (state, action) => {
@@ -65,6 +75,9 @@ export const authSlice = createSlice({
       .addCase(signup.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.auth = action.payload;
+      })
+      .addCase(signOut.type, (state, action) => {
+        authSlice.caseReducers.resetAuth(state);
       })
       .addMatcher(isPendingAction, (state, action) => {
         state.status = 'loading';
@@ -81,3 +94,5 @@ export const {} = authSlice.actions;
 export const selectAuth = (state: RootState) => state.auth;
 
 export default authSlice.reducer;
+
+export const { resetState } = authSlice.actions;

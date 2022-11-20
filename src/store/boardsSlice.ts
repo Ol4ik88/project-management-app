@@ -6,14 +6,15 @@ import {
   AnyAction,
 } from '@reduxjs/toolkit';
 import boardRequest from 'services/Request/boardRequest';
+import { signOut } from './authSlice';
 import { RootState, store } from './store';
-import { Board, BoardsState } from './types';
+import { Board, BoardsState, UpdateBoardProps } from './types';
 
 function isRejectedAction(action: AnyAction) {
-  return action.type.endsWith('rejected');
+  return action.type.startsWith('boards/') && action.type.endsWith('rejected');
 }
 function isPendingAction(action: AnyAction) {
-  return action.type.endsWith('/pending');
+  return action.type.startsWith('boards/') && action.type.endsWith('/pending');
 }
 
 const boardsAdapter = createEntityAdapter<Board>({
@@ -29,7 +30,7 @@ const initialState = boardsAdapter.getInitialState<BoardsState>({
 
 export const fetchUserBoards = createAsyncThunk<Board[], { userId: string }, { state: RootState }>(
   'boards/fetchUserBoards',
-  async ({ userId }: { userId: string }, thunkAPI) => {
+  async ({ userId }, thunkAPI) => {
     const token = thunkAPI.getState().auth.auth.token ?? '';
     const response = await boardRequest.getBoardsSetByUserId(userId, token);
 
@@ -37,37 +38,35 @@ export const fetchUserBoards = createAsyncThunk<Board[], { userId: string }, { s
   }
 );
 
-export const fetchBoardById = createAsyncThunk(
+export const fetchBoardById = createAsyncThunk<Board, { boardId: string }, { state: RootState }>(
   'boards/fetchBoardById',
-  async ({ boardId }: { boardId: string }, thunkAPI) => {
+  async ({ boardId }, thunkAPI) => {
     // const response = await api.getBoardsByUserId();
     return { _id: 'boardId', title: 'boardTitle', owner: 'ownerId', users: [] };
   }
 );
-export const createBoard = createAsyncThunk<
-  Board,
-  { title: string; owner: string; users: string[] },
-  { state: RootState }
->(
+export const createBoard = createAsyncThunk<Board, Omit<Board, '_id'>, { state: RootState }>(
   'boards/createBoard',
-  async ({ title, owner, users }: { title: string; owner: string; users: string[] }, thunkAPI) => {
+  async ({ title, owner, users }, thunkAPI) => {
     const token = thunkAPI.getState().auth.auth.token ?? '';
     const response = await boardRequest.createBoard({ owner, title, users }, token);
 
     return response;
   }
 );
-export const updateBoard = createAsyncThunk(
+export const updateBoard = createAsyncThunk<Board, UpdateBoardProps, { state: RootState }>(
   'boards/updateBoard',
-  async ({ boardId }: { boardId: string }, thunkAPI) => {
-    // const response = await api.updateBoard();
-    return { _id: 'boardId', title: 'boardTitle', owner: 'ownerId', users: [] };
+  async ({ boardId, title, owner, users }, thunkAPI) => {
+    const token = thunkAPI.getState().auth.auth.token ?? '';
+    const response = await boardRequest.updateBoard(boardId, { title, users, owner }, token);
+
+    return response;
   }
 );
 
 export const removeBoard = createAsyncThunk<Board, { boardId: string }, { state: RootState }>(
   'boards/removeBoard',
-  async ({ boardId }: { boardId: string }, thunkAPI) => {
+  async ({ boardId }, thunkAPI) => {
     const token = thunkAPI.getState().auth.auth.token ?? '';
     const response = await boardRequest.deleteBoard(boardId, token);
     return response;
@@ -77,7 +76,11 @@ export const removeBoard = createAsyncThunk<Board, { boardId: string }, { state:
 export const boardsSlice = createSlice({
   name: 'boards',
   initialState,
-  reducers: {},
+  reducers: {
+    resetBoards(state) {
+      Object.assign(state, initialState);
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchUserBoards.fulfilled, (state, action) => {
@@ -102,6 +105,9 @@ export const boardsSlice = createSlice({
         const { _id, ...changes } = action.payload;
         boardsAdapter.removeOne(state, _id);
       })
+      .addCase(signOut.type, (state, action) => {
+        boardsSlice.caseReducers.resetBoards(state);
+      })
       .addMatcher(isPendingAction, (state, action) => {
         state.status = 'loading';
       })
@@ -114,8 +120,10 @@ export const boardsSlice = createSlice({
 
 export const {} = boardsSlice.actions;
 
-export const selectBoards = (state: RootState) => state.boards;
+export const selectBoards = (state: RootState): BoardsState => state.boards;
 
 export const boardsSelectors = boardsAdapter.getSelectors<RootState>((state) => state.boards);
 
 export default boardsSlice.reducer;
+
+export const { resetBoards } = boardsSlice.actions;

@@ -6,10 +6,43 @@
   "addBoard":"ДОБАВИТЬ ДОСКУ",
   "profile":"ПРОФИЛЬ",
   "lang": "Ру",
+  "close":"Закрыть",
+  "cancel": "Отмена",
   "board": {
     "board title": "Заголовок доски",
     "board description": "Описание доски",
-    "no boards created": "Доски еще не созданы."
+    "no boards created": "Доски еще не созданы.",
+    "create board button": "Создать",
+    "update board button": "Изменить",
+    "delete board button": "Удалить",
+    "remove board title": "Удалить доску",
+    "edit board title": "Изменить доску",
+    "remove board message": "Вы уверены, что хотите удалить эту доску?"
+  },
+  "sign-up": {
+    "please sign up": "РЕГИСТРАЦИЯ",
+    "name": "Имя",
+    "login": "Логин",
+    "password": "Пароль",
+    "error message - name": "Имя должно содержать не менее 2 символов",
+    "error message - login": "Логин долен содержать не менее 2 символов",
+    "error message - password": "Пароль должен содержать не менее 5 символов",
+    "sign up": "РЕГИСТРАЦИЯ",
+    "registration error":"Логин уже существует",
+    "registration successfull":"Регистрация завершена успешно",
+    "loading":"Загрузка..."
+  },
+  "sign-in": {
+    "please sign in": "ВХОД",
+    "login": "Логин",
+    "password": "Пароль",
+    "error message - name": "Имя должно содержать не менее 2 символов",
+    "error message - login": "Логин долен содержать не менее 2 символов",
+    "error message - password": "Пароль должен содержать не менее 5 символов",
+    "sign in": "ВХОД",
+    "error":"Ошибка авторизации",
+    "successfull":"Авторизация завершена успешно",
+    "loading":"Загрузка..."
   },
   "welcome": {
     "pms": "Система управления проектами",
