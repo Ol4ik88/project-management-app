@@ -8,15 +8,18 @@
   "lang": "EN",
   "close":"close",
   "cancel": "cancel",
+  "submit": "submit",
+  "edit": "edit",
+  "delete": "delete",
   "board": {
     "board title": "Board title",
     "board description": "Board description",
     "no boards created": "There are no boards created yet.",
-    "create board button": "Create",
     "update board button": "Edit",
+    "edit board title": "Edit board",
+    "create board button": "Create",
     "delete board button": "Remove",
     "remove board title": "remove board",
-    "edit board title": "Edit board",
     "remove board message": "Are you sure you want to remove this board?"
   },
   "sign-up": {
@@ -43,5 +46,24 @@
     "error": "Authorization error",
     "successfull":"Authorization is successful",
     "loading":"Loading..."
+  },
+  "welcome": {
+    "pms": "Project management system",
+    "definition": " is an application that helps a team or group of developers achieve their goals.",
+    "description": "Our app will help you collaborate on your projects.",
+    "course": "This application is the result of the collaboration of three developers, students of the React 2022 Q3 course.",
+    "RSS": "RS School is free-of-charge and community-based education program conducted by The Rolling Scopes developer community since 2013."
+  },
+  "teamDevs": {
+    "team": "Development Team",
+    "nameGR": "Gleb",
+    "nameYL": "Yura",
+    "nameOS": "Оlga"
+  },
+  "user-page": {
+    "remove message": "Are you sure you want to remove this user?",
+    "info": "Profile Information",
+    "update title": "Change user data",
+    "remove title": "Delete user"
   }
 }

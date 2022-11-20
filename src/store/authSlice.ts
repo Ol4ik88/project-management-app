@@ -6,8 +6,9 @@ import {
   PayloadAction,
 } from '@reduxjs/toolkit';
 import authRequest from 'services/Request/authRequest';
+import userRequest from 'services/Request/userRequest';
 import { RootState } from './store';
-import { AuthState, JwtPayload, SignUpProps, UserState } from './types';
+import { AuthState, JwtPayload, SignUpProps, UserState, UpdateUserProps } from './types';
 import jwt_decode from 'jwt-decode';
 import { IUser } from 'types/Interfaces';
 import { authLocalstorage } from 'services/LocalStorage/authLocalStorage';
@@ -55,6 +56,24 @@ export const fetchUserById = createAsyncThunk<IUser, { userId: string }, { state
   }
 );
 
+export const updateUser = createAsyncThunk<IUser, UpdateUserProps, { state: RootState }>(
+  'auth/updateUser',
+  async ({ userId, name, login, password }, thunkAPI) => {
+    const token = thunkAPI.getState().auth.auth.token ?? '';
+    const response = await userRequest.updateUser(userId, { name, login, password }, token);
+    return response;
+  }
+);
+
+export const removeUser = createAsyncThunk<IUser, { userId: string }, { state: RootState }>(
+  'auth/removeUser',
+  async ({ userId }, thunkAPI) => {
+    const token = thunkAPI.getState().auth.auth.token ?? '';
+    const response = await userRequest.deleteUser(userId, token);
+    return response;
+  }
+);
+
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -80,6 +99,17 @@ export const authSlice = createSlice({
         state.status = 'succeeded';
         state.auth = action.payload;
       })
+      .addCase(fetchUserById.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.auth.login = action.payload.login;
+        state.auth.name = action.payload.name;
+      })
+      .addCase(removeUser.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+      })
       .addCase(signOut.type, (state, action) => {
         authSlice.caseReducers.resetAuth(state);
         authLocalstorage.saveAuth('');
@@ -96,7 +126,7 @@ export const authSlice = createSlice({
 
 export const {} = authSlice.actions;
 
-export const selectAuth = (state: RootState) => state.auth;
+export const selectAuth = (state: RootState): AuthState => state.auth;
 
 export default authSlice.reducer;
 
