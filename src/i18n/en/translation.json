@@ -10,5 +10,18 @@
     "board title": "Board title",
     "board description": "Board description",
     "no boards created": "There are no boards created yet."
-  }  
+  },
+  "welcome": {
+    "pms": "Project management system",
+    "definition": " is an application that helps a team or group of developers achieve their goals.",
+    "description": "Our app will help you collaborate on your projects.",
+    "course": "This application is the result of the collaboration of three developers, students of the React 2022 Q3 course.",
+    "RSS": "RS School is free-of-charge and community-based education program conducted by The Rolling Scopes developer community since 2013."
+  },
+  "teamDevs": {
+    "team": "Development Team",
+    "nameGR": "Gleb",
+    "nameYL": "Yura",
+    "nameOS": "Оlga"
+  }
 }
