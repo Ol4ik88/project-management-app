@@ -9,6 +9,7 @@ import { Boards } from 'views/Boards';
 import { store } from 'store/store';
 import Footer from 'components/layout/footer/Footer';
 import Header from 'components/layout/header/Header';
+import Welcome from 'views/Welcome ';
 import { Registration } from 'views/Registration';
 import { Login } from 'views/Login';
 
@@ -22,12 +23,10 @@ export default function App() {
   return (
     <Provider store={store}>
       <div className="min-vh-100 d-flex flex-column">
-        <header className="App-header">
-          <Header />
-        </header>
+        <Header />
         <main className="flex-grow-1 px-3">
           <Routes>
-            <Route path="/" element={<p>Welcome page</p>} />
+            <Route path="/" element={<Welcome />} />
             <Route path="/welcome" element={<p>Welcome page</p>} />
             <Route path="/login" element={<Login />} />
             <Route path="/registration" element={<Registration />} />
