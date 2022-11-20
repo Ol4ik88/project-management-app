@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 import ModalWindow from 'components/modal/ModalWindow';
 import { useTranslation } from 'react-i18next';
 import './boardList.css';
+import { UpdateteBoardForm } from 'components/forms/UpdateBoardForm';
+import { Board } from 'store/types';
 
 function RemoveBoardWindow({ cancel, remove }: { cancel: () => void; remove: () => void }) {
   const { t } = useTranslation();
@@ -49,7 +51,12 @@ export function BoardsList() {
     );
     setIsOpen(true);
   }
-  function handleClickEdit(boardId: string, e: MouseEvent) {}
+  function handleClickEdit(board: Board, e: MouseEvent) {
+    e.preventDefault();
+    setModalTitle(t('board.edit board title') ?? '');
+    setModalContent(<UpdateteBoardForm board={board} onClose={() => setIsOpen(false)} />);
+    setIsOpen(true);
+  }
 
   return (
     <>
@@ -65,7 +72,7 @@ export function BoardsList() {
                     <Button
                       variant="warning"
                       size="sm"
-                      onClick={(e) => handleClickEdit(String(id), e)}
+                      onClick={(e) => handleClickEdit(entities[id], e)}
                     >
                       edit
                     </Button>{' '}

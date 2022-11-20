@@ -1,11 +1,12 @@
 import ModalWindow from 'components/modal/ModalWindow';
 import React, { useEffect, useState } from 'react';
-import { Accordion, Button, Col, Container, Row } from 'react-bootstrap';
+import { Accordion, Button, Col, Container, OverlayTrigger, Popover, Row } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getBoardById, removeBoard, selectBoards } from 'store/boardsSlice';
 import { AppDispatch } from 'store/store';
+import info_icon from '../../assets/info_icon.svg';
 
 export const BoardTitle = (props: { boardId: string }) => {
   const navigate = useNavigate();
@@ -13,12 +14,15 @@ export const BoardTitle = (props: { boardId: string }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const { entities, error, status, ids } = useSelector(selectBoards);
-  //const { _id, title, owner, users } = entities; //!как достать свойства доски
-  const _id = '12345';
-  const title = 'Board Title';
-  const owner = 'Yura';
-  const users = ['Olga', 'Rita', 'Sveta'];
-  const [isOpen, setIsOpen] = useState(false);
+
+  const { _id, title, owner, users } = entities[boardId]; //!получить имена вместо id
+  //! добавить описание доски
+
+  const [isOpen, setIsOpen] = useState(0);
+  const modalTitle = isOpen === 1 ? t('editBoard') : t('deleteBoard');
+
+  //const [isOpen, setIsOpen] = useState(0);
+
   useEffect(() => {
     if (status === 'idle' && boardId) {
       dispatch(getBoardById({ boardId }));
@@ -26,42 +30,54 @@ export const BoardTitle = (props: { boardId: string }) => {
   }, [boardId, dispatch, status]);
 
   const modifyBoard = () => {
-    setIsOpen(true);
+    setIsOpen(1);
     //! форма изменения доски
     //const newBoard: Omit<IBoard, '_id'> = {...};
     //dispatch(editBoard({ boardId, ...newBoard }));
   };
 
   const deleteBoard = () => {
-    setIsOpen(true);
+    setIsOpen(2);
     //!модальное окно - "удалять или нет"
     dispatch(removeBoard({ boardId }));
-    //navigate('/boards');
+    navigate('/boards');
   };
 
   return (
     <Container>
-      <Row>
-        <Col xs={7}>
-          <Accordion>
-            <Accordion.Item eventKey="0">
-              <Accordion.Header>{title}</Accordion.Header>
-              <Accordion.Body>
-                <p>
-                  {t('id')} : {_id}
-                </p>
-                <p>
-                  {t('owner')} : {owner}
-                </p>
-                <p>
-                  {t('users')} :
-                  {users.map((user) => (
-                    <li key={user.toString()}>{user}</li>
-                  ))}
-                </p>
-              </Accordion.Body>
-            </Accordion.Item>
-          </Accordion>
+      <Row className="mb-5">
+        <Col className="row justify-content-start px-5">
+          <OverlayTrigger
+            trigger="click"
+            placement="bottom"
+            overlay={
+              <Popover id={`popover-positioned-$"bottom"`} className="col-12">
+                <Popover.Header as="h3">
+                  {t('titleBoard')}: {title}
+                </Popover.Header>
+                <Popover.Body>
+                  <p>
+                    {t('id')} : {_id}
+                  </p>
+                  <p>
+                    {t('owner')} : {owner}
+                  </p>
+                  <p>
+                    {t('users')} :
+                    {users.map((user) => (
+                      <li key={user.toString()}>{user}</li>
+                    ))}
+                  </p>
+                </Popover.Body>
+              </Popover>
+            }
+          >
+            <Button variant="info" size="lg" className="col-10 h-100 ">
+              {title} - {t('infoBoard')}
+              {'  '}
+              <img width="30" src={info_icon} alt="edit" />
+            </Button>
+          </OverlayTrigger>
         </Col>
 
         <Col className="row justify-content-around">
@@ -74,9 +90,10 @@ export const BoardTitle = (props: { boardId: string }) => {
           </Button>
         </Col>
       </Row>
-      {isOpen && (
-        <ModalWindow modalTitle={t('editBoard')} show={isOpen} onHide={() => setIsOpen(false)}>
-          <div> form</div>
+
+      {isOpen > 0 && (
+        <ModalWindow modalTitle={modalTitle} show={isOpen > 0} onHide={() => setIsOpen(0)}>
+          {isOpen == 1 ? <div> Редактирование доски </div> : <div> Удаление доски </div>}
         </ModalWindow>
       )}
     </Container>
