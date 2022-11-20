@@ -1,8 +1,7 @@
 import PrivateRoute from 'components/routing/PrivateRoute';
 import React from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { Container } from 'react-bootstrap';
 import './i18n/config';
 import { useTranslation } from 'react-i18next';
 import { Boards } from 'views/Boards';
@@ -12,6 +11,7 @@ import Header from 'components/layout/header/Header';
 import Welcome from 'views/Welcome ';
 import { Registration } from 'views/Registration';
 import { Login } from 'views/Login';
+import { Profile } from 'views/Profile';
 
 export default function App() {
   const { t, i18n } = useTranslation();
@@ -46,7 +46,7 @@ export default function App() {
               path="/profile"
               element={
                 <PrivateRoute>
-                  <p>profile</p>
+                  <Profile />
                 </PrivateRoute>
               }
             />
