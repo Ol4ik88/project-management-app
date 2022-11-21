@@ -11,6 +11,7 @@ import { RootState } from './store';
 import { AuthState, JwtPayload, SignUpProps, UserState, UpdateUserProps } from './types';
 import jwt_decode from 'jwt-decode';
 import { IUser } from 'types/Interfaces';
+import { authLocalstorage } from 'services/LocalStorage/authLocalStorage';
 
 function isRejectedAction(action: AnyAction) {
   return action.type.startsWith('auth/') && action.type.endsWith('rejected');
@@ -30,9 +31,9 @@ export const signin = createAsyncThunk<UserState, Omit<SignUpProps, 'name'>, { s
   'auth/signin',
   async ({ login, password }, thunkAPI) => {
     const token = await authRequest.userSignIn({ login, password });
+    authLocalstorage.saveAuth(token);
     const { id, exp } = jwt_decode<JwtPayload>(token);
     const user = await authRequest.getUserById(id, token);
-
     return { _id: id, name: user.name, login, token, exp };
   }
 );
@@ -77,6 +78,9 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    setAuth(state, action: PayloadAction<UserState>) {
+      state.auth = action.payload;
+    },
     resetState(state, action: PayloadAction<string>) {
       state.status = action.payload;
       state.error = null;
@@ -108,6 +112,7 @@ export const authSlice = createSlice({
       })
       .addCase(signOut.type, (state, action) => {
         authSlice.caseReducers.resetAuth(state);
+        authLocalstorage.saveAuth('');
       })
       .addMatcher(isPendingAction, (state, action) => {
         state.status = 'loading';
@@ -125,4 +130,4 @@ export const selectAuth = (state: RootState): AuthState => state.auth;
 
 export default authSlice.reducer;
 
-export const { resetState } = authSlice.actions;
+export const { resetState, setAuth, resetAuth } = authSlice.actions;

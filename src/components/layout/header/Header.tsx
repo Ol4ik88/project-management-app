@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectAuth, signOut } from 'store/authSlice';
 import { AppDispatch } from 'store/store';
 import { CreateBoardForm } from 'components/forms/CreateBoardForm';
+import { useAuthStatus } from 'utils/helpers/authHelper';
 
 export interface ISetContent {
   setContentModal: (content: JSX.Element) => void;
@@ -29,6 +30,8 @@ function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
+
+  const { isAuth } = useAuthStatus();
 
   const handleScroll = () => {
     const position = window.pageYOffset;
@@ -75,7 +78,7 @@ function Header() {
               />
             </NavLink>
           </Navbar.Brand>
-          {auth.token && (
+          {isAuth() && (
             <Button variant="light" onClick={() => setIsOpen(true)}>
               <img src={imgAddBoard} width="30" height="30" className="me-2" />
               <span className="d-none d-sm-inline">{t('addBoard')}</span>
@@ -83,7 +86,7 @@ function Header() {
           )}
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav" className="flex-grow-0">
-            {!auth.token ? (
+            {!isAuth() ? (
               <Nav className="me-2">
                 <NavLink to="/login" className="nav-link">
                   {t('signIn')}

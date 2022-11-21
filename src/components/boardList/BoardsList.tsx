@@ -6,7 +6,6 @@ import { AppDispatch } from 'store/store';
 import { Link } from 'react-router-dom';
 import ModalWindow from 'components/modal/ModalWindow';
 import { useTranslation } from 'react-i18next';
-import './boardList.css';
 import { UpdateteBoardForm } from 'components/forms/UpdateBoardForm';
 import { Board } from 'store/types';
 
@@ -63,7 +62,7 @@ export function BoardsList() {
       <Row md={4}>
         {ids.map((id) => (
           <Col key={id}>
-            <Link to={`/boards/${id}`} className={'board-link'}>
+            <Link to={`/boards/${id}`} className={'text-decoration-none'}>
               <Card bg="primary" text="white" className="mb-2">
                 <Card.Body>
                   <Card.Title>{entities[id]?.title} </Card.Title>
