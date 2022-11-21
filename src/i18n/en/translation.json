@@ -8,20 +8,15 @@
   "lang": "EN",
   "close":"close",
   "cancel": "cancel",
-  "close":"close",
-  "cancel": "cancel",
-  "edit":"EDIT",
-  "delete":"DELETE",
+  "submit": "submit",
+  "edit": "edit",
+  "delete": "delete",
   "board": {
     "board title": "Board title",
     "board description": "Board description",
     "no boards created": "There are no boards created yet.",
-    "create board button": "Create",
     "update board button": "Edit",
-    "delete board button": "Remove",
-    "remove board title": "remove board",
     "edit board title": "Edit board",
-    "remove board message": "Are you sure you want to remove this board?",
     "create board button": "Create",
     "delete board button": "Remove",
     "remove board title": "remove board",
@@ -64,5 +59,11 @@
     "nameGR": "Gleb",
     "nameYL": "Yura",
     "nameOS": "Оlga"
+  },
+  "user-page": {
+    "remove message": "Are you sure you want to remove this user?",
+    "info": "Profile Information",
+    "update title": "Change user data",
+    "remove title": "Delete user"
   }
 }

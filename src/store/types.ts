@@ -74,3 +74,10 @@ export type SignUpProps = {
 export type UpdateBoardProps = Omit<Board, '_id'> & { boardId: string };
 export type UpdateColumnProps = Omit<Column, '_id'> & { columnId: string };
 export type UpdateTaskProps = Omit<Task, '_id'> & { taskId: string; newColumnId: string };
+
+export type UpdateUserProps = {
+  userId: string;
+  name: string;
+  login: string;
+  password: string;
+};
