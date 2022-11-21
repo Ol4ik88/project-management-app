@@ -49,18 +49,22 @@ export const getBoardById = createAsyncThunk<Board, { boardId: string }, { state
 
 export const createBoard = createAsyncThunk<Board, Omit<Board, '_id'>, { state: RootState }>(
   'boards/createBoard',
-  async ({ title, owner, users }, thunkAPI) => {
+  async ({ title, description, owner, users }, thunkAPI) => {
     const token = thunkAPI.getState().auth.auth.token ?? '';
-    const response = await boardRequest.createBoard({ owner, title, users }, token);
+    const response = await boardRequest.createBoard({ owner, title, description, users }, token);
 
     return response;
   }
 );
 export const updateBoard = createAsyncThunk<Board, UpdateBoardProps, { state: RootState }>(
   'boards/updateBoard',
-  async ({ boardId, title, owner, users }, thunkAPI) => {
+  async ({ boardId, title, description, owner, users }, thunkAPI) => {
     const token = thunkAPI.getState().auth.auth.token ?? '';
-    const response = await boardRequest.updateBoard(boardId, { title, users, owner }, token);
+    const response = await boardRequest.updateBoard(
+      boardId,
+      { title, description, users, owner },
+      token
+    );
 
     return response;
   }

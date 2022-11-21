@@ -11,10 +11,11 @@ export function CreateBoardForm({ onClose }: { onClose: () => void }) {
   const authState = useSelector(selectAuth);
   const { t } = useTranslation();
   const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
 
   function submitHandler(e: React.SyntheticEvent) {
     e.preventDefault();
-    dispatch(createBoard({ owner: authState.auth._id ?? '', title, users: [] }));
+    dispatch(createBoard({ owner: authState.auth._id ?? '', title, description, users: [] }));
     onClose();
   }
 
@@ -31,7 +32,12 @@ export function CreateBoardForm({ onClose }: { onClose: () => void }) {
       </Form.Group>
       <Form.Group className="mb-3" controlId="createBoardFormDesc">
         <Form.Label>{t('board.board description')}</Form.Label>
-        <Form.Control type="text" placeholder="Enter board description" />
+        <Form.Control
+          type="text"
+          placeholder="Enter board description"
+          value={description}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setDescription(e.target.value)}
+        />
       </Form.Group>
       <Modal.Footer>
         <Button variant="secondary" type="reset" onClick={onClose}>

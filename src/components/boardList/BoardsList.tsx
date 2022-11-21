@@ -8,6 +8,8 @@ import ModalWindow from 'components/modal/ModalWindow';
 import { useTranslation } from 'react-i18next';
 import { UpdateteBoardForm } from 'components/forms/UpdateBoardForm';
 import { Board } from 'store/types';
+import edit_icon from '../../assets/registaration_icon.svg';
+import delete_icon from '../../assets/delete_icon.svg';
 
 function RemoveBoardWindow({ cancel, remove }: { cancel: () => void; remove: () => void }) {
   const { t } = useTranslation();
@@ -65,22 +67,22 @@ export function BoardsList() {
             <Link to={`/boards/${id}`} className={'text-decoration-none'}>
               <Card bg="primary" text="white" className="mb-2">
                 <Card.Body>
-                  <Card.Title>{entities[id]?.title} </Card.Title>
-                  <Card.Text>{'description'}</Card.Text>
+                  <Card.Title>{entities[id].title} </Card.Title>
+                  <Card.Text>{entities[id].description}</Card.Text>
                   <div className="text-end">
                     <Button
                       variant="warning"
                       size="sm"
                       onClick={(e) => handleClickEdit(entities[id], e)}
                     >
-                      edit
+                      <img width="20" src={edit_icon} alt="edit" />
                     </Button>{' '}
                     <Button
                       variant="danger"
                       size="sm"
                       onClick={(e) => handleClickDelete(String(id), e)}
                     >
-                      del
+                      <img width="20" src={delete_icon} alt="delete" />
                     </Button>
                   </div>
                 </Card.Body>
