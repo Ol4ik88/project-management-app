@@ -38,13 +38,15 @@ export const fetchUserBoards = createAsyncThunk<Board[], { userId: string }, { s
   }
 );
 
-export const fetchBoardById = createAsyncThunk<Board, { boardId: string }, { state: RootState }>(
+export const getBoardById = createAsyncThunk<Board, { boardId: string }, { state: RootState }>(
   'boards/fetchBoardById',
   async ({ boardId }, thunkAPI) => {
-    // const response = await api.getBoardsByUserId();
-    return { _id: 'boardId', title: 'boardTitle', owner: 'ownerId', users: [] };
+    const token = thunkAPI.getState().auth.auth.token ?? '';
+
+    return await boardRequest.getBoardById(boardId, token);
   }
 );
+
 export const createBoard = createAsyncThunk<Board, Omit<Board, '_id'>, { state: RootState }>(
   'boards/createBoard',
   async ({ title, owner, users }, thunkAPI) => {
@@ -87,7 +89,7 @@ export const boardsSlice = createSlice({
         state.status = 'succeeded';
         boardsAdapter.upsertMany(state, action.payload);
       })
-      .addCase(fetchBoardById.fulfilled, (state, action) => {
+      .addCase(getBoardById.fulfilled, (state, action) => {
         state.status = 'succeeded';
         boardsAdapter.upsertOne(state, action.payload);
       })

@@ -9,7 +9,7 @@ const getBoards = async (token: string): Promise<IBoard[] | []> => {
   });
 };
 
-const getBoardById = async (boardId: string, token: string): Promise<IBoard | IErrorResponse> => {
+const getBoardById = async (boardId: string, token: string): Promise<IBoard> => {
   return await request(`${URL}boards/${boardId}`, 'GET', undefined, {
     'Content-type': 'application/json',
     Authorization: `Bearer ${token}`,
