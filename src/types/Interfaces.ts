@@ -13,6 +13,7 @@ export interface IUserDto {
 export interface IBoard {
   _id: string;
   title: string;
+  description: string;
   owner: string;
   users: string[];
 }
