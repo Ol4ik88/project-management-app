@@ -30,9 +30,9 @@ const initialState = tasksAdapter.getInitialState<TasksState>({
 
 export const fetchTasksByBoardId = createAsyncThunk<
   Task[],
-  { boardId: string; columnId: string },
+  { boardId: string },
   { state: RootState }
->('tasks/fetchTasksByColumnId', async ({ boardId }, thunkAPI) => {
+>('tasks/fetchTasksByBoardId', async ({ boardId }, thunkAPI) => {
   const token = thunkAPI.getState().auth.auth.token ?? '';
   const response = await taskRequest.getTasksByBoardId(boardId, token);
 
@@ -108,6 +108,10 @@ export const tasksSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(fetchTasksByBoardId.fulfilled, (state, action) => {
+        tasksAdapter.upsertMany(state, action.payload);
+        state.statuses[action.meta.arg.boardId] = 'succeeded';
+      })
       .addCase(fetchTasksByColumnId.fulfilled, (state, action) => {
         tasksAdapter.upsertMany(state, action.payload);
         state.statuses[action.meta.arg.boardId] = 'succeeded';
@@ -149,6 +153,11 @@ export const tasksSelectors = tasksAdapter.getSelectors<RootState>((state) => st
 export const selectTasksByBoardId = (boardId: string) =>
   createSelector(tasksSelectors.selectIds, tasksSelectors.selectEntities, (ids, entites) =>
     ids.filter((id) => entites[id]?.boardId === boardId)
+  );
+
+export const selectTasksByColumnId = (columnId: string) =>
+  createSelector(tasksSelectors.selectIds, tasksSelectors.selectEntities, (ids, entites) =>
+    ids.filter((id) => entites[id]?.columnId === columnId)
   );
 
 export default tasksSlice.reducer;

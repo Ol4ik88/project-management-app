@@ -46,6 +46,7 @@ export type BoardsState = {
   };
   status: string;
   error?: string;
+  statuses: { [key: string]: string };
 };
 
 export type ColumnsState = {

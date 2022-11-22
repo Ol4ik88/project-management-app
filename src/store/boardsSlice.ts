@@ -26,6 +26,7 @@ const initialState = boardsAdapter.getInitialState<BoardsState>({
   error: '',
   ids: [],
   entities: {},
+  statuses: {},
 });
 
 export const fetchUserBoards = createAsyncThunk<Board[], { userId: string }, { state: RootState }>(
@@ -38,7 +39,7 @@ export const fetchUserBoards = createAsyncThunk<Board[], { userId: string }, { s
   }
 );
 
-export const getBoardById = createAsyncThunk<Board, { boardId: string }, { state: RootState }>(
+export const fetchBoardById = createAsyncThunk<Board, { boardId: string }, { state: RootState }>(
   'boards/fetchBoardById',
   async ({ boardId }, thunkAPI) => {
     const token = thunkAPI.getState().auth.auth.token ?? '';
@@ -93,8 +94,8 @@ export const boardsSlice = createSlice({
         state.status = 'succeeded';
         boardsAdapter.upsertMany(state, action.payload);
       })
-      .addCase(getBoardById.fulfilled, (state, action) => {
-        state.status = 'succeeded';
+      .addCase(fetchBoardById.fulfilled, (state, action) => {
+        state.statuses[action.meta.arg.boardId] = 'succeeded';
         boardsAdapter.upsertOne(state, action.payload);
       })
       .addCase(createBoard.fulfilled, (state, action) => {
@@ -115,7 +116,11 @@ export const boardsSlice = createSlice({
         boardsSlice.caseReducers.resetBoards(state);
       })
       .addMatcher(isPendingAction, (state, action) => {
-        state.status = 'loading';
+        if (action.type !== 'boards/fetchBoardById/pending') {
+          state.status = 'loading';
+        } else {
+          state.statuses[action.meta.arg.boardId] = 'loading';
+        }
       })
       .addMatcher(isRejectedAction, (state, action) => {
         state.status = 'failed';

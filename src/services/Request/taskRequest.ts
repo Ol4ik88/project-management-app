@@ -43,10 +43,15 @@ const createTask = async (
   task: Omit<ITask, '_id' | 'boardId' | 'columnId'>,
   token: string
 ): Promise<ITask> => {
-  return request(`${URL}boards/${boardId}/columns/${columnId}`, 'POST', JSON.stringify(task), {
-    'Content-type': 'application/json',
-    Authorization: `Bearer ${token}`,
-  });
+  return request(
+    `${URL}boards/${boardId}/columns/${columnId}/tasks`,
+    'POST',
+    JSON.stringify(task),
+    {
+      'Content-type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    }
+  );
 };
 
 const updateTask = async (
