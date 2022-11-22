@@ -1,7 +1,7 @@
 import { Column } from 'components/column/column';
 import { CreateColumnForm } from 'components/forms/CreateColumnForm';
 import ModalWindow from 'components/modal/ModalWindow';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Container } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,35 +14,25 @@ export const BoardField = (props: { boardId: string }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
-  //const { entities, error, statuses, ids } = useSelector(selectColumns);
-
-  const columns: IColumn[] = [
-    {
-      _id: '123',
-      title: 'Column title1',
-      order: 1,
-      boardId: boardId,
-    },
-    {
-      _id: '456',
-      title: 'Column title2',
-      order: 2,
-      boardId: boardId,
-    },
-    {
-      _id: '789',
-      title: 'Column title3',
-      order: 3,
-      boardId: boardId,
-    },
-  ];
+  const { entities, ids } = useSelector(selectColumns);
 
   useEffect(() => {
     if (boardId) {
-      //dispatch(fetchColumns({ boardId }));
-      //! колонок нет, получаем [] и выкидывает из авторизации
+      dispatch(fetchColumns({ boardId }));
     }
   }, [boardId, dispatch, isOpen]);
+
+  const getCollumnsByBoardId = useCallback(() => {
+    const arrayColumns: IColumn[] = [];
+
+    ids.map((id) => {
+      if (entities[id]?.boardId === boardId) {
+        arrayColumns.push(entities[id]!);
+      }
+    });
+
+    return arrayColumns;
+  }, [ids, entities, boardId]);
 
   function createColumn() {
     setIsOpen(true);
@@ -51,7 +41,7 @@ export const BoardField = (props: { boardId: string }) => {
   return (
     <>
       <Container className="d-flex align-items-start">
-        {columns.map((column) => (
+        {getCollumnsByBoardId().map((column) => (
           <Column key={column._id} column={column} />
         ))}
 
@@ -64,7 +54,6 @@ export const BoardField = (props: { boardId: string }) => {
         <ModalWindow modalTitle={t('createColumn')} show={isOpen} onHide={() => setIsOpen(false)}>
           <CreateColumnForm boardId={boardId} />
         </ModalWindow>
-        //! не создаются колонки
       )}
     </>
   );
