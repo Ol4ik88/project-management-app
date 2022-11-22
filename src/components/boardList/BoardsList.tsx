@@ -10,28 +10,7 @@ import { UpdateteBoardForm } from 'components/forms/UpdateBoardForm';
 import { Board } from 'store/types';
 import edit_icon from '../../assets/registaration_icon.svg';
 import delete_icon from '../../assets/delete_icon.svg';
-
-function RemoveBoardWindow({ cancel, remove }: { cancel: () => void; remove: () => void }) {
-  const { t } = useTranslation();
-
-  function handleReoveClick() {
-    remove();
-    cancel();
-  }
-  return (
-    <>
-      <div>{t('board.remove board message')}</div>
-      <Modal.Footer>
-        <Button variant="secondary" type="reset" onClick={cancel}>
-          {t('cancel')}
-        </Button>
-        <Button variant="primary" type="submit" onClick={handleReoveClick}>
-          {t('board.delete board button')}
-        </Button>
-      </Modal.Footer>
-    </>
-  );
-}
+import { DeleteWindow } from 'components/modal/DeleteWindow';
 
 export function BoardsList() {
   const dispatch = useDispatch<AppDispatch>();
@@ -45,9 +24,10 @@ export function BoardsList() {
     e.preventDefault();
     setModalTitle(t('board.remove board title') ?? '');
     setModalContent(
-      <RemoveBoardWindow
+      <DeleteWindow
         cancel={() => setIsOpen(false)}
         remove={() => dispatch(removeBoard({ boardId }))}
+        text={t('board.remove board message')}
       />
     );
     setIsOpen(true);

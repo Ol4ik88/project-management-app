@@ -2,21 +2,27 @@ import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 
-export function RemoveUserContent({ cancel, remove }: { cancel: () => void; remove: () => void }) {
+export interface IDeleteWindow {
+  cancel: () => void;
+  remove: () => void;
+  text: string;
+}
+
+export function DeleteWindow({ cancel, remove, text }: IDeleteWindow) {
   const { t } = useTranslation();
 
-  function handleReoveClick() {
+  function handleRemoveClick() {
     remove();
     cancel();
   }
   return (
     <>
-      <div>{t('user-page.remove message')}</div>
+      <div>{text}</div>
       <Modal.Footer>
         <Button variant="secondary" type="reset" onClick={cancel}>
           {t('cancel')}
         </Button>
-        <Button variant="info" type="submit" onClick={handleReoveClick}>
+        <Button variant="info" type="submit" onClick={handleRemoveClick}>
           {t('delete')}
         </Button>
       </Modal.Footer>
