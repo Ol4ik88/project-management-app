@@ -1,12 +1,7 @@
 import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-
-export interface IDeleteWindow {
-  cancel: () => void;
-  remove: () => void;
-  text: string;
-}
+import { IDeleteWindow } from './DeleteWindow.type';
 
 export function DeleteWindow({ cancel, remove, text }: IDeleteWindow) {
   const { t } = useTranslation();

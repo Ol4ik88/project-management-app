@@ -62,11 +62,9 @@ export function UserInfo() {
           </div>
         </Card.Body>
       </Card>
-      {isOpen && (
-        <ModalWindow modalTitle={modalTitle} show={isOpen} onHide={onHide}>
-          {modalContent}
-        </ModalWindow>
-      )}
+      <ModalWindow modalTitle={modalTitle} show={isOpen} onHide={onHide}>
+        {modalContent}
+      </ModalWindow>
     </>
   );
 }

@@ -22,7 +22,8 @@
     "delete board button": "Удалить",
     "remove board title": "Удалить доску",
     "edit board title": "Изменить доску",
-    "remove board message": "Вы уверены, что хотите удалить эту доску?"
+    "remove board message": "Вы уверены, что хотите удалить эту доску?",
+    "create board push": "Создана новая доска"
   },
   "sign-up": {
     "please sign up": "РЕГИСТРАЦИЯ",
