@@ -18,10 +18,6 @@ import { AppDispatch } from 'store/store';
 import { CreateBoardForm } from 'components/forms/CreateBoardForm';
 import { useAuthStatus } from 'utils/helpers/authHelper';
 
-export interface ISetContent {
-  setContentModal: (content: JSX.Element) => void;
-}
-
 function Header() {
   const dispatch = useDispatch<AppDispatch>();
   const { auth } = useSelector(selectAuth);
