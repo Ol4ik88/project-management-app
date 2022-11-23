@@ -15,20 +15,20 @@ export const TaskInformation = (props: {
   return (
     <>
       <div className="border-bottom h5">
-        {t('user')} {userName}
+        {t('task-info.user')} {userName}
       </div>
       <div className="border-bottom h5">
-        {t('inBoard')} {boardTitle}
+        {t('task-info.inBoard')} {boardTitle}
       </div>
       <div className="border-bottom h5">
-        {t('inColumn')} {columnTitle}
+        {t('task-info.inColumn')} {columnTitle}
       </div>
       <div className="border-bottom h5">
-        {t('description')} {description}
+        {t('task-info.description')} {description}
       </div>
 
       <div className="border-bottom h5">
-        {t('users')}{' '}
+        {t('task-info.users')}{' '}
         {users.map((user) => (
           <li key={user}>{user}</li>
         ))}

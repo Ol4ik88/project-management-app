@@ -66,5 +66,17 @@
     "info": "Profile Information",
     "update title": "Change user data",
     "remove title": "Delete user"
+  },
+  "task-info": {
+    "task": "Task: ",
+    "user": "User: ",
+    "inBoard": "Board: ",
+    "inColumn": "Column: ",
+    "description": "Description: ",
+    "users": "Users: "
+  },
+  "task": {
+    "delete":"Remove Task",
+    "deleteTask":"Are you sure you want to remove this task?"
   }
 }
