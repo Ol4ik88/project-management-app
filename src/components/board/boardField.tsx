@@ -5,44 +5,48 @@ import React, { useEffect, useState } from 'react';
 import { Button, Container } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchColumns, selectColumns } from 'store/columnSlice';
+import { fetchColumns, selectColumns, selectColumnsByBoardId } from 'store/columnSlice';
 import { AppDispatch } from 'store/store';
+import {
+  fetchTasksByBoardId,
+  selectTasks,
+  selectTasksByBoardId,
+  selectTasksByColumnId,
+} from 'store/taskSlice';
 import { IColumn } from 'types/Interfaces';
 
-export const BoardField = (props: { boardId: string }) => {
-  const boardId = props.boardId;
+export const BoardField = ({ boardId }: { boardId: string }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
-  //const { entities, error, statuses, ids } = useSelector(selectColumns);
+  const {
+    entities: colEntities,
+    // ids: columnsIds,
+    error: columnsError,
+    statuses: columnsStatuses,
+  } = useSelector(selectColumns);
+  const colIds = useSelector(selectColumnsByBoardId(boardId));
 
-  const columns: IColumn[] = [
-    {
-      _id: '123',
-      title: 'Column title1',
-      order: 1,
-      boardId: boardId,
-    },
-    {
-      _id: '456',
-      title: 'Column title2',
-      order: 2,
-      boardId: boardId,
-    },
-    {
-      _id: '789',
-      title: 'Column title3',
-      order: 3,
-      boardId: boardId,
-    },
-  ];
+  const {
+    entities: tasksEntities,
+    // ids: tasksIds,
+    error: tasksError,
+    statuses: tasksStatuses,
+  } = useSelector(selectTasks);
+  const tasksIds = useSelector(selectTasksByBoardId(boardId));
+
+  const getTaskByColumnId = useSelector(selectTasksByColumnId);
 
   useEffect(() => {
-    if (boardId) {
-      //dispatch(fetchColumns({ boardId }));
-      //! колонок нет, получаем [] и выкидывает из авторизации
+    if (!columnsStatuses[boardId]) {
+      dispatch(fetchColumns({ boardId }));
     }
-  }, [boardId, dispatch, isOpen]);
+
+    if (!tasksStatuses[boardId]) {
+      dispatch(fetchTasksByBoardId({ boardId }));
+      console.log('tasks');
+    }
+  }, [dispatch]);
 
   function createColumn() {
     setIsOpen(true);
@@ -50,12 +54,18 @@ export const BoardField = (props: { boardId: string }) => {
 
   return (
     <>
-      <Container className="d-flex align-items-start">
-        {columns.map((column) => (
-          <Column key={column._id} column={column} />
+      <Container fluid className="d-flex align-items-start">
+        {colIds.map((id) => (
+          <Column key={id} column={colEntities[id] as IColumn} />
         ))}
 
-        <Button variant="primary" size="lg" className="col-md-3 my-2" onClick={createColumn}>
+        <Button
+          variant="primary"
+          size="sm"
+          className="col-md-3 my-2"
+          style={{ width: '272px' }}
+          onClick={createColumn}
+        >
           + {t('createColumn')}
         </Button>
       </Container>
@@ -64,7 +74,6 @@ export const BoardField = (props: { boardId: string }) => {
         <ModalWindow modalTitle={t('createColumn')} show={isOpen} onHide={() => setIsOpen(false)}>
           <CreateColumnForm boardId={boardId} />
         </ModalWindow>
-        //! не создаются колонки
       )}
     </>
   );

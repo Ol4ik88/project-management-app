@@ -9,9 +9,8 @@ import info_icon from '../../assets/info_icon.svg';
 import { ITask } from 'types/Interfaces';
 import ModalWindow from 'components/modal/ModalWindow';
 
-export const Task = (props: { task: ITask }) => {
-  const { _id, title, order, boardId, columnId, description, userId, users } = props.task;
-  //const {  } = useSelector();
+export const Task = ({ task }: { task: ITask }) => {
+  const { _id, title, order, boardId, columnId, description, userId, users } = task;
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const [isOpen, setIsOpen] = useState(0);
@@ -30,55 +29,11 @@ export const Task = (props: { task: ITask }) => {
 
   return (
     <>
-      <Card className="shadow mb-2">
-        <Card.Header as="h5" className="d-flex justify-content-between align-items-center">
-          <OverlayTrigger
-            trigger="click"
-            placement="bottom"
-            overlay={
-              <Popover id={`popover-positioned-$"bottom"`} className="col-12">
-                <Popover.Header as="h3">
-                  {t('titleBoard')}: {title}
-                </Popover.Header>
-                <Popover.Body>
-                  <p>
-                    {t('id')} : {_id}
-                  </p>
-                  <p>
-                    {t('title')} : {title}
-                  </p>
-                </Popover.Body>
-              </Popover>
-            }
-          >
-            <Button variant="muted" className="col-12 ">
-              {title}
-              {'  '}
-              <img width="30" src={info_icon} alt="edit" />
-            </Button>
-          </OverlayTrigger>
-        </Card.Header>
-
-        <Card.Body>
-          <Card.Text>{description}</Card.Text>
-          <Form.Select aria-label="Default select example">
-            {users.map((user) => (
-              <option value={user} key={user}>
-                {user}
-              </option>
-            ))}
-          </Form.Select>
-        </Card.Body>
-
-        <Card.Footer className="d-flex justify-content-between align-items-center">
-          <Button variant="light" className="col-3" onClick={editTask}>
-            <img width="30" src={edit_icon} alt="edit" />
-          </Button>
-
-          <Button variant="light" className="col-3" onClick={deleteTask}>
-            <img width="30" src={delete_icon} alt="delete" />
-          </Button>
-        </Card.Footer>
+      <Card className="shadow-sm mb-2 flex-row">
+        <Card.Text className="flex-fill mb-0 p-1">{title} </Card.Text>
+        <Button variant="light" size="sm" className="p-0" onClick={deleteTask}>
+          <img width="15" src={delete_icon} alt="delete" />
+        </Button>
       </Card>
 
       {isOpen > 0 && (

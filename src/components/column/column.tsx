@@ -8,21 +8,26 @@ import delete_icon from '../../assets/delete_icon.svg';
 import { Task } from 'components/task/task';
 import ModalWindow from 'components/modal/ModalWindow';
 import { IColumn, ITask } from 'types/Interfaces';
-import { fetchTasksByColumnId, selectTasks } from 'store/taskSlice';
+import { selectTasks, selectTasksByColumnId } from 'store/taskSlice';
+import { CreateTaskForm } from 'components/forms/CreateTaskForm';
 
-export const Column = (props: { column: IColumn }) => {
+export const Column = ({ column }: { column: IColumn }) => {
   const dispatch = useDispatch<AppDispatch>();
   const { t } = useTranslation();
-  const { _id, title, order, boardId } = props.column;
-  //const { entities, error, statuses, ids } = useSelector(selectTasks);
+  const { _id, title, order, boardId } = column;
   const [isOpen, setIsOpen] = useState(0);
+
+  const {
+    entities: tasksEntities,
+    // ids: tasksIds,
+    error: tasksError,
+    statuses: tasksStatuses,
+  } = useSelector(selectTasks);
+
+  const tasksIds = useSelector(selectTasksByColumnId(_id));
 
   const modalTitle =
     isOpen === 1 ? t('editColumn') : isOpen === 2 ? t('deleteColumn') : t('createTask');
-
-  useEffect(() => {
-    dispatch(fetchTasksByColumnId({ boardId, columnId: _id }));
-  }, [_id, boardId, dispatch, isOpen]);
 
   function editColumn() {
     setIsOpen(1);
@@ -36,61 +41,28 @@ export const Column = (props: { column: IColumn }) => {
     setIsOpen(3);
   }
 
-  const task: ITask[] = [
-    {
-      _id: 'id-1',
-      title: 'title1',
-      order: 1,
-      boardId: 'boardId-1',
-      columnId: 'columnId-1',
-      description: 'despription-1',
-      userId: 'userId-1',
-      users: ['user1', 'user2', 'user3'],
-    },
-    {
-      _id: 'id-2',
-      title: 'title2',
-      order: 2,
-      boardId: 'boardId-2',
-      columnId: 'columnId-2',
-      description: 'despription-2',
-      userId: 'userId-2',
-      users: ['user1', 'user2', 'user3'],
-    },
-    {
-      _id: 'id-3',
-      title: 'title3',
-      order: 3,
-      boardId: 'boardId-3',
-      columnId: 'columnId-3',
-      description: 'despription-3',
-      userId: 'userId-3',
-      users: ['user1', 'user2', 'user3'],
-    },
-  ];
-
   return (
     <>
-      <Card className="shadow p-2 m-2">
+      <Card className="shadow p-0 m-2" style={{ width: '272px' }}>
         <Card.Header>
           {title}
-          <Button variant="light" className="col-3" onClick={editColumn}>
-            <img width="30" src={edit_icon} alt="edit" />
+          <Button variant="light" className="col-3 p-0" onClick={editColumn} size="sm">
+            <img width="20" src={edit_icon} alt="edit" />
           </Button>
 
-          <Button variant="light" className="col-3" onClick={deleteColumn}>
-            <img width="30" src={delete_icon} alt="delete" />
+          <Button variant="light" className="col-3 p-0" onClick={deleteColumn} size="sm">
+            <img width="20" src={delete_icon} alt="delete" />
           </Button>
         </Card.Header>
 
-        <Card.Body>
-          {task.map((task) => (
-            <Task key={task._id} task={task} />
+        <Card.Body className="p-1">
+          {tasksIds.map((id) => (
+            <Task key={id} task={tasksEntities[id] as ITask} />
           ))}
         </Card.Body>
 
         <Card.Footer>
-          <Button variant="primary" onClick={createTask} className="col-12">
+          <Button variant="primary" size="sm" onClick={createTask} className="col-12">
             {t('addTask')}
           </Button>
         </Card.Footer>
@@ -103,7 +75,7 @@ export const Column = (props: { column: IColumn }) => {
           ) : isOpen === 2 ? (
             <div> Удаление списка </div>
           ) : (
-            <div> Создание задачи </div>
+            <CreateTaskForm boardId={boardId} columnId={_id} />
           )}
         </ModalWindow>
       )}
