@@ -70,11 +70,9 @@ export const BoardField = ({ boardId }: { boardId: string }) => {
         </Button>
       </Container>
 
-      {isOpen && (
-        <ModalWindow modalTitle={t('createColumn')} show={isOpen} onHide={() => setIsOpen(false)}>
-          <CreateColumnForm boardId={boardId} />
-        </ModalWindow>
-      )}
+      <ModalWindow modalTitle={t('createColumn')} show={isOpen} onHide={() => setIsOpen(false)}>
+        <CreateColumnForm boardId={boardId} />
+      </ModalWindow>
     </>
   );
 };

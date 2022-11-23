@@ -20,7 +20,8 @@
     "create board button": "Create",
     "delete board button": "Remove",
     "remove board title": "remove board",
-    "remove board message": "Are you sure you want to remove this board?"
+    "remove board message": "Are you sure you want to remove this board?",
+    "create board push": "New board created"
   },
   "sign-up": {
     "please sign up": "Please sign up",

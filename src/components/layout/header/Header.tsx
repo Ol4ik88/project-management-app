@@ -18,10 +18,6 @@ import { AppDispatch } from 'store/store';
 import { CreateBoardForm } from 'components/forms/CreateBoardForm';
 import { useAuthStatus } from 'utils/helpers/authHelper';
 
-export interface ISetContent {
-  setContentModal: (content: JSX.Element) => void;
-}
-
 function Header() {
   const dispatch = useDispatch<AppDispatch>();
   const { auth } = useSelector(selectAuth);
@@ -133,11 +129,10 @@ function Header() {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      {isOpen && (
-        <ModalWindow modalTitle={t('addBoard')} show={isOpen} onHide={() => setIsOpen(false)}>
-          <CreateBoardForm onClose={() => setIsOpen(false)} />
-        </ModalWindow>
-      )}
+
+      <ModalWindow modalTitle={t('addBoard')} show={isOpen} onHide={() => setIsOpen(false)}>
+        <CreateBoardForm onClose={() => setIsOpen(false)} />
+      </ModalWindow>
     </>
   );
 }
