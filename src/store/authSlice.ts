@@ -31,9 +31,9 @@ export const signin = createAsyncThunk<UserState, Omit<SignUpProps, 'name'>, { s
   'auth/signin',
   async ({ login, password }, thunkAPI) => {
     const token = await authRequest.userSignIn({ login, password });
-    authLocalstorage.saveAuth(token);
     const { id, exp } = jwt_decode<JwtPayload>(token);
     const user = await authRequest.getUserById(id, token);
+    authLocalstorage.saveAuth(token, user.name);
     return { _id: id, name: user.name, login, token, exp };
   }
 );
@@ -112,7 +112,7 @@ export const authSlice = createSlice({
       })
       .addCase(signOut.type, (state, action) => {
         authSlice.caseReducers.resetAuth(state);
-        authLocalstorage.saveAuth('');
+        authLocalstorage.clearAuth();
       })
       .addMatcher(isPendingAction, (state, action) => {
         state.status = 'loading';
