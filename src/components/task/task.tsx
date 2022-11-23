@@ -12,10 +12,9 @@ import { TaskInformation } from './taskInformation';
 import { getBoardById } from 'store/boardsSlice';
 import { fetchColumns } from 'store/columnSlice';
 
-export const Task = (props: { task: ITask }) => {
-  const { _id, title, order, columnId, description, userId, users } = props.task;
+export const Task = ({ task }: { task: ITask }) => {
+  const { _id, title, order, columnId, description, userId, users } = task;
   const boardId = '637cbfd3d835ac65a9013ae4';
-  //const {  } = useSelector();
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const [isOpen, setIsOpen] = useState(0);
@@ -42,29 +41,11 @@ export const Task = (props: { task: ITask }) => {
 
   return (
     <>
-      <Card className="shadow mb-2">
-        <Card.Header
-          as="h5"
-          className="btn d-flex justify-content-between align-items-center border-bottom"
-          onClick={infoTask}
-        >
-          {title}
-          <img width="30" src={info_icon} alt="edit" />
-        </Card.Header>
-
-        <Card.Body>
-          <Card.Text>{description}</Card.Text>
-        </Card.Body>
-
-        <Card.Footer className="d-flex justify-content-between align-items-center">
-          <Button variant="light" className="col-3" onClick={editTask}>
-            <img width="30" src={edit_icon} alt="edit" />
-          </Button>
-
-          <Button variant="light" className="col-3" onClick={deleteTask}>
-            <img width="30" src={delete_icon} alt="delete" />
-          </Button>
-        </Card.Footer>
+      <Card className="shadow-sm mb-2 flex-row">
+        <Card.Text className="flex-fill mb-0 p-1">{title} </Card.Text>
+        <Button variant="light" size="sm" className="p-0" onClick={deleteTask}>
+          <img width="15" src={delete_icon} alt="delete" />
+        </Button>
       </Card>
 
       {isOpen > 0 && (

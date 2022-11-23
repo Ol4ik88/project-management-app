@@ -6,7 +6,7 @@ import { AppDispatch } from 'store/store';
 import { Card, Button } from 'react-bootstrap';
 import { UpdateUserForm } from 'components/forms/UpdateUserForm';
 import ModalWindow from 'components/modal/ModalWindow';
-import { RemoveUserContent } from './RemoveUserContent';
+import { DeleteWindow } from 'components/modal/DeleteWindow';
 
 export function UserInfo() {
   const dispatch = useDispatch<AppDispatch>();
@@ -16,24 +16,27 @@ export function UserInfo() {
   const [modalTitle, setModalTitle] = useState<string>('');
   const { t } = useTranslation();
 
-  function handleClickDelete() {
+  const onHide = () => setIsOpen(false);
+  const handleClickDelete = () => {
     setModalTitle(t('user-page.remove title') ?? '');
     setModalContent(
-      <RemoveUserContent
-        cancel={() => setIsOpen(false)}
+      <DeleteWindow
+        cancel={onHide}
         remove={() => {
           dispatch(removeUser({ userId: auth._id ?? '' }));
           dispatch(signOut());
         }}
+        text={t('user-page.remove message')}
       />
     );
     setIsOpen(true);
-  }
-  function handleClickEdit() {
+  };
+
+  const handleClickEdit = () => {
     setModalTitle(t('user-page.update title') ?? '');
-    setModalContent(<UpdateUserForm onClose={() => setIsOpen(false)} />);
+    setModalContent(<UpdateUserForm onClose={onHide} />);
     setIsOpen(true);
-  }
+  };
   return (
     <>
       <Card className="mb-2 text-center shadow" style={{ width: '18rem' }}>
@@ -50,17 +53,17 @@ export function UserInfo() {
             </span>
           </Card.Text>
           <div>
-            <Button variant="secondary" onClick={() => handleClickEdit()}>
+            <Button variant="secondary" onClick={handleClickEdit}>
               {t('edit')}
             </Button>{' '}
-            <Button variant="info" onClick={() => handleClickDelete()}>
+            <Button variant="info" onClick={handleClickDelete}>
               {t('delete')}
             </Button>
           </div>
         </Card.Body>
       </Card>
       {isOpen && (
-        <ModalWindow modalTitle={modalTitle} show={isOpen} onHide={() => setIsOpen(false)}>
+        <ModalWindow modalTitle={modalTitle} show={isOpen} onHide={onHide}>
           {modalContent}
         </ModalWindow>
       )}

@@ -21,7 +21,7 @@ export function CreateTaskForm({ boardId, columnId }: { boardId: string; columnI
         boardId,
         columnId,
         title,
-        description: '',
+        description,
         order: 0,
         userId: authState.auth._id ?? '',
         users: [],

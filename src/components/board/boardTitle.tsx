@@ -1,70 +1,58 @@
+import { UpdateteBoardForm } from 'components/forms/UpdateBoardForm';
 import ModalWindow from 'components/modal/ModalWindow';
 import React, { useEffect, useState } from 'react';
-import { Accordion, Button, Col, Container, OverlayTrigger, Popover, Row } from 'react-bootstrap';
+import { Button, Col, Container, Navbar, OverlayTrigger, Popover, Row } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { getBoardById, removeBoard, selectBoards } from 'store/boardsSlice';
 import { AppDispatch } from 'store/store';
+import { Board } from 'store/types';
 import info_icon from '../../assets/info_icon.svg';
 
-export const BoardTitle = (props: { boardId: string }) => {
+export const BoardTitle = ({ board }: { board: Board }) => {
   const navigate = useNavigate();
-  const boardId = props.boardId;
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
-  const { entities, error, status, ids } = useSelector(selectBoards);
-
-  const { _id, title, owner, users } = entities[boardId]; //!получить имена вместо id
-  //! добавить описание доски
 
   const [isOpen, setIsOpen] = useState(0);
   const modalTitle = isOpen === 1 ? t('editBoard') : t('deleteBoard');
 
-  //const [isOpen, setIsOpen] = useState(0);
-
-  useEffect(() => {
-    if (status === 'idle' && boardId) {
-      dispatch(getBoardById({ boardId }));
-    }
-  }, [boardId, dispatch, status]);
-
   const modifyBoard = () => {
     setIsOpen(1);
-    //! форма изменения доски
-    //const newBoard: Omit<IBoard, '_id'> = {...};
-    //dispatch(editBoard({ boardId, ...newBoard }));
   };
 
   const deleteBoard = () => {
     setIsOpen(2);
     //!модальное окно - "удалять или нет"
-    dispatch(removeBoard({ boardId }));
     navigate('/boards');
   };
 
   return (
-    <Container>
-      <Row className="mb-5">
-        <Col className="row justify-content-start px-5">
+    <Container fluid>
+      <Navbar expand="lg" className="shadow rounded">
+        <Container fluid>
+          <Button size="sm" className="me-3" onClick={() => navigate('/boards')}>
+            {t('Back')}
+          </Button>
+          <Navbar.Brand>{board.title}</Navbar.Brand>
           <OverlayTrigger
             trigger="click"
             placement="bottom"
             overlay={
               <Popover id={`popover-positioned-$"bottom"`} className="col-12">
                 <Popover.Header as="h3">
-                  {t('titleBoard')}: {title}
+                  {t('titleBoard')}: {board.title}
                 </Popover.Header>
                 <Popover.Body>
                   <p>
-                    {t('id')} : {_id}
+                    {t('id')} : {board._id}
                   </p>
                   <p>
-                    {t('owner')} : {owner}
+                    {t('owner')} : {board.owner}
                   </p>
                   <p>
                     {t('users')} :
-                    {users.map((user) => (
+                    {board.users.map((user) => (
                       <li key={user.toString()}>{user}</li>
                     ))}
                   </p>
@@ -72,28 +60,27 @@ export const BoardTitle = (props: { boardId: string }) => {
               </Popover>
             }
           >
-            <Button variant="info" size="lg" className="col-10 h-100 ">
-              {title} - {t('infoBoard')}
-              {'  '}
-              <img width="30" src={info_icon} alt="edit" />
-            </Button>
+            <span>
+              <img width="20" src={info_icon} alt="edit" />
+            </span>
           </OverlayTrigger>
-        </Col>
-
-        <Col className="row justify-content-around">
-          <Button onClick={modifyBoard} className="col-5 h-100" variant="primary">
-            {t('edit')}
-          </Button>
-
-          <Button onClick={deleteBoard} className="col-5 h-100" variant="primary">
-            {t('delete')}
-          </Button>
-        </Col>
-      </Row>
-
+          <div className="ms-auto">
+            <Button onClick={modifyBoard} className="" size="sm" variant="primary">
+              {t('edit')}
+            </Button>{' '}
+            <Button onClick={deleteBoard} className="" size="sm" variant="primary">
+              {t('delete')}
+            </Button>
+          </div>
+        </Container>
+      </Navbar>
       {isOpen > 0 && (
         <ModalWindow modalTitle={modalTitle} show={isOpen > 0} onHide={() => setIsOpen(0)}>
-          {isOpen == 1 ? <div> Редактирование доски </div> : <div> Удаление доски </div>}
+          {isOpen == 1 ? (
+            <UpdateteBoardForm onClose={() => setIsOpen(0)} board={board} />
+          ) : (
+            <div> Удаление доски </div>
+          )}
         </ModalWindow>
       )}
     </Container>
