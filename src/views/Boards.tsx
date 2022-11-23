@@ -7,6 +7,7 @@ import { selectAuth } from 'store/authSlice';
 import { boardsSelectors, fetchUserBoards, selectBoards } from 'store/boardsSlice';
 import { AppDispatch } from 'store/store';
 import { useAuthStatus } from 'utils/helpers/authHelper';
+import Loading from 'components/layout/loading/Loading';
 
 export function Boards() {
   const dispatch = useDispatch<AppDispatch>();
@@ -25,7 +26,7 @@ export function Boards() {
   return (
     <Container className="mt-5">
       {status === 'failed' && <Alert variant={'danger'}>{error}</Alert>}
-      {status === 'loading' && <div>Loading...</div>}
+      {status === 'loading' && <Loading />}
       {total > 0 && status !== 'failed' && <BoardsList />}
       {total === 0 && status === 'succeeded' && (
         <Alert variant={'info'}>{t('board.no boards created')}</Alert>
