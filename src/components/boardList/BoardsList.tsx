@@ -71,11 +71,9 @@ export function BoardsList() {
           </Col>
         ))}
       </Row>
-      {isOpen && (
-        <ModalWindow modalTitle={modalTitle} show={isOpen} onHide={() => setIsOpen(false)}>
-          {modalContent}
-        </ModalWindow>
-      )}
+      <ModalWindow modalTitle={modalTitle} show={isOpen} onHide={() => setIsOpen(false)}>
+        {modalContent}
+      </ModalWindow>
     </>
   );
 }

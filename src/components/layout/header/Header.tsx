@@ -129,11 +129,10 @@ function Header() {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      {isOpen && (
-        <ModalWindow modalTitle={t('addBoard')} show={isOpen} onHide={() => setIsOpen(false)}>
-          <CreateBoardForm onClose={() => setIsOpen(false)} />
-        </ModalWindow>
-      )}
+
+      <ModalWindow modalTitle={t('addBoard')} show={isOpen} onHide={() => setIsOpen(false)}>
+        <CreateBoardForm onClose={() => setIsOpen(false)} />
+      </ModalWindow>
     </>
   );
 }
