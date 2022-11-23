@@ -4,6 +4,7 @@ import { fetchUserById, selectAuth } from 'store/authSlice';
 import { AppDispatch } from 'store/store';
 import { Alert, Container } from 'react-bootstrap';
 import { UserInfo } from 'components/userInfo/UserInfo';
+import Loading from 'components/layout/loading/Loading';
 
 export function Profile() {
   const { error, status } = useSelector(selectAuth);
@@ -19,7 +20,7 @@ export function Profile() {
   return (
     <Container className="mt-5 d-flex justify-content-center">
       {status === 'failed' && <Alert variant={'danger'}>{error}</Alert>}
-      {status === 'loading' && <div>Loading...</div>}
+      {status === 'loading' && <Loading />}
       {status === 'succeeded' && <UserInfo />}
     </Container>
   );
