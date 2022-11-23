@@ -8,7 +8,7 @@ function PushMessage({ text, isShow, onHide }: IPushMessage) {
       className="position-fixed bottom-0 end-0 border border-2 border-warning"
       onClose={onHide}
       show={isShow}
-      delay={3000}
+      delay={1000}
       autohide
     >
       <Toast.Header className="justify-content-between text-dark">{text}</Toast.Header>
