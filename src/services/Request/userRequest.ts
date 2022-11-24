@@ -2,7 +2,7 @@ import { IErrorResponse, IUser, IUserDto } from 'types/Interfaces';
 import request from './request';
 import { URL } from '../../utils/constants';
 
-const getUsers = async (token: string): Promise<IUser[] | undefined> => {
+const getUsers = async (token: string): Promise<IUser[]> => {
   return await request(`${URL}users`, 'GET', undefined, {
     'Content-type': 'application/json',
     Authorization: `Bearer ${token}`,

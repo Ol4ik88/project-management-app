@@ -56,6 +56,14 @@ export const fetchUserById = createAsyncThunk<IUser, { userId: string }, { state
   }
 );
 
+// export const getUsers = createAsyncThunk<IUser[], unknown, { state: RootState }>(
+//   'auth/getUsers',
+//   async (thunkAPI) => {
+//     const token = thunkAPI.getState().auth.auth.token ?? '';
+//     return await userRequest.getUsers(token);
+//   }
+// );
+
 export const updateUser = createAsyncThunk<IUser, UpdateUserProps, { state: RootState }>(
   'auth/updateUser',
   async ({ userId, name, login, password }, thunkAPI) => {
