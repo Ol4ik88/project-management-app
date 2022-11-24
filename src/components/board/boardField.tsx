@@ -52,6 +52,8 @@ export const BoardField = ({ boardId }: { boardId: string }) => {
     setIsOpen(true);
   }
 
+  const onHide = () => setIsOpen(false);
+
   return (
     <>
       <Container fluid className="d-flex align-items-start">
@@ -66,12 +68,12 @@ export const BoardField = ({ boardId }: { boardId: string }) => {
           style={{ width: '272px' }}
           onClick={createColumn}
         >
-          + {t('createColumn')}
+          + {t('board.create column')}
         </Button>
       </Container>
 
-      <ModalWindow modalTitle={t('createColumn')} show={isOpen} onHide={() => setIsOpen(false)}>
-        <CreateColumnForm boardId={boardId} />
+      <ModalWindow modalTitle={t('board.create column')} show={isOpen} onHide={onHide}>
+        <CreateColumnForm boardId={boardId} onClose={onHide} />
       </ModalWindow>
     </>
   );
