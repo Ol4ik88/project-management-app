@@ -53,7 +53,7 @@ export function UpdateteBoardForm({ onClose, board }: { onClose: () => void; boa
           {t('close')}
         </Button>
         <Button variant="primary" type="submit">
-          {t('board.update board button')}
+          {t('edit')}
         </Button>
       </Modal.Footer>
     </Form>

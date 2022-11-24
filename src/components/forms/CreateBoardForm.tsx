@@ -32,6 +32,7 @@ export function CreateBoardForm({ onClose }: { onClose: () => void }) {
         <Form.Group className="mb-3" controlId="createBoardFormTitle">
           <Form.Label>{t('board.board title')}</Form.Label>
           <Form.Control
+            required
             type="text"
             placeholder="Enter board title"
             value={title}
@@ -41,6 +42,7 @@ export function CreateBoardForm({ onClose }: { onClose: () => void }) {
         <Form.Group className="mb-3" controlId="createBoardFormDesc">
           <Form.Label>{t('board.board description')}</Form.Label>
           <Form.Control
+            required
             type="text"
             placeholder="Enter board description"
             value={description}
@@ -52,11 +54,11 @@ export function CreateBoardForm({ onClose }: { onClose: () => void }) {
             {t('close')}
           </Button>
           <Button variant="primary" type="submit">
-            {t('board.create board button')}
+            {t('create')}
           </Button>
         </Modal.Footer>
       </Form>
-      {show && <PushMessage text={t('board.create board push')} isShow={show} onHide={onHide} />}
+      <PushMessage text={t('board.create board push')} isShow={show} onHide={onHide} />
     </>
   );
 }

@@ -10,12 +10,15 @@ import ModalWindow from 'components/modal/ModalWindow';
 import { IColumn, ITask } from 'types/Interfaces';
 import { selectTasks, selectTasksByColumnId } from 'store/taskSlice';
 import { CreateTaskForm } from 'components/forms/CreateTaskForm';
+import { DeleteWindow } from 'components/modal/DeleteWindow';
 
 export const Column = ({ column }: { column: IColumn }) => {
   const dispatch = useDispatch<AppDispatch>();
   const { t } = useTranslation();
   const { _id, title, order, boardId } = column;
-  const [isOpen, setIsOpen] = useState(0);
+  const [modalContent, setModalContent] = useState<React.ReactNode>();
+  const [modalTitle, setModalTitle] = useState<string>('');
+  const [isOpen, setIsOpen] = useState(false);
 
   const {
     entities: tasksEntities,
@@ -26,31 +29,42 @@ export const Column = ({ column }: { column: IColumn }) => {
 
   const tasksIds = useSelector(selectTasksByColumnId(_id));
 
-  const modalTitle =
-    isOpen === 1 ? t('editColumn') : isOpen === 2 ? t('deleteColumn') : t('createTask');
+  const handleClickDelete = () => {
+    setModalTitle(t('board.remove task title') ?? '');
+    setModalContent(
+      <DeleteWindow
+        cancel={onHide}
+        remove={() => {
+          alert('удаление задачи');
+        }}
+        text={t('board.remove task message')}
+      />
+    );
+    setIsOpen(true);
+  };
 
-  function editColumn() {
-    setIsOpen(1);
-  }
+  const handleClickEdit = () => {
+    alert('изменить название столбца');
+  };
 
-  function deleteColumn() {
-    setIsOpen(2);
-  }
+  const handleClickCreate = () => {
+    setModalTitle(t('board.create task') ?? '');
+    setModalContent(<CreateTaskForm boardId={boardId} columnId={_id} onClose={onHide} />);
+    setIsOpen(true);
+  };
 
-  function createTask() {
-    setIsOpen(3);
-  }
+  const onHide = () => setIsOpen(false);
 
   return (
     <>
       <Card className="shadow p-0 m-2" style={{ width: '272px' }}>
         <Card.Header>
           {title}
-          <Button variant="light" className="col-3 p-0" onClick={editColumn} size="sm">
+          <Button variant="light" className="col-3 p-0" size="sm" onClick={handleClickEdit}>
             <img width="20" src={edit_icon} alt="edit" />
           </Button>
 
-          <Button variant="light" className="col-3 p-0" onClick={deleteColumn} size="sm">
+          <Button variant="light" className="col-3 p-0" size="sm" onClick={handleClickDelete}>
             <img width="20" src={delete_icon} alt="delete" />
           </Button>
         </Card.Header>
@@ -62,23 +76,14 @@ export const Column = ({ column }: { column: IColumn }) => {
         </Card.Body>
 
         <Card.Footer>
-          <Button variant="primary" size="sm" onClick={createTask} className="col-12">
-            {t('addTask')}
+          <Button variant="primary" size="sm" className="col-12" onClick={handleClickCreate}>
+            {t('board.add task')}
           </Button>
         </Card.Footer>
       </Card>
-
-      {isOpen > 0 && (
-        <ModalWindow modalTitle={modalTitle} show={isOpen > 0} onHide={() => setIsOpen(0)}>
-          {isOpen === 1 ? (
-            <div> Редактирование списка </div>
-          ) : isOpen === 2 ? (
-            <div> Удаление списка </div>
-          ) : (
-            <CreateTaskForm boardId={boardId} columnId={_id} />
-          )}
-        </ModalWindow>
-      )}
+      <ModalWindow modalTitle={modalTitle} show={isOpen} onHide={onHide}>
+        {modalContent}
+      </ModalWindow>
     </>
   );
 };
