@@ -1,9 +1,18 @@
 export const authLocalstorage = {
-  saveAuth(token: string) {
-    localStorage.setItem('auth', token);
+  saveAuth(token: string, name: string) {
+    localStorage.setItem('auth', JSON.stringify({ token: token, name: name }));
   },
   getAuth() {
-    const token = localStorage.getItem('auth');
-    return token ? token : null;
+    const auth = localStorage.getItem('auth');
+    let authObj;
+    try {
+      authObj = auth ? JSON.parse(auth) : null;
+    } catch {
+      this.clearAuth();
+    }
+    return authObj;
+  },
+  clearAuth() {
+    localStorage.removeItem('auth');
   },
 };

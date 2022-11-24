@@ -11,10 +11,11 @@ export function useAuthStatus() {
 
   function isAuth() {
     if (!auth.token) {
-      const token = authLocalstorage.getAuth() ?? '';
-      if (token) {
+      const authData = authLocalstorage.getAuth();
+      if (authData) {
+        const { token, name } = authData;
         const { id, exp, login } = jwt_decode<JwtPayload>(token);
-        dispatch(setAuth({ token, login, _id: id, exp }));
+        dispatch(setAuth({ token, login, _id: id, exp, name }));
       }
     }
     const currentDate = new Date().getTime() / 1000;
