@@ -5,10 +5,10 @@ import { IPushMessage } from './PushMessage.type';
 function PushMessage({ text, isShow, onHide }: IPushMessage) {
   return (
     <Toast
-      className="position-fixed bottom-0 end-0 border border-2 border-warning"
+      className="position-fixed bottom-0 end-0 border border-2 border-dark m-2"
       onClose={onHide}
       show={isShow}
-      delay={1000}
+      delay={1500}
       autohide
     >
       <Toast.Header className="justify-content-between text-dark">{text}</Toast.Header>
