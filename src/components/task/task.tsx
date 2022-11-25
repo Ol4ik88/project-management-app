@@ -9,7 +9,7 @@ import ModalWindow from 'components/modal/ModalWindow';
 import { TaskInformation } from './taskInformation';
 import { fetchBoardById, fetchUserBoards, selectBoards } from 'store/boardsSlice';
 import { fetchColumns, selectColumns } from 'store/columnSlice';
-import { fetchUserById, selectAuth } from 'store/authSlice';
+import { fetchUserById, selectAuth, getUsers } from 'store/authSlice';
 import { DeleteWindow } from 'components/modal/DeleteWindow';
 import { removeTask } from 'store/taskSlice';
 
@@ -34,7 +34,7 @@ export const Task = ({ task }: { task: ITask }) => {
   useEffect(() => {
     dispatch(fetchUserBoards({ userId }));
     dispatch(fetchColumns({ boardId }));
-    dispatch(fetchUserById({ userId }));
+    //dispatch(getUsers());//! доделать
   }, [boardId, dispatch, userId]);
 
   useEffect(() => {

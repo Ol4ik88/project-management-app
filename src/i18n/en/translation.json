@@ -79,7 +79,9 @@
   },
   "task-info": {
     "task-info":"Task parameters",
+    "select":"Make a selection",
     "task": "Task: ",
+    "order":"Order: ",
     "user": "User: ",
     "inBoard": "In Board: ",
     "inColumn": "In Column: ",

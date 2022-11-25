@@ -56,13 +56,21 @@ export const fetchUserById = createAsyncThunk<IUser, { userId: string }, { state
   }
 );
 
-// export const getUsers = createAsyncThunk<IUser[], unknown, { state: RootState }>(
+// createAsyncThunk<IUser[], undefined, { state: RootState }>(
 //   'auth/getUsers',
-//   async (thunkAPI) => {
+//   async (undefined, thunkAPI) => {
 //     const token = thunkAPI.getState().auth.auth.token ?? '';
 //     return await userRequest.getUsers(token);
 //   }
 // );
+
+export const getUsers = createAsyncThunk<IUser[], undefined, { state: RootState }>(
+  'auth/getUsers',
+  async (undefined, thunkAPI) => {
+    const token = thunkAPI.getState().auth.auth.token ?? '';
+    return await userRequest.getUsers(token);
+  }
+);
 
 export const updateUser = createAsyncThunk<IUser, UpdateUserProps, { state: RootState }>(
   'auth/updateUser',
