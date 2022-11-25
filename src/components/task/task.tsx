@@ -100,6 +100,7 @@ export const Task = ({ task }: { task: ITask }) => {
               usersList={users}
               columns={columnsInfo}
               boards={boardsInfo}
+              cancel={() => setIsOpen(0)}
             />
           )}
         </ModalWindow>

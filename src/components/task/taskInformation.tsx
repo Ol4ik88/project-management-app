@@ -15,13 +15,14 @@ type propsType = {
   columns: idAndTitle[];
   boards: idAndTitle[];
   usersList: IUser[];
+  cancel: () => void;
 };
 
 type idAndTitle = {
   [key: string]: string;
 };
 
-export const TaskInformation = ({ task, userName, columns, usersList }: propsType) => {
+export const TaskInformation = ({ task, userName, columns, usersList, cancel }: propsType) => {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
 
@@ -47,6 +48,7 @@ export const TaskInformation = ({ task, userName, columns, usersList }: propsTyp
 
   function resetData() {
     setTaskData(infoForRender);
+    cancel();
   }
 
   function saveData() {
@@ -67,6 +69,8 @@ export const TaskInformation = ({ task, userName, columns, usersList }: propsTyp
         users,
       })
     );
+
+    cancel();
   }
 
   function idUserInName(users: string[]) {
