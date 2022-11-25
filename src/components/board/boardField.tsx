@@ -1,3 +1,20 @@
+import {
+  closestCenter,
+  DndContext,
+  DragEndEvent,
+  DragOverlay,
+  DragStartEvent,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
+import {
+  arrayMove,
+  horizontalListSortingStrategy,
+  SortableContext,
+  sortableKeyboardCoordinates,
+} from '@dnd-kit/sortable';
 import { Column } from 'components/column/column';
 import { CreateColumnForm } from 'components/forms/CreateColumnForm';
 import ModalWindow from 'components/modal/ModalWindow';
@@ -5,7 +22,13 @@ import React, { useEffect, useState } from 'react';
 import { Button, Container } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchColumns, selectColumns, selectColumnsByBoardId } from 'store/columnSlice';
+import {
+  changeColumnsOrders,
+  fetchColumns,
+  selectColumns,
+  selectColumnsByBoardId,
+  setColumnsOrder,
+} from 'store/columnSlice';
 import { AppDispatch } from 'store/store';
 import {
   fetchTasksByBoardId,
@@ -37,6 +60,18 @@ export const BoardField = ({ boardId }: { boardId: string }) => {
 
   const getTaskByColumnId = useSelector(selectTasksByColumnId);
 
+  const [activeId, setActiveId] = useState<string | number | null>(null);
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 10,
+      },
+    }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
   useEffect(() => {
     if (!columnsStatuses[boardId]) {
       dispatch(fetchColumns({ boardId }));
@@ -44,7 +79,6 @@ export const BoardField = ({ boardId }: { boardId: string }) => {
 
     if (!tasksStatuses[boardId]) {
       dispatch(fetchTasksByBoardId({ boardId }));
-      console.log('tasks');
     }
   }, [dispatch]);
 
@@ -54,13 +88,48 @@ export const BoardField = ({ boardId }: { boardId: string }) => {
 
   const onHide = () => setIsOpen(false);
 
+  function handleDragStart(event: DragStartEvent) {
+    setActiveId(event.active.id);
+  }
+
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event;
+    if (over && active.id !== over.id) {
+      const oldIndex = colIds.indexOf(active.id);
+      const newIndex = colIds.indexOf(over.id);
+      const orderedColumnsIds = arrayMove(colIds, oldIndex, newIndex);
+
+      const orderedList = orderedColumnsIds.reduce((accum, id, index) => {
+        if (colEntities[id] && colEntities[id]?._id) {
+          accum.push({ _id: colEntities[id]?._id as string, order: index } as IColumn);
+        }
+        return accum;
+      }, [] as IColumn[]);
+      dispatch(setColumnsOrder(orderedList));
+
+      dispatch(changeColumnsOrders(orderedList));
+    }
+    setActiveId(null);
+  }
+
   return (
     <>
       <Container fluid className="d-flex align-items-start">
-        {colIds.map((id) => (
-          <Column key={id} column={colEntities[id] as IColumn} />
-        ))}
-
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragStart={handleDragStart}
+          onDragEnd={handleDragEnd}
+        >
+          <SortableContext items={colIds} strategy={horizontalListSortingStrategy}>
+            {colIds.map((id) => (
+              <Column key={id} column={colEntities[id] as IColumn} isDragging={activeId === id} />
+            ))}
+          </SortableContext>
+          <DragOverlay>
+            {activeId ? <Column key={activeId} column={colEntities[activeId] as IColumn} /> : null}
+          </DragOverlay>
+        </DndContext>
         <Button
           variant="primary"
           size="sm"
@@ -73,7 +142,7 @@ export const BoardField = ({ boardId }: { boardId: string }) => {
       </Container>
 
       <ModalWindow modalTitle={t('board.create column')} show={isOpen} onHide={onHide}>
-        <CreateColumnForm boardId={boardId} onClose={onHide} />
+        <CreateColumnForm boardId={boardId} onClose={onHide} order={colIds.length} />
       </ModalWindow>
     </>
   );

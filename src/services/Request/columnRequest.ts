@@ -55,10 +55,21 @@ const deleteColumn = async (boardId: string, columnId: string, token: string): P
   });
 };
 
+const changeColumnsOrders = async (
+  orderedList: Pick<IColumn, '_id' | 'order'>[],
+  token: string
+): Promise<IColumn[]> => {
+  return await request(`${URL}columnsSet`, 'PATCH', JSON.stringify(orderedList), {
+    'Content-type': 'application/json',
+    Authorization: `Bearer ${token}`,
+  });
+};
+
 export default {
   getColumns,
   getColumnById,
   createColumn,
   updateColumn,
   deleteColumn,
+  changeColumnsOrders,
 };
