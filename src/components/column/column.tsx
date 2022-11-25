@@ -1,5 +1,5 @@
 import React, { useEffect, useState, ChangeEvent } from 'react';
-import { Button, Card, Form, Col } from 'react-bootstrap';
+import { Button, Card, Form, Col, Row } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from 'store/store';
@@ -15,6 +15,7 @@ import { DeleteWindow } from 'components/modal/DeleteWindow';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { updateColumn } from 'store/columnSlice';
+import './column.css';
 
 export const Column = ({ column, isDragging }: { column: IColumn; isDragging?: boolean }) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -88,7 +89,7 @@ export const Column = ({ column, isDragging }: { column: IColumn; isDragging?: b
   return (
     <>
       <Card
-        className="shadow p-0 m-2"
+        className="shadow p-0 me-2 mt-2"
         ref={setNodeRef}
         {...attributes}
         style={{ ...style, width: '272px' }}
@@ -128,10 +129,12 @@ export const Column = ({ column, isDragging }: { column: IColumn; isDragging?: b
           )}
         </Card.Header>
 
-        <Card.Body className="p-1">
-          {tasksIds.map((id) => (
-            <Task key={id} task={tasksEntities[id] as ITask} />
-          ))}
+        <Card.Body className="p-1 column">
+          <Row className="column__content">
+            {tasksIds.map((id) => (
+              <Task key={id} task={tasksEntities[id] as ITask} />
+            ))}
+          </Row>
         </Card.Body>
 
         <Card.Footer>
