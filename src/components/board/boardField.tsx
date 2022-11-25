@@ -115,7 +115,7 @@ export const BoardField = ({ boardId }: { boardId: string }) => {
 
   return (
     <>
-      <Container fluid className="d-flex align-items-start board_content">
+      <Container fluid className="d-flex align-items-start board__content">
         <DndContext
           sensors={sensors}
           collisionDetection={closestCenter}
