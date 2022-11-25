@@ -7,7 +7,7 @@ import { AppDispatch } from 'store/store';
 import { IPropsCreateColumnForm } from './Form.type';
 import PushMessage from 'components/pushMessage/PushMessage';
 
-export function CreateColumnForm({ boardId, onClose }: IPropsCreateColumnForm) {
+export function CreateColumnForm({ boardId, onClose, order = 0 }: IPropsCreateColumnForm) {
   const dispatch = useDispatch<AppDispatch>();
   const { t } = useTranslation();
   const [title, setTitle] = useState('');
@@ -16,7 +16,7 @@ export function CreateColumnForm({ boardId, onClose }: IPropsCreateColumnForm) {
 
   function submitHandler(e: React.SyntheticEvent) {
     e.preventDefault();
-    dispatch(createColumn({ boardId, title, order: 0 }));
+    dispatch(createColumn({ boardId, title, order }));
     onHide();
     setTimeout(() => {
       onClose();

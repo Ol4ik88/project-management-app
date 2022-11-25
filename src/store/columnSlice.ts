@@ -19,6 +19,7 @@ function isPendingAction(action: AnyAction) {
 
 const columnsAdapter = createEntityAdapter<Column>({
   selectId: (column) => column._id,
+  sortComparer: (a, b) => a.order - b.order,
 });
 
 const initialState = columnsAdapter.getInitialState<ColumnsState>({
@@ -76,10 +77,24 @@ export const removeColumn = createAsyncThunk<
   return response;
 });
 
+export const changeColumnsOrders = createAsyncThunk<
+  Column[],
+  Pick<Column, '_id' | 'order'>[],
+  { state: RootState }
+>('columns/changeColumnsOrders', async (orderedList, thunkAPI) => {
+  const token = thunkAPI.getState().auth.auth.token ?? '';
+  const response = await columnRequest.changeColumnsOrders(orderedList, token);
+  return response;
+});
+
 export const columnsSlice = createSlice({
   name: 'columns',
   initialState,
-  reducers: {},
+  reducers: {
+    setColumnsOrder(state, action) {
+      columnsAdapter.upsertMany(state, action.payload);
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchColumns.fulfilled, (state, action) => {
@@ -114,8 +129,7 @@ export const columnsSlice = createSlice({
   },
 });
 
-export const {} = columnsSlice.actions;
-
+export const { setColumnsOrder } = columnsSlice.actions;
 export const selectColumns = (state: RootState) => state.columns;
 
 export const columnsSelectors = columnsAdapter.getSelectors<RootState>((state) => state.columns);
