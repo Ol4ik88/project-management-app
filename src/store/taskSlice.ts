@@ -19,6 +19,7 @@ function isPendingAction(action: AnyAction) {
 
 const tasksAdapter = createEntityAdapter<Task>({
   selectId: (task) => task._id,
+  sortComparer: (a, b) => a.order - b.order,
 });
 
 const initialState = tasksAdapter.getInitialState<TasksState>({

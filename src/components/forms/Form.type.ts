@@ -1,5 +1,6 @@
 export interface IPropsCreateColumnForm {
   boardId: string;
+  order?: number;
   onClose: () => void;
 }
 

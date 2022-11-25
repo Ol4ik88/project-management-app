@@ -11,8 +11,10 @@ import { IColumn, ITask } from 'types/Interfaces';
 import { selectTasks, selectTasksByColumnId } from 'store/taskSlice';
 import { CreateTaskForm } from 'components/forms/CreateTaskForm';
 import { DeleteWindow } from 'components/modal/DeleteWindow';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
-export const Column = ({ column }: { column: IColumn }) => {
+export const Column = ({ column, isDragging }: { column: IColumn; isDragging?: boolean }) => {
   const dispatch = useDispatch<AppDispatch>();
   const { t } = useTranslation();
   const { _id, title, order, boardId } = column;
@@ -28,6 +30,17 @@ export const Column = ({ column }: { column: IColumn }) => {
   } = useSelector(selectTasks);
 
   const tasksIds = useSelector(selectTasksByColumnId(_id));
+
+  const { attributes, listeners, setNodeRef, transform, transition, setActivatorNodeRef } =
+    useSortable({
+      id: column._id,
+    });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0 : undefined,
+  };
 
   const handleClickDelete = () => {
     setModalTitle(t('board.remove task title') ?? '');
@@ -57,8 +70,14 @@ export const Column = ({ column }: { column: IColumn }) => {
 
   return (
     <>
-      <Card className="shadow p-0 m-2" style={{ width: '272px' }}>
-        <Card.Header>
+      <Card
+        className="shadow p-0 m-2"
+        ref={setNodeRef}
+        {...attributes}
+        style={{ ...style, width: '272px' }}
+        id={column._id}
+      >
+        <Card.Header ref={setActivatorNodeRef} {...listeners}>
           {title}
           <Button variant="light" className="col-3 p-0" size="sm" onClick={handleClickEdit}>
             <img width="20" src={edit_icon} alt="edit" />
