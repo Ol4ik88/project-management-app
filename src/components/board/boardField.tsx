@@ -38,6 +38,7 @@ import {
   selectTasksByColumnId,
 } from 'store/taskSlice';
 import { IColumn } from 'types/Interfaces';
+import './boardField.css';
 
 export const BoardField = ({ boardId }: { boardId: string }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -116,7 +117,7 @@ export const BoardField = ({ boardId }: { boardId: string }) => {
 
   return (
     <>
-      <Container fluid className="d-flex align-items-start">
+      <Container fluid className="d-flex align-items-start board__content">
         <DndContext
           sensors={sensors}
           collisionDetection={closestCenter}
