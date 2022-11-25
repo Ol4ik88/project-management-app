@@ -8,11 +8,33 @@ import delete_icon from '../../assets/delete_icon.svg';
 import { Task } from 'components/task/task';
 import ModalWindow from 'components/modal/ModalWindow';
 import { IColumn, ITask } from 'types/Interfaces';
-import { selectTasks, selectTasksByColumnId } from 'store/taskSlice';
+import {
+  changeTasksOrders,
+  selectTasks,
+  selectTasksByColumnId,
+  setTasksOrder,
+} from 'store/taskSlice';
 import { CreateTaskForm } from 'components/forms/CreateTaskForm';
 import { DeleteWindow } from 'components/modal/DeleteWindow';
-import { useSortable } from '@dnd-kit/sortable';
+import {
+  arrayMove,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import {
+  closestCorners,
+  DndContext,
+  DragEndEvent,
+  DragOverlay,
+  DragStartEvent,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
 
 export const Column = ({ column, isDragging }: { column: IColumn; isDragging?: boolean }) => {
   const dispatch = useDispatch<AppDispatch>();
@@ -42,6 +64,18 @@ export const Column = ({ column, isDragging }: { column: IColumn; isDragging?: b
     opacity: isDragging ? 0 : undefined,
   };
 
+  const [activeTaskId, setActiveTaskId] = useState<string | null>(null);
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 3,
+      },
+    }),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
   const handleClickDelete = () => {
     setModalTitle(t('board.remove task title') ?? '');
     setModalContent(
@@ -68,6 +102,34 @@ export const Column = ({ column, isDragging }: { column: IColumn; isDragging?: b
 
   const onHide = () => setIsOpen(false);
 
+  function handleDragTaskStart(event: DragStartEvent) {
+    setActiveTaskId(String(event.active.id));
+  }
+
+  function handleDragTaskEnd(event: DragEndEvent) {
+    const { active, over } = event;
+    if (over && active.id !== over.id) {
+      const oldIndex = tasksIds.indexOf(active.id);
+      const newIndex = tasksIds.indexOf(over.id);
+      const orderedTasksIds = arrayMove(tasksIds, oldIndex, newIndex);
+
+      const orderedList = orderedTasksIds.reduce((accum, id, index) => {
+        if (tasksEntities[id] && tasksEntities[id]?._id) {
+          accum.push({
+            _id: tasksEntities[id]?._id as string,
+            order: index,
+            columnId: tasksEntities[id]?.columnId,
+          } as ITask);
+        }
+        return accum;
+      }, [] as ITask[]);
+      dispatch(setTasksOrder(orderedList));
+
+      dispatch(changeTasksOrders(orderedList));
+    }
+    setActiveTaskId(null);
+  }
+
   return (
     <>
       <Card
@@ -89,9 +151,23 @@ export const Column = ({ column, isDragging }: { column: IColumn; isDragging?: b
         </Card.Header>
 
         <Card.Body className="p-1">
-          {tasksIds.map((id) => (
-            <Task key={id} task={tasksEntities[id] as ITask} />
-          ))}
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCorners}
+            onDragStart={handleDragTaskStart}
+            onDragEnd={handleDragTaskEnd}
+          >
+            <SortableContext items={tasksIds} strategy={verticalListSortingStrategy}>
+              {tasksIds.map((id) => (
+                <Task key={id} task={tasksEntities[id] as ITask} isDragging={activeTaskId === id} />
+              ))}
+            </SortableContext>
+            <DragOverlay>
+              {activeTaskId ? (
+                <Task key={activeTaskId} task={tasksEntities[activeTaskId] as ITask} />
+              ) : null}
+            </DragOverlay>
+          </DndContext>
         </Card.Body>
 
         <Card.Footer>

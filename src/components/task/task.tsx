@@ -8,8 +8,10 @@ import delete_icon from '../../assets/delete_icon.svg';
 import info_icon from '../../assets/info_icon.svg';
 import { ITask } from 'types/Interfaces';
 import ModalWindow from 'components/modal/ModalWindow';
+import { CSS } from '@dnd-kit/utilities';
+import { useSortable } from '@dnd-kit/sortable';
 
-export const Task = ({ task }: { task: ITask }) => {
+export const Task = ({ task, isDragging }: { task: ITask; isDragging?: boolean }) => {
   const { _id, title, order, boardId, columnId, description, userId, users } = task;
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
@@ -27,9 +29,27 @@ export const Task = ({ task }: { task: ITask }) => {
 
   function infoTask() {}
 
+  const { attributes, listeners, setNodeRef, transform, transition, setActivatorNodeRef } =
+    useSortable({
+      id: task._id,
+    });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0 : undefined,
+  };
+
   return (
     <>
-      <Card className="shadow-sm mb-2 flex-row">
+      <Card
+        className="shadow-sm mb-2 flex-row"
+        ref={setNodeRef}
+        {...attributes}
+        {...listeners}
+        style={style}
+        id={task._id}
+      >
         <Card.Text className="flex-fill mb-0 p-1">{title} </Card.Text>
         <Button variant="light" size="sm" className="p-0" onClick={deleteTask}>
           <img width="15" src={delete_icon} alt="delete" />
