@@ -78,9 +78,9 @@
     "remove title": "Delete user"
   },
   "task-info": {
-    "task-info":"Task parameters",
+    "task-info":"Task",
     "select":"Make a selection",
-    "task": "Task: ",
+    "task": "Title: ",
     "order":"Order: ",
     "user": "User: ",
     "inBoard": "In Board: ",

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { ITask, IUser } from 'types/Interfaces';
@@ -41,6 +41,7 @@ export const TaskInformation = ({ task, userName, columns, usersList, cancel }: 
   const [descript, setDescript] = useState(false);
   const [allUsers, setAllUsers] = useState(false);
   const [taskData, setTaskData] = useState(infoForRender);
+  const [isEdit, setIsEdit] = useState(false);
 
   function getColumnTitle(columns: idAndTitle[]) {
     return columns.filter((column) => Object.keys(column)[0] === columnId)[0][columnId];
@@ -72,6 +73,19 @@ export const TaskInformation = ({ task, userName, columns, usersList, cancel }: 
 
     cancel();
   }
+
+  function deleteUser(userName: string) {
+    const id = usersList.filter((user) => user.name === userName)[0]._id;
+    const users = taskData.users.filter((user) => user !== id);
+
+    setTaskData({ ...taskData, users });
+  }
+
+  useEffect(() => {
+    if (JSON.stringify(infoForRender) !== JSON.stringify(taskData)) {
+      setIsEdit(true);
+    }
+  }, [infoForRender, taskData]);
 
   function idUserInName(users: string[]) {
     return users.map((userId) => {
@@ -178,7 +192,12 @@ export const TaskInformation = ({ task, userName, columns, usersList, cancel }: 
             {t('task-info.users')}{' '}
             <div>
               {idUserInName(taskData.users).map((user) => (
-                <li key={user}>{user}</li>
+                <li className="d-flex justify-content-between align-items-center" key={user}>
+                  {user}
+                  <Button variant="light" onClick={() => deleteUser(user)}>
+                    <img width="20" src={no_icon} alt="no" />
+                  </Button>
+                </li>
               ))}
             </div>
             <Button variant="light" onClick={() => setAllUsers(true)}>
@@ -208,7 +227,7 @@ export const TaskInformation = ({ task, userName, columns, usersList, cancel }: 
         )}
       </div>
 
-      {
+      {isEdit && (
         <div className="d-flex flex-row-reverse align-items-center gap-2">
           <Button variant="outline-secondary" onClick={saveData}>
             <img width="15" src={yes_icon} alt="yes" />
@@ -217,7 +236,7 @@ export const TaskInformation = ({ task, userName, columns, usersList, cancel }: 
             <img width="15" src={no_icon} alt="no" />
           </Button>
         </div>
-      }
+      )}
     </>
   );
 };

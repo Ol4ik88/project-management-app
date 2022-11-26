@@ -1,3 +1,5 @@
+import { IUser } from 'types/Interfaces';
+
 export type JwtPayload = { id: string; login: string; exp: number };
 
 export type UserState = {
@@ -6,6 +8,10 @@ export type UserState = {
   name?: string;
   token?: string;
   exp?: number;
+};
+
+export type UsersState = {
+  users: IUser[];
 };
 
 export type AuthState = {

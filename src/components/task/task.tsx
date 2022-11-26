@@ -7,12 +7,12 @@ import delete_icon from '../../assets/delete_icon.svg';
 import { IColumn, ITask } from 'types/Interfaces';
 import ModalWindow from 'components/modal/ModalWindow';
 import { TaskInformation } from './taskInformation';
-import { fetchBoardById, fetchUserBoards, selectBoards } from 'store/boardsSlice';
+import { fetchUserBoards, selectBoards } from 'store/boardsSlice';
 import { fetchColumns, selectColumns } from 'store/columnSlice';
-import { fetchUserById, selectAuth } from 'store/authSlice';
+import { selectAuth } from 'store/authSlice';
 import { DeleteWindow } from 'components/modal/DeleteWindow';
 import { removeTask } from 'store/taskSlice';
-import { getUsers } from 'store/userSlice';
+import { getUsers, selectUsers } from 'store/userSlice';
 
 type idAndTitle = {
   [key: string]: string;
@@ -31,11 +31,12 @@ export const Task = ({ task }: { task: ITask }) => {
   const boards = useSelector(selectBoards);
   const columns = useSelector(selectColumns);
   const { auth } = useSelector(selectAuth);
+  const { users } = useSelector(selectUsers);
 
   useEffect(() => {
     dispatch(fetchUserBoards({ userId }));
     dispatch(fetchColumns({ boardId }));
-    dispatch(getUsers()); //! доделать
+    dispatch(getUsers());
   }, [boardId, dispatch, userId]);
 
   useEffect(() => {
@@ -61,19 +62,6 @@ export const Task = ({ task }: { task: ITask }) => {
     setIsOpen(2);
   }
 
-  const users = [
-    {
-      login: '123',
-      name: 'Yura',
-      _id: '637c8728d835ac65a9013aae',
-    },
-    {
-      login: 'vasias',
-      name: 'vasia',
-      _id: '6380b33d3c8f23459e9ac6d2',
-    },
-  ];
-
   return (
     <>
       <Card className="shadow-sm mb-2 flex-row">
@@ -85,26 +73,24 @@ export const Task = ({ task }: { task: ITask }) => {
         </Button>
       </Card>
 
-      {isOpen > 0 && (
-        <ModalWindow modalTitle={modalTitle} show={isOpen > 0} onHide={() => setIsOpen(0)}>
-          {isOpen === 1 ? (
-            <DeleteWindow
-              cancel={() => setIsOpen(0)}
-              remove={() => dispatch(removeTask({ boardId, columnId, taskId: _id }))}
-              text={t('task.deleteTask')}
-            />
-          ) : (
-            <TaskInformation
-              task={task}
-              userName={auth.name || auth.login || userId}
-              usersList={users}
-              columns={columnsInfo}
-              boards={boardsInfo}
-              cancel={() => setIsOpen(0)}
-            />
-          )}
-        </ModalWindow>
-      )}
+      <ModalWindow modalTitle={modalTitle} show={isOpen > 0} onHide={() => setIsOpen(0)}>
+        {isOpen === 1 ? (
+          <DeleteWindow
+            cancel={() => setIsOpen(0)}
+            remove={() => dispatch(removeTask({ boardId, columnId, taskId: _id }))}
+            text={t('task.deleteTask')}
+          />
+        ) : (
+          <TaskInformation
+            task={task}
+            userName={auth.name || auth.login || userId}
+            usersList={users}
+            columns={columnsInfo}
+            boards={boardsInfo}
+            cancel={() => setIsOpen(0)}
+          />
+        )}
+      </ModalWindow>
     </>
   );
 };
