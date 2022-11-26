@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { ITask, IUser } from 'types/Interfaces';
-import yes_icon from '../../assets/yes_icon.svg';
-import no_icon from '../../assets/no_icon.svg';
+// import yes_icon from '../../assets/yes_icon.svg';
+// import no_icon from '../../assets/no_icon.svg';
+import yes_icon from '../../assets/registaration_icon.svg';
+import no_icon from '../../assets/cancel.svg';
 import dots_icon from '../../assets/dots_icon.svg';
 import { updateTask } from 'store/taskSlice';
 import { useDispatch } from 'react-redux';
@@ -104,7 +106,7 @@ export const TaskInformation = ({ task, userName, columns, usersList, cancel }: 
           <div className="h5 d-flex justify-content-between align-items-center">
             {t('task-info.task')} {taskData.title}
             <Button variant="light" onClick={() => setTitle(true)}>
-              <img width="15" src={dots_icon} alt="dots" />
+              <img width="25" src={dots_icon} alt="dots" />
             </Button>
           </div>
         ) : (
@@ -120,7 +122,7 @@ export const TaskInformation = ({ task, userName, columns, usersList, cancel }: 
               }}
             />
             <Button variant="light" onClick={() => setTitle(false)}>
-              <img width="15" src={yes_icon} alt="yes" />
+              <img width="25" src={yes_icon} alt="yes" />
             </Button>
           </div>
         )}
@@ -131,7 +133,7 @@ export const TaskInformation = ({ task, userName, columns, usersList, cancel }: 
           <div className="h5 d-flex justify-content-between align-items-center">
             {t('task-info.inColumn')} {taskData.columnTitle}
             <Button variant="light" onClick={() => setColumn(true)}>
-              <img width="15" src={dots_icon} alt="dots" />
+              <img width="25" src={dots_icon} alt="dots" />
             </Button>
           </div>
         ) : (
@@ -150,7 +152,7 @@ export const TaskInformation = ({ task, userName, columns, usersList, cancel }: 
               ))}
             </select>
             <Button variant="light" onClick={() => setColumn(false)}>
-              <img width="15" src={yes_icon} alt="yes" />
+              <img width="25" src={yes_icon} alt="yes" />
             </Button>
           </div>
         )}
@@ -165,7 +167,7 @@ export const TaskInformation = ({ task, userName, columns, usersList, cancel }: 
             </div>
 
             <Button variant="light" onClick={() => setDescript(true)}>
-              <img width="15" src={dots_icon} alt="dots" />
+              <img width="25" src={dots_icon} alt="dots" />
             </Button>
           </div>
         ) : (
@@ -180,7 +182,7 @@ export const TaskInformation = ({ task, userName, columns, usersList, cancel }: 
               }}
             />
             <Button variant="light" onClick={() => setDescript(false)}>
-              <img width="15" src={yes_icon} alt="yes" />
+              <img width="25" src={yes_icon} alt="yes" />
             </Button>
           </div>
         )}
@@ -201,7 +203,7 @@ export const TaskInformation = ({ task, userName, columns, usersList, cancel }: 
               ))}
             </div>
             <Button variant="light" onClick={() => setAllUsers(true)}>
-              <img width="15" src={dots_icon} alt="dots" />
+              <img width="25" src={dots_icon} alt="dots" />
             </Button>
           </div>
         ) : (
@@ -221,19 +223,19 @@ export const TaskInformation = ({ task, userName, columns, usersList, cancel }: 
               ))}
             </select>
             <Button variant="light" onClick={() => setAllUsers(false)}>
-              <img width="15" src={yes_icon} alt="yes" />
+              <img width="25" src={yes_icon} alt="yes" />
             </Button>
           </div>
         )}
       </div>
 
       {isEdit && (
-        <div className="d-flex flex-row-reverse align-items-center gap-2">
+        <div className="d-flex flex-row-reverse align-items-center gap-3 pt-3">
           <Button variant="outline-secondary" onClick={saveData}>
-            <img width="15" src={yes_icon} alt="yes" />
+            <img width="25" src={yes_icon} alt="yes" />
           </Button>
           <Button variant="outline-secondary" onClick={resetData}>
-            <img width="15" src={no_icon} alt="no" />
+            <img width="25" src={no_icon} alt="no" />
           </Button>
         </div>
       )}
