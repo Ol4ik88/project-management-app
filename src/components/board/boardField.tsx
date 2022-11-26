@@ -1,5 +1,6 @@
 import {
   closestCenter,
+  closestCorners,
   DndContext,
   DragEndEvent,
   DragOverlay,
@@ -61,11 +62,12 @@ export const BoardField = ({ boardId }: { boardId: string }) => {
 
   const getTaskByColumnId = useSelector(selectTasksByColumnId);
 
-  const [activeId, setActiveId] = useState<string | number | null>(null);
+  const [activeColId, setActiveColId] = useState<string | null>(null);
+
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
-        distance: 10,
+        distance: 5,
       },
     }),
     useSensor(KeyboardSensor, {
@@ -89,11 +91,11 @@ export const BoardField = ({ boardId }: { boardId: string }) => {
 
   const onHide = () => setIsOpen(false);
 
-  function handleDragStart(event: DragStartEvent) {
-    setActiveId(event.active.id);
+  function handleDragColStart(event: DragStartEvent) {
+    setActiveColId(String(event.active.id));
   }
 
-  function handleDragEnd(event: DragEndEvent) {
+  function handleDragColEnd(event: DragEndEvent) {
     const { active, over } = event;
     if (over && active.id !== over.id) {
       const oldIndex = colIds.indexOf(active.id);
@@ -110,7 +112,7 @@ export const BoardField = ({ boardId }: { boardId: string }) => {
 
       dispatch(changeColumnsOrders(orderedList));
     }
-    setActiveId(null);
+    setActiveColId(null);
   }
 
   return (
@@ -119,16 +121,22 @@ export const BoardField = ({ boardId }: { boardId: string }) => {
         <DndContext
           sensors={sensors}
           collisionDetection={closestCenter}
-          onDragStart={handleDragStart}
-          onDragEnd={handleDragEnd}
+          onDragStart={handleDragColStart}
+          onDragEnd={handleDragColEnd}
         >
           <SortableContext items={colIds} strategy={horizontalListSortingStrategy}>
             {colIds.map((id) => (
-              <Column key={id} column={colEntities[id] as IColumn} isDragging={activeId === id} />
+              <Column
+                key={id}
+                column={colEntities[id] as IColumn}
+                isDragging={activeColId === id}
+              />
             ))}
           </SortableContext>
           <DragOverlay>
-            {activeId ? <Column key={activeId} column={colEntities[activeId] as IColumn} /> : null}
+            {activeColId ? (
+              <Column key={activeColId} column={colEntities[activeColId] as IColumn} />
+            ) : null}
           </DragOverlay>
         </DndContext>
         <Button

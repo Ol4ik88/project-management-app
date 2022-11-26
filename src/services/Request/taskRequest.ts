@@ -89,6 +89,16 @@ const deleteTask = async (
   );
 };
 
+const changeTasksOrders = async (
+  orderedList: Pick<ITask, '_id' | 'order' | 'columnId'>[],
+  token: string
+): Promise<ITask[]> => {
+  return await request(`${URL}tasksSet`, 'PATCH', JSON.stringify(orderedList), {
+    'Content-type': 'application/json',
+    Authorization: `Bearer ${token}`,
+  });
+};
+
 export default {
   getTasksByColumnId,
   getTasksByBoardId,
@@ -96,4 +106,5 @@ export default {
   createTask,
   updateTask,
   deleteTask,
+  changeTasksOrders,
 };

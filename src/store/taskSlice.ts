@@ -103,10 +103,24 @@ export const removeTask = createAsyncThunk<
   return response;
 });
 
+export const changeTasksOrders = createAsyncThunk<
+  Task[],
+  Pick<Task, '_id' | 'order' | 'columnId'>[],
+  { state: RootState }
+>('columns/changeTasksOrders', async (orderedList, thunkAPI) => {
+  const token = thunkAPI.getState().auth.auth.token ?? '';
+  const response = await taskRequest.changeTasksOrders(orderedList, token);
+  return response;
+});
+
 export const tasksSlice = createSlice({
   name: 'tasks',
   initialState,
-  reducers: {},
+  reducers: {
+    setTasksOrder(state, action) {
+      tasksAdapter.upsertMany(state, action.payload);
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchTasksByBoardId.fulfilled, (state, action) => {
@@ -145,7 +159,7 @@ export const tasksSlice = createSlice({
   },
 });
 
-export const {} = tasksSlice.actions;
+export const { setTasksOrder } = tasksSlice.actions;
 
 export const selectTasks = (state: RootState) => state.tasks;
 
