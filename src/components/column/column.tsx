@@ -36,7 +36,7 @@ import {
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
-import { updateColumn } from 'store/columnSlice';
+import { removeColumn, updateColumn } from 'store/columnSlice';
 import './column.css';
 
 export const Column = ({ column, isDragging }: { column: IColumn; isDragging?: boolean }) => {
@@ -87,7 +87,7 @@ export const Column = ({ column, isDragging }: { column: IColumn; isDragging?: b
       <DeleteWindow
         cancel={onHide}
         remove={() => {
-          alert('удаление столбца');
+          dispatch(removeColumn({ boardId, columnId: _id }));
         }}
         text={t('board.remove column message')}
       />
