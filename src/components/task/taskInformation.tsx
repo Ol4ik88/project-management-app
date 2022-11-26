@@ -85,7 +85,7 @@ export const TaskInformation = ({ task, userName, columns, usersList, cancel }: 
     if (JSON.stringify(infoForRender) !== JSON.stringify(taskData)) {
       setIsEdit(true);
     }
-  }, [infoForRender, taskData]);
+  }, [taskData]);
 
   function idUserInName(users: string[]) {
     return users.map((userId) => {

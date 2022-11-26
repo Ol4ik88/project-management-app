@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { boardsSelectors, fetchBoardById, selectBoards } from 'store/boardsSlice';
 import { AppDispatch } from 'store/store';
+import './Board.css';
 
 export function Board() {
   const dispatch = useDispatch<AppDispatch>();
@@ -21,20 +22,24 @@ export function Board() {
   }, [dispatch]);
 
   return (
-    <Container fluid>
-      {status === 'failed' && (
-        <Alert className="text-center" variant={'danger'}>
-          {error}
-        </Alert>
-      )}
-      {boardId && statuses[boardId] === 'loading' && (
-        <Alert className="text-center" variant={'info'}>
-          {t('board.loading')}
-        </Alert>
-      )}
+    <>
+      <Container fluid>
+        {status === 'failed' && (
+          <Alert className="text-center" variant={'danger'}>
+            {error}
+          </Alert>
+        )}
+        {boardId && statuses[boardId] === 'loading' && (
+          <Alert className="text-center" variant={'info'}>
+            {t('board.loading')}
+          </Alert>
+        )}
 
-      {boardId && entities[boardId] && <BoardTitle board={entities[boardId]} />}
-      {boardId && <BoardField boardId={boardId as string} />}
-    </Container>
+        {boardId && entities[boardId] && <BoardTitle board={entities[boardId]} />}
+      </Container>
+      <Container fluid className="board">
+        {boardId && <BoardField boardId={boardId as string} />}
+      </Container>
+    </>
   );
 }

@@ -17,9 +17,11 @@ import { getUsers, selectUsers } from 'store/userSlice';
 type idAndTitle = {
   [key: string]: string;
 };
+import { CSS } from '@dnd-kit/utilities';
+import { useSortable } from '@dnd-kit/sortable';
 
-export const Task = ({ task }: { task: ITask }) => {
-  const { title, columnId, userId, boardId, _id } = task;
+export const Task = ({ task, isDragging }: { task: ITask; isDragging?: boolean }) => {
+  const { _id, title, boardId, columnId, userId } = task;
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
   const [isOpen, setIsOpen] = useState(0);
@@ -62,9 +64,27 @@ export const Task = ({ task }: { task: ITask }) => {
     setIsOpen(2);
   }
 
+  const { attributes, listeners, setNodeRef, transform, transition, setActivatorNodeRef } =
+    useSortable({
+      id: task._id,
+    });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0 : undefined,
+  };
+
   return (
     <>
-      <Card className="shadow-sm mb-2 flex-row">
+      <Card
+        className="shadow-sm mb-2 flex-row"
+        ref={setNodeRef}
+        {...attributes}
+        {...listeners}
+        style={style}
+        id={task._id}
+      >
         <Card.Text className="flex-fill mb-0 p-1 btn" onClick={infoTask}>
           {title}
         </Card.Text>
