@@ -18,28 +18,25 @@ import {
 import { CreateTaskForm } from 'components/forms/CreateTaskForm';
 import { DeleteWindow } from 'components/modal/DeleteWindow';
 import {
-  arrayMove,
   SortableContext,
   sortableKeyboardCoordinates,
   useSortable,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import {
-  closestCorners,
-  DndContext,
-  DragEndEvent,
-  DragOverlay,
-  DragStartEvent,
-  KeyboardSensor,
-  PointerSensor,
-  useSensor,
-  useSensors,
-} from '@dnd-kit/core';
+import { KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { removeColumn, updateColumn } from 'store/columnSlice';
 import './column.css';
 
-export const Column = ({ column, isDragging }: { column: IColumn; isDragging?: boolean }) => {
+export const Column = ({
+  column,
+  isDragging,
+  activeTaskId,
+}: {
+  column: IColumn;
+  isDragging?: boolean;
+  activeTaskId?: string | null;
+}) => {
   const dispatch = useDispatch<AppDispatch>();
   const { t } = useTranslation();
   const { _id, title, order, boardId } = column;
@@ -68,18 +65,6 @@ export const Column = ({ column, isDragging }: { column: IColumn; isDragging?: b
     transition,
     opacity: isDragging ? 0 : undefined,
   };
-
-  const [activeTaskId, setActiveTaskId] = useState<string | null>(null);
-  const sensors = useSensors(
-    useSensor(PointerSensor, {
-      activationConstraint: {
-        distance: 3,
-      },
-    }),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    })
-  );
 
   const handleClickDelete = () => {
     setModalTitle(t('board.remove column title') ?? '');
@@ -119,34 +104,6 @@ export const Column = ({ column, isDragging }: { column: IColumn; isDragging?: b
   };
 
   const onHide = () => setIsOpen(false);
-
-  function handleDragTaskStart(event: DragStartEvent) {
-    setActiveTaskId(String(event.active.id));
-  }
-
-  function handleDragTaskEnd(event: DragEndEvent) {
-    const { active, over } = event;
-    if (over && active.id !== over.id) {
-      const oldIndex = tasksIds.indexOf(active.id);
-      const newIndex = tasksIds.indexOf(over.id);
-      const orderedTasksIds = arrayMove(tasksIds, oldIndex, newIndex);
-
-      const orderedList = orderedTasksIds.reduce((accum, id, index) => {
-        if (tasksEntities[id] && tasksEntities[id]?._id) {
-          accum.push({
-            _id: tasksEntities[id]?._id as string,
-            order: index,
-            columnId: tasksEntities[id]?.columnId,
-          } as ITask);
-        }
-        return accum;
-      }, [] as ITask[]);
-      dispatch(setTasksOrder(orderedList));
-
-      dispatch(changeTasksOrders(orderedList));
-    }
-    setActiveTaskId(null);
-  }
 
   return (
     <>
@@ -191,30 +148,12 @@ export const Column = ({ column, isDragging }: { column: IColumn; isDragging?: b
           )}
         </Card.Header>
 
-        <Card.Body className="p-1 column">
-          <Row className="column__content">
-            <DndContext
-              sensors={sensors}
-              collisionDetection={closestCorners}
-              onDragStart={handleDragTaskStart}
-              onDragEnd={handleDragTaskEnd}
-            >
-              <SortableContext items={tasksIds} strategy={verticalListSortingStrategy}>
-                {tasksIds.map((id) => (
-                  <Task
-                    key={id}
-                    task={tasksEntities[id] as ITask}
-                    isDragging={activeTaskId === id}
-                  />
-                ))}
-              </SortableContext>
-              <DragOverlay>
-                {activeTaskId ? (
-                  <Task key={activeTaskId} task={tasksEntities[activeTaskId] as ITask} />
-                ) : null}
-              </DragOverlay>
-            </DndContext>
-          </Row>
+        <Card.Body className="p-1 column__content column">
+          <SortableContext items={tasksIds} strategy={verticalListSortingStrategy}>
+            {tasksIds.map((id) => (
+              <Task key={id} task={tasksEntities[id] as ITask} isDragging={activeTaskId === id} />
+            ))}
+          </SortableContext>
         </Card.Body>
 
         <Card.Footer>
