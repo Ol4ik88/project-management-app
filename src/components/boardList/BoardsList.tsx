@@ -41,11 +41,11 @@ export function BoardsList() {
 
   return (
     <>
-      <Row md={4}>
+      <Row md={4} xs={1} sm={2}>
         {ids.map((id) => (
           <Col key={id}>
             <Link to={`/boards/${id}`} className={'text-decoration-none'}>
-              <Card bg="primary" text="white" className="mb-2">
+              <Card bg="primary" text="white" className="mb-2 bg-gradient shadow">
                 <Card.Body>
                   <Card.Title>{entities[id].title} </Card.Title>
                   <Card.Text>{entities[id].description}</Card.Text>
@@ -58,7 +58,7 @@ export function BoardsList() {
                       <img width="20" src={edit_icon} alt="edit" />
                     </Button>{' '}
                     <Button
-                      variant="light"
+                      variant="warning"
                       size="sm"
                       onClick={(e) => handleClickDelete(String(id), e)}
                     >

@@ -140,9 +140,9 @@ export const BoardField = ({ boardId }: { boardId: string }) => {
           </DragOverlay>
         </DndContext>
         <Button
-          variant="primary"
+          variant="info"
           size="sm"
-          className="col-md-3 my-2"
+          className="col-md-3 my-2 shadow"
           style={{ width: '272px' }}
           onClick={createColumn}
         >
