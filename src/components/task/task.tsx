@@ -20,7 +20,15 @@ type idAndTitle = {
 import { CSS } from '@dnd-kit/utilities';
 import { useSortable } from '@dnd-kit/sortable';
 
-export const Task = ({ task, isDragging }: { task: ITask; isDragging?: boolean }) => {
+export const Task = ({
+  task,
+  isDragging,
+  id,
+}: {
+  task: ITask;
+  isDragging?: boolean;
+  id?: string;
+}) => {
   const { _id, title, boardId, columnId, userId } = task;
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
@@ -36,9 +44,7 @@ export const Task = ({ task, isDragging }: { task: ITask; isDragging?: boolean }
   const { users } = useSelector(selectUsers);
 
   useEffect(() => {
-    dispatch(fetchUserBoards({ userId }));
-    dispatch(fetchColumns({ boardId }));
-    dispatch(getUsers());
+    // dispatch(getUsers());
   }, [boardId, dispatch, userId]);
 
   useEffect(() => {
@@ -64,10 +70,9 @@ export const Task = ({ task, isDragging }: { task: ITask; isDragging?: boolean }
     setIsOpen(2);
   }
 
-  const { attributes, listeners, setNodeRef, transform, transition, setActivatorNodeRef } =
-    useSortable({
-      id: task._id,
-    });
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
+    id: task._id,
+  });
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -83,7 +88,7 @@ export const Task = ({ task, isDragging }: { task: ITask; isDragging?: boolean }
         {...attributes}
         {...listeners}
         style={style}
-        id={task._id}
+        id={id || task._id}
       >
         <Card.Text className="flex-fill mb-0 p-1 btn" onClick={infoTask}>
           {title}
