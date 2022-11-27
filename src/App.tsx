@@ -13,6 +13,7 @@ import Welcome from 'views/Welcome ';
 import { Registration } from 'views/Registration';
 import { Login } from 'views/Login';
 import { Profile } from 'views/Profile';
+import { Page404 } from 'views/Page404';
 
 export default function App() {
   const { t, i18n } = useTranslation();
@@ -55,7 +56,7 @@ export default function App() {
                 </PrivateRoute>
               }
             />
-            <Route path="*" element={<p>404</p>} />
+            <Route path="*" element={<Page404 />} />
           </Routes>
         </main>
         <Footer />
