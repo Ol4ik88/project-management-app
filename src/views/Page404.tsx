@@ -9,9 +9,8 @@ export function Page404() {
   const { t } = useTranslation();
   return (
     <Container className="mt-5 text-center">
-      <Row className="justify-content-center">
-        <img src={error404} alt="" className="col-4" />
-      </Row>
+      <img src={error404} alt="" className="col-4 justify-content-center" />
+
       <Row className="justify-content-center">
         <h3>{t('page404.title')}</h3>
         <p>{t('page404.text')}</p>
