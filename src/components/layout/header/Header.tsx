@@ -17,6 +17,7 @@ import { selectAuth, signOut } from 'store/authSlice';
 import { AppDispatch } from 'store/store';
 import { CreateBoardForm } from 'components/forms/CreateBoardForm';
 import { useAuthStatus } from 'utils/helpers/authHelper';
+import PushMessage from 'components/pushMessage/PushMessage';
 
 function Header() {
   const dispatch = useDispatch<AppDispatch>();
@@ -24,10 +25,13 @@ function Header() {
   const [scrollPosition, setSrollPosition] = useState(0);
   const [barSticky, setBarSticky] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [toast, setToast] = useState(false);
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
 
   const { isAuth } = useAuthStatus();
+
+  const showToast = () => setToast(!toast);
 
   const handleScroll = () => {
     const position = window.pageYOffset;
@@ -131,8 +135,9 @@ function Header() {
       </Navbar>
 
       <ModalWindow modalTitle={t('addBoard')} show={isOpen} onHide={() => setIsOpen(false)}>
-        <CreateBoardForm onClose={() => setIsOpen(false)} />
+        <CreateBoardForm onClose={() => setIsOpen(false)} showToast={showToast} />
       </ModalWindow>
+      <PushMessage text={t('board.create board push')} isShow={toast} onHide={showToast} />
     </>
   );
 }

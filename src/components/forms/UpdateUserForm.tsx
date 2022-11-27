@@ -72,10 +72,10 @@ export function UpdateUserForm({ onClose }: { onClose: () => void }) {
       </Form.Group>
       <div className="text-danger">{errors.password && errors.password.message}</div>
       <Modal.Footer>
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" className="shadow">
           {t('submit')}
         </Button>
-        <Button variant="info" type="reset" onClick={onClose}>
+        <Button variant="info" type="reset" onClick={onClose} className="shadow">
           {t('close')}
         </Button>
       </Modal.Footer>

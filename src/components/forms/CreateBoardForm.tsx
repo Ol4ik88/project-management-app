@@ -5,25 +5,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectAuth } from 'store/authSlice';
 import { createBoard } from 'store/boardsSlice';
 import { AppDispatch } from 'store/store';
-import PushMessage from 'components/pushMessage/PushMessage';
+import { IPropsCreateBoardForm } from './Form.type';
 
-export function CreateBoardForm({ onClose }: { onClose: () => void }) {
+export function CreateBoardForm({ onClose, showToast }: IPropsCreateBoardForm) {
   const dispatch = useDispatch<AppDispatch>();
   const authState = useSelector(selectAuth);
   const { t } = useTranslation();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
 
-  const [show, setShow] = useState(false);
-  const onHide = () => setShow(!show);
-
   function submitHandler(e: React.SyntheticEvent) {
     e.preventDefault();
     dispatch(createBoard({ owner: authState.auth._id ?? '', title, description, users: [] }));
-    onHide();
-    setTimeout(() => {
-      onClose();
-    }, 1600);
+    showToast();
+    onClose();
   }
 
   return (
@@ -58,7 +53,6 @@ export function CreateBoardForm({ onClose }: { onClose: () => void }) {
           </Button>
         </Modal.Footer>
       </Form>
-      <PushMessage text={t('board.create board push')} isShow={show} onHide={onHide} />
     </>
   );
 }
