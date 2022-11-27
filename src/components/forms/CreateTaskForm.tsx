@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectAuth } from 'store/authSlice';
 import { AppDispatch } from 'store/store';
-import { createTask } from 'store/taskSlice';
+import { createTask, selectTasksByBoardId } from 'store/taskSlice';
 import { IPropsCreateTaskForm } from './Form.type';
 import PushMessage from 'components/pushMessage/PushMessage';
 
@@ -16,6 +16,7 @@ export function CreateTaskForm({ boardId, columnId, onClose }: IPropsCreateTaskF
   const [description, setDescription] = useState('');
   const [show, setShow] = useState(false);
   const onHide = () => setShow(!show);
+  const tasksIds = useSelector(selectTasksByBoardId(boardId));
 
   function submitHandler(e: React.SyntheticEvent) {
     e.preventDefault();
@@ -25,7 +26,7 @@ export function CreateTaskForm({ boardId, columnId, onClose }: IPropsCreateTaskF
         columnId,
         title,
         description,
-        order: 0,
+        order: tasksIds.length,
         userId: authState.auth._id ?? '',
         users: [],
       })
