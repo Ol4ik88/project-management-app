@@ -51,14 +51,14 @@ export function BoardsList() {
                   <Card.Text>{entities[id].description}</Card.Text>
                   <div className="text-end">
                     <Button
-                      variant="warning"
+                      variant="light"
                       size="sm"
                       onClick={(e) => handleClickEdit(entities[id], e)}
                     >
                       <img width="20" src={edit_icon} alt="edit" />
                     </Button>{' '}
                     <Button
-                      variant="danger"
+                      variant="light"
                       size="sm"
                       onClick={(e) => handleClickDelete(String(id), e)}
                     >

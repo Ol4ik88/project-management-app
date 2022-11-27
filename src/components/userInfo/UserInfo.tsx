@@ -39,7 +39,7 @@ export function UserInfo() {
   };
   return (
     <>
-      <Card className="mb-2 text-center shadow" style={{ width: '18rem' }}>
+      <Card className="mb-2 text-center shadow" style={{ width: '25rem' }}>
         <Card.Body>
           <Card.Title>{t('user-page.info')}</Card.Title>
           <Card.Text>
@@ -53,10 +53,10 @@ export function UserInfo() {
             </span>
           </Card.Text>
           <div>
-            <Button variant="secondary" onClick={handleClickEdit}>
+            <Button variant="primary" onClick={handleClickEdit} className="col-12 col-sm-5 mb-2">
               {t('edit')}
             </Button>{' '}
-            <Button variant="info" onClick={handleClickDelete}>
+            <Button variant="info" onClick={handleClickDelete} className="col-12 col-sm-5 mb-2">
               {t('delete')}
             </Button>
           </div>
