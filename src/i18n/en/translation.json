@@ -14,6 +14,7 @@
   "create": "create",
   "required field": "This is a required field",
   "Back": "Back",
+  "home": "Home",
   "board": {
     "board title": "Board title",
     "board description": "Board description",
@@ -93,5 +94,9 @@
   "task": {
     "delete":"Remove Task",
     "deleteTask":"Are you sure you want to remove this task?"
+  },
+  "page404": {
+    "title": "Ouch! Page not found!",
+    "text": "Sorry, we can't find the page you requested. You may have entered the address incorrectly."
   }
 }
