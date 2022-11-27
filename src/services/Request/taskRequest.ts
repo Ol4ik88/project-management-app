@@ -89,6 +89,13 @@ const deleteTask = async (
   );
 };
 
+const getTasksByUserId = async (userId: string, token: string): Promise<ITask[]> => {
+  return await request(`${URL}tasksSet?userId=${userId}`, 'GET', undefined, {
+    'Content-type': 'application/json',
+    Authorization: `Bearer ${token}`,
+  });
+};
+
 const changeTasksOrders = async (
   orderedList: Pick<ITask, '_id' | 'order' | 'columnId'>[],
   token: string
@@ -107,4 +114,5 @@ export default {
   updateTask,
   deleteTask,
   changeTasksOrders,
+  getTasksByUserId,
 };

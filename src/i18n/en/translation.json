@@ -77,7 +77,8 @@
     "remove message": "Are you sure you want to remove this user?",
     "info": "Profile Information",
     "update title": "Change user data",
-    "remove title": "Delete user"
+    "remove title": "Delete user",
+    "tasks":"User tasks"
   },
   "task-info": {
     "task-info":"Task",

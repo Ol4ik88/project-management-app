@@ -113,6 +113,15 @@ export const changeTasksOrders = createAsyncThunk<
   return response;
 });
 
+export const fetchTaskByUserId = createAsyncThunk<Task[], { userId: string }, { state: RootState }>(
+  'tasks/fetchTaskByUserId',
+  async ({ userId }, thunkAPI) => {
+    const token = thunkAPI.getState().auth.auth.token ?? '';
+    const response = await taskRequest.getTasksByUserId(userId, token);
+    return response;
+  }
+);
+
 export const tasksSlice = createSlice({
   name: 'tasks',
   initialState,
@@ -130,6 +139,10 @@ export const tasksSlice = createSlice({
       .addCase(fetchTasksByColumnId.fulfilled, (state, action) => {
         tasksAdapter.upsertMany(state, action.payload);
         state.statuses[action.meta.arg.boardId] = 'succeeded';
+      })
+      .addCase(fetchTaskByUserId.fulfilled, (state, action) => {
+        tasksAdapter.upsertMany(state, action.payload);
+        state.statuses[action.meta.arg.userId] = 'succeeded';
       })
       .addCase(fetchTaskById.fulfilled, (state, action) => {
         tasksAdapter.upsertOne(state, action.payload);

@@ -7,6 +7,7 @@ import { Card, Button } from 'react-bootstrap';
 import { UpdateUserForm } from 'components/forms/UpdateUserForm';
 import ModalWindow from 'components/modal/ModalWindow';
 import { DeleteWindow } from 'components/modal/DeleteWindow';
+import { UserTasks } from './UserTasks';
 
 export function UserInfo() {
   const dispatch = useDispatch<AppDispatch>();
@@ -61,6 +62,7 @@ export function UserInfo() {
             </Button>
           </div>
         </Card.Body>
+        <UserTasks userId={auth._id} />
       </Card>
       <ModalWindow modalTitle={modalTitle} show={isOpen} onHide={onHide}>
         {modalContent}
