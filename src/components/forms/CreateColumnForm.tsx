@@ -40,11 +40,11 @@ export function CreateColumnForm({ boardId, onClose, order = 0 }: IPropsCreateCo
           />
         </Form.Group>
         <Modal.Footer>
-          <Button variant="secondary" type="reset" onClick={onClose}>
-            {t('close')}
-          </Button>
           <Button variant="primary" type="submit">
             {t('create')}
+          </Button>
+          <Button variant="info" type="reset" onClick={onClose}>
+            {t('close')}
           </Button>
         </Modal.Footer>
       </Form>

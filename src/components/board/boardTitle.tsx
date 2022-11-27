@@ -31,7 +31,7 @@ export const BoardTitle = ({ board }: { board: Board }) => {
     <Container fluid>
       <Navbar expand="lg" className="shadow rounded">
         <Container fluid>
-          <Button size="sm" className="me-3" onClick={() => navigate('/boards')}>
+          <Button size="sm" className="me-3 shadow" onClick={() => navigate('/boards')}>
             {t('Back')}
           </Button>
           <Navbar.Brand>{board.title}</Navbar.Brand>
@@ -65,10 +65,10 @@ export const BoardTitle = ({ board }: { board: Board }) => {
             </span>
           </OverlayTrigger>
           <div className="ms-auto">
-            <Button onClick={modifyBoard} className="" size="sm" variant="primary">
+            <Button onClick={modifyBoard} className="shadow" size="sm" variant="info">
               {t('edit')}
             </Button>{' '}
-            <Button onClick={deleteBoard} className="" size="sm" variant="primary">
+            <Button onClick={deleteBoard} className="shadow" size="sm" variant="warning">
               {t('delete')}
             </Button>
           </div>
