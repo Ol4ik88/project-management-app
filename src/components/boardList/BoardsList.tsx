@@ -11,6 +11,7 @@ import { Board } from 'store/types';
 import edit_icon from '../../assets/registaration_icon.svg';
 import delete_icon from '../../assets/delete_icon.svg';
 import { DeleteWindow } from 'components/modal/DeleteWindow';
+import './boardsList.css';
 
 export function BoardsList() {
   const dispatch = useDispatch<AppDispatch>();
@@ -43,12 +44,12 @@ export function BoardsList() {
     <>
       <Row md={4} xs={1} sm={2}>
         {ids.map((id) => (
-          <Col key={id}>
+          <Col key={id} className="mb-2">
             <Link to={`/boards/${id}`} className={'text-decoration-none'}>
-              <Card bg="primary" text="white" className="mb-2 bg-gradient shadow">
+              <Card bg="primary" text="white" className="bg-gradient shadow h-100">
                 <Card.Body>
                   <Card.Title>{entities[id].title} </Card.Title>
-                  <Card.Text>{entities[id].description}</Card.Text>
+                  <Card.Text className="board-desc">{entities[id].description}</Card.Text>
                   <div className="text-end">
                     <Button
                       variant="light"
