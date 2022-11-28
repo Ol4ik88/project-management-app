@@ -10,7 +10,7 @@ import { DeleteWindow } from 'components/modal/DeleteWindow';
 import ModalWindow from 'components/modal/ModalWindow';
 import { TaskInformation } from 'components/task/taskInformation';
 import { EntityId } from '@reduxjs/toolkit';
-import { selectUsers } from 'store/userSlice';
+import { getUsers, selectUsers } from 'store/userSlice';
 import { selectBoards } from 'store/boardsSlice';
 import { fetchColumns, selectColumns } from 'store/columnSlice';
 import { BoardsList } from 'components/boardList/BoardsList';
@@ -26,18 +26,16 @@ type idAndTitle = {
 
 export function UserTasks({ userId }: propsType) {
   const dispatch = useDispatch<AppDispatch>();
-  const { entities, ids, error, statuses } = useSelector(selectTasks);
-  const { users } = useSelector(selectUsers);
-  const columns = useSelector(selectColumns);
-  // const boards = useSelector(selectBoards);
-  // const columns = useSelector(selectColumns);
   const { t } = useTranslation();
 
   const [isOpen, setIsOpen] = useState(0);
   const [idTask, setIdTask] = useState<EntityId>('');
-
   const [columnsInfo, setColumnsInfo] = useState<idAndTitle[]>([]);
   const [boardsList, setBoardsList] = useState<string[]>([]);
+
+  const { users } = useSelector(selectUsers);
+  const columns = useSelector(selectColumns);
+  const { entities, ids, error, statuses } = useSelector(selectTasks);
 
   const modalTitle = isOpen === 1 ? t('task.delete') : t('task-info.task-info');
 
@@ -52,39 +50,38 @@ export function UserTasks({ userId }: propsType) {
   }
 
   function infoTask(id: EntityId) {
+    const boardId = entities[id]!.boardId;
+    dispatch(fetchColumns({ boardId }));
+
     setIdTask(id);
-    setIsOpen(2);
+    setTimeout(() => {
+      setIsOpen(2);
+    }, 1000);
   }
 
   useEffect(() => {
     userId && dispatch(fetchTaskByUserId({ userId }));
   }, [dispatch, userId]);
 
-  const getUserBoardsCallback = useCallback(getUserBoards, [entities, ids]);
-
   useEffect(() => {
-    getUserBoardsCallback();
-    boardsList.forEach((boardId) => {
-      if (!columns.statuses[boardId]) {
-        dispatch(fetchColumns({ boardId }));
-      }
-    });
+    if (!users.length) {
+      //dispatch(getUsers());
+    }
   }, [dispatch]);
 
   useEffect(() => {
     const columnsIdAndTitle = columns.ids.map((id: string) => {
       const title = (columns.entities[id] as IColumn).title;
+      console.log('columns1=', columns);
       return { [id]: title };
     });
-
+    console.log('columns2=', columns);
     setColumnsInfo(columnsIdAndTitle);
-
-    console.log('boardsIdAndTitle=', columns);
-  }, []);
+  }, [columns, idTask]);
 
   return (
-    <>
-      <div className="mb-2 text-center shadow" style={{ width: '18rem' }}>
+    <div className="d-flex align-items-center justify-content-center">
+      <div className="mb-2 text-center" style={{ width: '20rem' }}>
         <div className="h5">{t('user-page.tasks')}</div>
         <div>
           {ids.map((id) => (
@@ -125,6 +122,6 @@ export function UserTasks({ userId }: propsType) {
           />
         )}
       </ModalWindow>
-    </>
+    </div>
   );
 }
