@@ -7,12 +7,12 @@ import delete_icon from '../../assets/delete_icon.svg';
 import { IColumn, ITask } from 'types/Interfaces';
 import ModalWindow from 'components/modal/ModalWindow';
 import { TaskInformation } from './taskInformation';
-import { fetchUserBoards, selectBoards } from 'store/boardsSlice';
-import { fetchColumns, selectColumns } from 'store/columnSlice';
+import { selectBoards } from 'store/boardsSlice';
+import { selectColumns } from 'store/columnSlice';
 import { selectAuth } from 'store/authSlice';
 import { DeleteWindow } from 'components/modal/DeleteWindow';
 import { removeTask } from 'store/taskSlice';
-import { getUsers, selectUsers } from 'store/userSlice';
+import { selectUsers } from 'store/userSlice';
 
 type idAndTitle = {
   [key: string]: string;
@@ -42,10 +42,6 @@ export const Task = ({
   const columns = useSelector(selectColumns);
   const { auth } = useSelector(selectAuth);
   const { users } = useSelector(selectUsers);
-
-  useEffect(() => {
-    // dispatch(getUsers());
-  }, [boardId, dispatch, userId]);
 
   useEffect(() => {
     const boardsIdAndTitle = boards.ids.map((id) => {

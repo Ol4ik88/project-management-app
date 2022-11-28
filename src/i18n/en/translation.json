@@ -79,7 +79,8 @@
     "info": "Profile Information",
     "update title": "Change user data",
     "remove title": "Delete user",
-    "remove push": "User deleted"
+    "remove push": "User deleted",
+    "tasks":"User tasks"
   },
   "task-info": {
     "task-info":"Task",

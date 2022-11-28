@@ -33,7 +33,7 @@ function LoginForm() {
     if (completed) {
       setTimeout(() => {
         if (status === 'succeeded') {
-          navigate('/');
+          navigate('/boards');
         } else {
           dispatch(resetState('idle'));
           reset();

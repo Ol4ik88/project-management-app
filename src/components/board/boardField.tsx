@@ -42,6 +42,7 @@ import {
   selectTasksByColumnId,
   setTasksOrder,
 } from 'store/taskSlice';
+import { getUsers, selectUsers } from 'store/userSlice';
 import { IColumn, ITask } from 'types/Interfaces';
 import './boardField.css';
 
@@ -56,6 +57,7 @@ export const BoardField = ({ boardId }: { boardId: string }) => {
     statuses: columnsStatuses,
   } = useSelector(selectColumns);
   const colIds = useSelector(selectColumnsByBoardId(boardId));
+  const { users } = useSelector(selectUsers);
 
   const {
     entities: tasksEntities,
@@ -88,6 +90,10 @@ export const BoardField = ({ boardId }: { boardId: string }) => {
 
     if (!tasksStatuses[boardId]) {
       dispatch(fetchTasksByBoardId({ boardId }));
+    }
+
+    if (!users.length) {
+      dispatch(getUsers());
     }
   }, [dispatch]);
 

@@ -12,6 +12,8 @@ export type UserState = {
 
 export type UsersState = {
   users: IUser[];
+  status?: string;
+  error?: string;
 };
 
 export type AuthState = {

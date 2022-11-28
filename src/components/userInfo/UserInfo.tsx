@@ -9,6 +9,7 @@ import ModalWindow from 'components/modal/ModalWindow';
 import { DeleteWindow } from 'components/modal/DeleteWindow';
 import { useNavigate } from 'react-router-dom';
 import PushMessage from 'components/pushMessage/PushMessage';
+import { UserTasks } from './UserTasks';
 
 export function UserInfo() {
   const dispatch = useDispatch<AppDispatch>();
@@ -79,6 +80,7 @@ export function UserInfo() {
             </Button>
           </div>
         </Card.Body>
+        <UserTasks userId={auth._id} />
       </Card>
       <ModalWindow modalTitle={modalTitle} show={isOpen} onHide={onHide}>
         {modalContent}

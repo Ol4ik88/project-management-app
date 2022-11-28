@@ -23,7 +23,6 @@ export const BoardTitle = ({ board }: { board: Board }) => {
 
   const deleteBoard = () => {
     setIsOpen(2);
-    //!модальное окно - "удалять или нет"
     navigate('/boards');
   };
 
