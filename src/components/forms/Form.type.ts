@@ -9,3 +9,8 @@ export interface IPropsCreateTaskForm {
   columnId: string;
   onClose: () => void;
 }
+
+export interface IPropsCreateBoardForm {
+  onClose: () => void;
+  showToast: () => void;
+}

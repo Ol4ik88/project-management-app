@@ -14,11 +14,11 @@ export function DeleteWindow({ cancel, remove, text }: IDeleteWindow) {
     <>
       <div>{text}</div>
       <Modal.Footer>
-        <Button variant="secondary" type="reset" onClick={cancel}>
-          {t('cancel')}
-        </Button>
-        <Button variant="info" type="submit" onClick={handleRemoveClick}>
+        <Button variant="warning" type="submit" onClick={handleRemoveClick} className="shadow">
           {t('delete')}
+        </Button>
+        <Button variant="info" type="reset" onClick={cancel} className="shadow">
+          {t('cancel')}
         </Button>
       </Modal.Footer>
     </>

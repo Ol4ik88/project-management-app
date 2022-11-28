@@ -23,6 +23,7 @@ export const usersSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getUsers.fulfilled, (state, action) => {
       state.users = action.payload;
+      state.status = 'succeeded';
     });
   },
 });

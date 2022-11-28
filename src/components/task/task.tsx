@@ -44,7 +44,6 @@ export const Task = ({
   const { users } = useSelector(selectUsers);
 
   useEffect(() => {
->>>>>>> 485570e9b2445fe80ce94b5d0ecd94a171c85fa9
     const boardsIdAndTitle = boards.ids.map((id) => {
       const title = boards.entities[id].title;
       return { [id]: title };
