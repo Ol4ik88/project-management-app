@@ -21,6 +21,6 @@ i18n
       escapeValue: false,
     },
     resources: resources,
-    fallbackLng: 'en',
+    fallbackLng: localStorage.getItem('lang') ?? 'en',
   });
 export default i18n;
