@@ -90,6 +90,7 @@ export const Column = ({
   };
 
   const handleClickTitle = () => {
+    setInputTitle(title);
     setIsInput(true);
   };
 
