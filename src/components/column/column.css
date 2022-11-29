@@ -1,7 +1,6 @@
 .column__content {
-  max-height: 35vh;
+  max-height: calc(100vh - 340px);
 }
-
 .column {
   overflow-y: auto;
   overflow-x: hidden;
