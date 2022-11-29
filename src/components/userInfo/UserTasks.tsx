@@ -37,7 +37,7 @@ export function UserTasks({ userId }: propsType) {
 
   useEffect(() => {
     if (!users.length) {
-      //dispatch(getUsers());
+      dispatch(getUsers());
     }
   }, [dispatch]);
 
