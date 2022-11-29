@@ -41,6 +41,7 @@ function Header() {
 
   const changeLanguage = (lng: string) => {
     i18n.changeLanguage(lng);
+    localStorage.setItem('lang', lng);
   };
 
   useEffect(() => {
@@ -123,10 +124,16 @@ function Header() {
 
               <Dropdown.Menu>
                 <Dropdown.Item onClick={() => changeLanguage('ru')}>
-                  <img src={ru} width="20" height="20" />
+                  <span>
+                    <img src={ru} width="20" height="20" className="me-2" />
+                    Russian
+                  </span>
                 </Dropdown.Item>
                 <Dropdown.Item onClick={() => changeLanguage('en')}>
-                  <img src={en} width="20" height="20" />
+                  <span>
+                    <img src={en} width="20" height="20" className="me-2" />
+                    English
+                  </span>
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
