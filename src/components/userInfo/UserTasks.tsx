@@ -45,18 +45,34 @@ export function UserTasks({ userId }: propsType) {
     <div className="d-flex align-items-center justify-content-center">
       <div className="mb-2 text-center" style={{ width: '20rem' }}>
         <div className="h5">{t('user-page.tasks')}</div>
-        <div>
-          {ids.map((id) => (
-            <Card className="shadow-sm mb-2 flex-row" key={id}>
-              <Card.Text className="flex-fill mb-0 p-1 btn">{entities[id]?.title}</Card.Text>
-              <Button variant="light" size="sm" className="p-0" onClick={() => deleteTask(id)}>
-                <img width="15" src={delete_icon} alt="delete" />
-              </Button>
-            </Card>
-          ))}
-        </div>
+        <Card>
+          <Card.Body>
+            {ids.map((id) => (
+              <Card.Text key={id}>
+                <Card.Title className="d-grid gap-2">
+                  <Button className="btn-block">{entities[id]?.boardId}</Button>
+                </Card.Title>
+
+                <Card.Text>
+                  <Card className="shadow-sm mb-2 flex-row">
+                    <Card.Text className="flex-fill mb-0 p-1 btn">{entities[id]?.title}</Card.Text>
+                    <Button
+                      variant="light"
+                      size="sm"
+                      className="p-0"
+                      onClick={() => deleteTask(id)}
+                    >
+                      <img width="15" src={delete_icon} alt="delete" />
+                    </Button>
+                  </Card>
+                </Card.Text>
+              </Card.Text>
+            ))}
+          </Card.Body>
+        </Card>
       </div>
-      <ModalWindow modalTitle={modalTitle} show={isOpen > 0} onHide={() => setIsOpen(0)}>
+
+      {/* <ModalWindow modalTitle={modalTitle} show={isOpen > 0} onHide={() => setIsOpen(0)}>
         <DeleteWindow
           cancel={() => setIsOpen(0)}
           remove={() =>
@@ -70,7 +86,7 @@ export function UserTasks({ userId }: propsType) {
           }
           text={t('task.deleteTask')}
         />
-      </ModalWindow>
+      </ModalWindow> */}
     </div>
   );
 }
