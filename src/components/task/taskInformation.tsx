@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { ITask, IUser } from 'types/Interfaces';
-// import yes_icon from '../../assets/yes_icon.svg';
-// import no_icon from '../../assets/no_icon.svg';
 import yes_icon from '../../assets/registaration_icon.svg';
 import no_icon from '../../assets/cancel.svg';
 import dots_icon from '../../assets/dots_icon.svg';
@@ -95,6 +93,10 @@ export const TaskInformation = ({ task, userName, columns, usersList, cancel }: 
     });
   }
 
+  function getFilteredUserList(users: string[]) {
+    return usersList.filter((user) => users.indexOf(user._id) === -1);
+  }
+
   return (
     <>
       <div className="border-bottom h5 pb-2">
@@ -121,24 +123,23 @@ export const TaskInformation = ({ task, userName, columns, usersList, cancel }: 
                 setTaskData({ ...taskData, title: e.target.value });
               }}
             />
-            <Button variant="light" onClick={() => setTitle(false)}>
-              <img width="25" src={yes_icon} alt="yes" />
-            </Button>
           </div>
         )}
       </div>
 
       <div className="border-bottom">
-        {!column ? (
+        <div className="h5 d-flex justify-content-between align-items-center">
+          {t('task-info.inColumn')} {taskData.columnTitle}
+          <Button
+            className={column ? 'invisible' : 'visible'}
+            variant="light"
+            onClick={() => setColumn(true)}
+          >
+            <img width="25" src={dots_icon} alt="dots" />
+          </Button>
+        </div>
+        {column && (
           <div className="h5 d-flex justify-content-between align-items-center">
-            {t('task-info.inColumn')} {taskData.columnTitle}
-            <Button variant="light" onClick={() => setColumn(true)}>
-              <img width="25" src={dots_icon} alt="dots" />
-            </Button>
-          </div>
-        ) : (
-          <div className="h5 d-flex justify-content-between align-items-center">
-            {t('task-info.inColumn')}
             <select
               className="form-select"
               aria-label="Default select example"
@@ -151,9 +152,6 @@ export const TaskInformation = ({ task, userName, columns, usersList, cancel }: 
                 </option>
               ))}
             </select>
-            <Button variant="light" onClick={() => setColumn(false)}>
-              <img width="25" src={yes_icon} alt="yes" />
-            </Button>
           </div>
         )}
       </div>
@@ -161,7 +159,7 @@ export const TaskInformation = ({ task, userName, columns, usersList, cancel }: 
       <div className="border-bottom">
         {!descript ? (
           <div className="h5 d-flex justify-content-between align-items-center">
-            <div style={{ wordWrap: 'break-word' }} className="flex-column">
+            <div style={{ wordWrap: 'break-word', width: '89%' }} className="flex-column">
               <div> {t('task-info.description')}</div>
               <div> {taskData.description}</div>
             </div>
@@ -171,7 +169,7 @@ export const TaskInformation = ({ task, userName, columns, usersList, cancel }: 
             </Button>
           </div>
         ) : (
-          <div className="h5 d-flex justify-content-between align-items-center">
+          <div className="h5 ">
             <div> {t('task-info.description')}</div>
             <textarea
               className="form-control"
@@ -181,32 +179,32 @@ export const TaskInformation = ({ task, userName, columns, usersList, cancel }: 
                 setTaskData({ ...taskData, description: e.target.value });
               }}
             />
-            <Button variant="light" onClick={() => setDescript(false)}>
-              <img width="25" src={yes_icon} alt="yes" />
-            </Button>
           </div>
         )}
       </div>
 
       <div className="border-bottom">
-        {!allUsers ? (
-          <div className="h5 d-flex justify-content-between align-items-center">
-            {t('task-info.users')}{' '}
-            <div>
-              {idUserInName(taskData.users).map((user) => (
-                <li className="d-flex justify-content-between align-items-center" key={user}>
-                  {user}
-                  <Button variant="light" onClick={() => deleteUser(user)}>
-                    <img width="20" src={no_icon} alt="no" />
-                  </Button>
-                </li>
-              ))}
-            </div>
-            <Button variant="light" onClick={() => setAllUsers(true)}>
-              <img width="25" src={dots_icon} alt="dots" />
-            </Button>
+        <div className="h5 d-flex justify-content-between align-items-center">
+          {t('task-info.users')}{' '}
+          <div>
+            {idUserInName(taskData.users).map((user) => (
+              <li className="d-flex justify-content-between align-items-center" key={user}>
+                {user}
+                <Button variant="light" onClick={() => deleteUser(user)}>
+                  <img width="20" src={no_icon} alt="no" />
+                </Button>
+              </li>
+            ))}
           </div>
-        ) : (
+          <Button
+            className={allUsers ? 'invisible' : 'visible'}
+            variant="light"
+            onClick={() => setAllUsers(true)}
+          >
+            <img width="25" src={dots_icon} alt="dots" />
+          </Button>
+        </div>
+        {allUsers && (
           <div className="h5 d-flex justify-content-between align-items-center">
             <select
               className="form-select"
@@ -216,15 +214,12 @@ export const TaskInformation = ({ task, userName, columns, usersList, cancel }: 
               }
             >
               <option> {t('task-info.select')}</option>
-              {usersList.map((user) => (
+              {getFilteredUserList(taskData.users).map((user) => (
                 <option key={user._id} value={user._id}>
                   {user.name}
                 </option>
               ))}
             </select>
-            <Button variant="light" onClick={() => setAllUsers(false)}>
-              <img width="25" src={yes_icon} alt="yes" />
-            </Button>
           </div>
         )}
       </div>
