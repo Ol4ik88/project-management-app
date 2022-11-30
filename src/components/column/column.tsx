@@ -64,6 +64,7 @@ export const Column = ({
   const { attributes, listeners, setNodeRef, transform, transition, setActivatorNodeRef } =
     useSortable({
       id: column._id,
+      disabled: isInput,
     });
 
   const style = {
