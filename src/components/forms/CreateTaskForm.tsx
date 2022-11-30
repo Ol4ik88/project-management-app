@@ -14,8 +14,6 @@ export function CreateTaskForm({ boardId, columnId, onClose }: IPropsCreateTaskF
   const { t } = useTranslation();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [show, setShow] = useState(false);
-  const onHide = () => setShow(!show);
   const tasksIds = useSelector(selectTasksByBoardId(boardId));
 
   function submitHandler(e: React.SyntheticEvent) {
@@ -31,10 +29,7 @@ export function CreateTaskForm({ boardId, columnId, onClose }: IPropsCreateTaskF
         users: [],
       })
     );
-    onHide();
-    setTimeout(() => {
-      onClose();
-    }, 2000);
+    onClose();
   }
 
   function titleChangeHandler(e: ChangeEvent<HTMLInputElement>) {
@@ -46,38 +41,35 @@ export function CreateTaskForm({ boardId, columnId, onClose }: IPropsCreateTaskF
   }
 
   return (
-    <>
-      <Form onSubmit={submitHandler}>
-        <Form.Group className="mb-3" controlId="createTaskFormTitle">
-          <Form.Label>{t('board.task title')}</Form.Label>
-          <Form.Control
-            required
-            type="text"
-            placeholder="Enter task title"
-            value={title}
-            onChange={titleChangeHandler}
-          />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="createTaskFormDesc">
-          <Form.Label>{t('board.task description')}</Form.Label>
-          <Form.Control
-            required
-            type="text"
-            placeholder="Enter task description"
-            value={description}
-            onChange={descriptionChangeHandler}
-          />
-        </Form.Group>
-        <Modal.Footer>
-          <Button variant="primary" type="submit">
-            {t('create')}
-          </Button>
-          <Button variant="info" type="reset" onClick={onClose}>
-            {t('close')}
-          </Button>
-        </Modal.Footer>
-      </Form>
-      <PushMessage text={t('board.create task push')} isShow={show} onHide={onHide} />
-    </>
+    <Form onSubmit={submitHandler}>
+      <Form.Group className="mb-3" controlId="createTaskFormTitle">
+        <Form.Label>{t('board.task title')}</Form.Label>
+        <Form.Control
+          required
+          type="text"
+          placeholder="Enter task title"
+          value={title}
+          onChange={titleChangeHandler}
+        />
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="createTaskFormDesc">
+        <Form.Label>{t('board.task description')}</Form.Label>
+        <Form.Control
+          required
+          type="text"
+          placeholder="Enter task description"
+          value={description}
+          onChange={descriptionChangeHandler}
+        />
+      </Form.Group>
+      <Modal.Footer>
+        <Button variant="primary" type="submit">
+          {t('create')}
+        </Button>
+        <Button variant="info" type="reset" onClick={onClose}>
+          {t('close')}
+        </Button>
+      </Modal.Footer>
+    </Form>
   );
 }
