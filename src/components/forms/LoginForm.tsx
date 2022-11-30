@@ -26,7 +26,6 @@ function LoginForm() {
     register,
     formState: { errors },
     handleSubmit,
-    reset,
   } = useForm<loginType>();
 
   useEffect(() => {
@@ -36,11 +35,10 @@ function LoginForm() {
           navigate('/boards');
         } else {
           dispatch(resetState('idle'));
-          reset();
         }
       }, 3000);
     }
-  }, [completed, dispatch, navigate, reset, status]);
+  }, [completed, dispatch, navigate, status]);
 
   const onSubmit: SubmitHandler<loginType> = (data) => {
     dispatch(signin(data));
@@ -49,17 +47,6 @@ function LoginForm() {
 
   return (
     <Container className="my-3 my-md-5 col-md-5">
-      <Row className="justify-content-center">
-        {completed && status === 'failed' && (
-          <Alert variant={'danger'}> {t('sign-in.error')}</Alert>
-        )}
-        {completed && status === 'loading' && <Loading />}
-        {completed && status === 'succeeded' && (
-          <Alert className="text-center" variant={'success'}>
-            {t('sign-in.successfull')}
-          </Alert>
-        )}
-      </Row>
       <Row>
         <Col className="d-flex justify-content-center align-items-start">
           <img width="30px" src={icon} alt="login" className="me-3" />
@@ -69,7 +56,11 @@ function LoginForm() {
       <Row>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Form.Group className="mb-3" controlId="formBasicName">
-            <FloatingLabel controlId="floatingInput" label={t('sign-in.login')} className="mb-3">
+            <FloatingLabel
+              controlId="floatingInputlogin"
+              label={t('sign-in.login')}
+              className="mb-3"
+            >
               <Form.Control
                 required
                 type="text"
@@ -103,6 +94,17 @@ function LoginForm() {
             {t('sign-in.sign in')}
           </Button>
         </Form>
+      </Row>
+      <Row className="justify-content-center mt-3">
+        {completed && status === 'failed' && (
+          <Alert variant={'danger'}> {t('sign-in.error')}</Alert>
+        )}
+        {completed && status === 'loading' && <Loading />}
+        {completed && status === 'succeeded' && (
+          <Alert className="text-center" variant={'success'}>
+            {t('sign-in.successfull')}
+          </Alert>
+        )}
       </Row>
     </Container>
   );
