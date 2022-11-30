@@ -24,7 +24,6 @@ function RegistrationForm() {
     register,
     formState: { errors },
     handleSubmit,
-    reset,
   } = useForm<IUserDto>();
 
   useEffect(() => {
@@ -34,11 +33,10 @@ function RegistrationForm() {
           navigate('/login');
         } else {
           dispatch(resetState('idle'));
-          reset();
         }
       }, 3000);
     }
-  }, [completed, dispatch, navigate, reset, status]);
+  }, [completed, dispatch, navigate, status]);
 
   const onSubmit: SubmitHandler<IUserDto> = (data) => {
     dispatch(signup(data));
@@ -47,18 +45,6 @@ function RegistrationForm() {
 
   return (
     <Container className="my-3 my-md-5 col-md-5">
-      <Row className="justify-content-center">
-        {completed && status === 'failed' && (
-          <Alert variant={'danger'}> {t('sign-up.registration error')}</Alert>
-        )}
-        {completed && status === 'loading' && <Loading />}
-        {completed && status === 'succeeded' && (
-          <Alert className="text-center" variant={'success'}>
-            {t('sign-up.registration successfull')}
-          </Alert>
-        )}
-      </Row>
-
       <Row>
         <Col className="d-flex justify-content-center align-items-start">
           <img width="30px" src={icon} alt="registration" className="me-3" />
@@ -68,7 +54,7 @@ function RegistrationForm() {
       <Row>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Form.Group className="mb-3" controlId="formBasicName">
-            <FloatingLabel controlId="floatingInput" label={t('sign-up.name')} className="mb-3">
+            <FloatingLabel controlId="floatingInputName" label={t('sign-up.name')} className="mb-3">
               <Form.Control
                 required
                 type="text"
@@ -81,7 +67,11 @@ function RegistrationForm() {
             </FloatingLabel>
             <div className="text-danger">{errors.name && errors.name.message}</div>
 
-            <FloatingLabel controlId="floatingInput" label={t('sign-up.login')} className="mb-3">
+            <FloatingLabel
+              controlId="floatingInputLogin"
+              label={t('sign-up.login')}
+              className="mb-3"
+            >
               <Form.Control
                 required
                 type="text"
@@ -115,6 +105,17 @@ function RegistrationForm() {
             {t('sign-up.sign up')}
           </Button>
         </Form>
+      </Row>
+      <Row className="justify-content-center mt-3">
+        {completed && status === 'failed' && (
+          <Alert variant={'danger'}> {t('sign-up.registration error')}</Alert>
+        )}
+        {completed && status === 'loading' && <Loading />}
+        {completed && status === 'succeeded' && (
+          <Alert className="text-center" variant={'success'}>
+            {t('sign-up.registration successfull')}
+          </Alert>
+        )}
       </Row>
     </Container>
   );

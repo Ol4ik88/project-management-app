@@ -77,15 +77,15 @@ export const Task = ({
   };
 
   return (
-    <>
-      <Card
-        className="shadow-sm mb-2 flex-row"
-        ref={setNodeRef}
-        {...attributes}
-        {...listeners}
-        style={style}
-        id={id || task._id}
-      >
+    <div
+      className="pb-2"
+      ref={setNodeRef}
+      {...attributes}
+      {...listeners}
+      style={style}
+      id={id || task._id}
+    >
+      <Card className="shadow-sm flex-row">
         <Card.Text className="flex-fill mb-0 p-1 btn" onClick={infoTask}>
           {title}
         </Card.Text>
@@ -112,6 +112,6 @@ export const Task = ({
           />
         )}
       </ModalWindow>
-    </>
+    </div>
   );
 };
