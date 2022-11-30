@@ -7,6 +7,7 @@ import {
   createSelector,
 } from '@reduxjs/toolkit';
 import taskRequest from 'services/Request/taskRequest';
+import { signOut } from './authSlice';
 import { RootState, store } from './store';
 import { Task, TasksState, UpdateTaskProps } from './types';
 
@@ -129,6 +130,9 @@ export const tasksSlice = createSlice({
     setTasksOrder(state, action) {
       tasksAdapter.upsertMany(state, action.payload);
     },
+    resetTasks(state) {
+      Object.assign(state, initialState);
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -161,6 +165,9 @@ export const tasksSlice = createSlice({
         const { _id, ...changes } = action.payload;
         tasksAdapter.removeOne(state, _id);
         state.statuses[action.meta.arg.boardId] = 'succeeded';
+      })
+      .addCase(signOut.type, (state, action) => {
+        tasksSlice.caseReducers.resetTasks(state);
       })
       .addMatcher(isPendingAction, (state, action) => {
         state.statuses[action.meta.arg.boardId] = 'loading';
