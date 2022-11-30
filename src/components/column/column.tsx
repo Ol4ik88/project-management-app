@@ -1,5 +1,5 @@
-import React, { useEffect, useState, ChangeEvent } from 'react';
-import { Button, Card, Form, Col, Row } from 'react-bootstrap';
+import React, { useState, ChangeEvent } from 'react';
+import { Button, Card, Form, Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from 'store/store';
@@ -9,24 +9,37 @@ import delete_icon from '../../assets/delete_icon.svg';
 import { Task } from 'components/task/task';
 import ModalWindow from 'components/modal/ModalWindow';
 import { IColumn, ITask } from 'types/Interfaces';
-import {
-  changeTasksOrders,
-  selectTasks,
-  selectTasksByColumnId,
-  setTasksOrder,
-} from 'store/taskSlice';
+import { selectTasks, selectTasksByColumnId } from 'store/taskSlice';
 import { CreateTaskForm } from 'components/forms/CreateTaskForm';
 import { DeleteWindow } from 'components/modal/DeleteWindow';
-import {
-  SortableContext,
-  sortableKeyboardCoordinates,
-  useSortable,
-  verticalListSortingStrategy,
-} from '@dnd-kit/sortable';
+import { SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { removeColumn, updateColumn } from 'store/columnSlice';
 import './column.css';
+import { EntityId } from '@reduxjs/toolkit';
+
+const TasksList = React.memo(function TasksList({
+  tasksIds,
+  activeTaskId,
+}: {
+  tasksIds: EntityId[];
+  activeTaskId: string | undefined;
+}) {
+  const {
+    entities: tasksEntities,
+    // ids: tasksIds,
+    error: tasksError,
+    statuses: tasksStatuses,
+  } = useSelector(selectTasks);
+
+  return (
+    <SortableContext items={tasksIds} strategy={verticalListSortingStrategy}>
+      {tasksIds.map((id) => (
+        <Task key={id} task={tasksEntities[id] as ITask} isDragging={activeTaskId === id} />
+      ))}
+    </SortableContext>
+  );
+});
 
 export const Column = ({
   column,
@@ -45,13 +58,6 @@ export const Column = ({
   const [isOpen, setIsOpen] = useState(false);
   const [isInput, setIsInput] = useState(false);
   const [inputTitle, setInputTitle] = useState(title);
-
-  const {
-    entities: tasksEntities,
-    // ids: tasksIds,
-    error: tasksError,
-    statuses: tasksStatuses,
-  } = useSelector(selectTasks);
 
   const tasksIds = useSelector(selectTasksByColumnId(_id));
 
@@ -150,11 +156,7 @@ export const Column = ({
         </Card.Header>
 
         <Card.Body className="p-1 column__content column">
-          <SortableContext items={tasksIds} strategy={verticalListSortingStrategy}>
-            {tasksIds.map((id) => (
-              <Task key={id} task={tasksEntities[id] as ITask} isDragging={activeTaskId === id} />
-            ))}
-          </SortableContext>
+          <TasksList tasksIds={tasksIds} activeTaskId={activeTaskId ?? undefined} />
         </Card.Body>
 
         <Card.Footer>
