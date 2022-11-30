@@ -1,29 +1,20 @@
 import {
-  closestCenter,
-  closestCorners,
   DndContext,
   DragEndEvent,
   DragOverEvent,
   DragOverlay,
   DragStartEvent,
-  KeyboardSensor,
   PointerSensor,
+  pointerWithin,
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
-import {
-  arrayMove,
-  horizontalListSortingStrategy,
-  rectSortingStrategy,
-  SortableContext,
-  sortableKeyboardCoordinates,
-} from '@dnd-kit/sortable';
+import { arrayMove, horizontalListSortingStrategy, SortableContext } from '@dnd-kit/sortable';
 import { Column } from 'components/column/column';
 import { CreateColumnForm } from 'components/forms/CreateColumnForm';
 import ModalWindow from 'components/modal/ModalWindow';
-import { Task } from 'components/task/task';
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Container } from 'react-bootstrap';
+import { Button, Card, Container } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -77,9 +68,6 @@ export const BoardField = ({ boardId }: { boardId: string }) => {
       activationConstraint: {
         distance: 3,
       },
-    }),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
     })
   );
 
@@ -121,10 +109,12 @@ export const BoardField = ({ boardId }: { boardId: string }) => {
     if (over?.id == null || colIds.includes(active.id)) {
       return;
     }
-    if (overElement.current.active == active.id && overElement.current.over == over?.id) {
+    if (over?.id === active.id) {
       return;
     }
-
+    if (overElement.current.over == over?.id) {
+      return;
+    }
     const activeContainerId = tasksEntities[active.id]?.columnId;
     const overContainerId = tasksEntities[over?.id]?.columnId
       ? tasksEntities[over?.id]?.columnId
@@ -137,15 +127,14 @@ export const BoardField = ({ boardId }: { boardId: string }) => {
     overElement.current = { over: String(over.id) ?? '', active: String(active.id) ?? '' };
 
     if (activeContainerId !== overContainerId) {
-      const activeIndex = colIds.indexOf(active.id);
-      const overIndex = colIds.indexOf(over.id);
-
-      if (colIds.includes(over.id)) {
+      const activeIndex = tasksIds.indexOf(active.id);
+      const overIndex = tasksIds.indexOf(over.id);
+      if (overContainerId === over.id) {
         dispatch(
           setTasksOrder([
             {
               _id: active.id as string,
-              order: 0,
+              order: tasksIds.length,
               columnId: overContainerId,
             } as ITask,
           ])
@@ -159,7 +148,7 @@ export const BoardField = ({ boardId }: { boardId: string }) => {
             (tasksEntities[id]?.columnId === overContainerId || id === active.id)
           ) {
             accum.push({
-              _id: tasksEntities[id]?._id as string,
+              _id: id,
               order: index,
               columnId: overContainerId,
             } as ITask);
@@ -231,12 +220,12 @@ export const BoardField = ({ boardId }: { boardId: string }) => {
       <Container fluid className="d-flex align-items-start board__content">
         <DndContext
           sensors={sensors}
-          collisionDetection={closestCorners}
+          collisionDetection={pointerWithin}
           onDragStart={handleDragStart}
           onDragEnd={handleDragEnd}
           onDragOver={handleDragOver}
         >
-          <SortableContext items={colIds} strategy={rectSortingStrategy}>
+          <SortableContext items={colIds} strategy={horizontalListSortingStrategy}>
             {colIds.map((id) => (
               <Column
                 key={id}
@@ -246,24 +235,32 @@ export const BoardField = ({ boardId }: { boardId: string }) => {
               />
             ))}
           </SortableContext>
+
+          <Button
+            variant="info"
+            size="sm"
+            className="col-md-3 my-2 shadow"
+            style={{ width: '272px' }}
+            onClick={createColumn}
+          >
+            + {t('board.create column')}
+          </Button>
           <DragOverlay>
-            {activeColId ? <Column column={colEntities[activeColId] as IColumn} /> : null}
+            {activeColId ? (
+              <div style={{ height: '300px' }}>
+                <Column column={colEntities[activeColId] as IColumn} />
+              </div>
+            ) : null}
             {activeTaskId ? (
-              <Task task={tasksEntities[activeTaskId] as ITask} id={`drag_${activeTaskId}`} />
+              <Card className="shadow-sm mb-2 flex-row">
+                <Card.Text className="flex-fill mb-0 p-1 btn">
+                  {tasksEntities[activeTaskId].title}
+                </Card.Text>
+              </Card>
             ) : null}
           </DragOverlay>
         </DndContext>
-        <Button
-          variant="info"
-          size="sm"
-          className="col-md-3 my-2 shadow"
-          style={{ width: '272px' }}
-          onClick={createColumn}
-        >
-          + {t('board.create column')}
-        </Button>
       </Container>
-
       <ModalWindow modalTitle={t('board.create column')} show={isOpen} onHide={onHide}>
         <CreateColumnForm boardId={boardId} onClose={onHide} order={colIds.length} />
       </ModalWindow>
