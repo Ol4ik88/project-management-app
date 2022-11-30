@@ -48,8 +48,9 @@ export function UserInfo() {
     setModalContent(<UpdateUserForm onClose={onHide} />);
     setIsOpen(true);
   };
+
   return (
-    <div className="flex-column justify-content-center">
+    <div className="d-flex flex-column align-items-center w-100">
       <Card className="mb-2 text-center shadow" style={{ width: '25rem' }}>
         <Card.Body>
           <Card.Title>{t('user-page.info')}</Card.Title>

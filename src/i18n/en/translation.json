@@ -80,7 +80,8 @@
     "update title": "Change user data",
     "remove title": "Delete user",
     "remove push": "User deleted",
-    "tasks":"User tasks"
+    "tasks":"User tasks",
+    "noTasks":"There are no user tasks"
   },
   "task-info": {
     "task-info":"Task",
