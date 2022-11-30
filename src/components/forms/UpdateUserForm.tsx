@@ -12,12 +12,18 @@ export function UpdateUserForm({ onClose }: { onClose: () => void }) {
   const authState = useSelector(selectAuth);
   const { t } = useTranslation();
   const [completed, setCompleted] = useState(false);
+  const { auth } = authState;
 
   const {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<IUserDto>();
+  } = useForm<IUserDto>({
+    defaultValues: {
+      name: auth.name ?? '',
+      login: auth.login ?? '',
+    },
+  });
 
   const onSubmit: SubmitHandler<IUserDto> = (data) => {
     const userUpdate = { ...data, userId: authState.auth._id ?? '' };
@@ -59,7 +65,7 @@ export function UpdateUserForm({ onClose }: { onClose: () => void }) {
         <Form.Label>{t('sign-up.password')}</Form.Label>
         <Form.Control
           required
-          type="text"
+          type="password"
           placeholder="Enter user password"
           {...register('password', {
             required: 'Please enter Password',
