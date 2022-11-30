@@ -18,7 +18,7 @@ export function Boards() {
   const { isAuth } = useAuthStatus();
 
   useEffect(() => {
-    if (status === 'idle' && isAuth()) {
+    if (status !== 'succeeded' && isAuth()) {
       dispatch(fetchUserBoards({ userId: authState?.auth._id ?? '' }));
     }
   }, [dispatch, status]);
