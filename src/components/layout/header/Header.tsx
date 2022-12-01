@@ -104,7 +104,7 @@ function Header() {
                 <NavLink to="/profile" className="nav-link">
                   {t('profile')}
                 </NavLink>
-                <Navbar.Text className={'text-white'}>
+                <Navbar.Text className={barSticky ? 'text-warning' : 'text-light'}>
                   {auth.name?.toLocaleUpperCase() || auth.login?.toLocaleUpperCase()}
                 </Navbar.Text>
                 <Button
