@@ -40,10 +40,14 @@ export function Board() {
             )}
           </Container>
           {boardId && entities[boardId] && status !== 'failed' && (
-            <Container fluid className="board">
-              <BoardTitle board={entities[boardId]} />
-              <BoardField boardId={boardId as string} />
-            </Container>
+            <>
+              <Container fluid>
+                <BoardTitle board={entities[boardId]} />
+              </Container>
+              <Container fluid className="board">
+                <BoardField boardId={boardId as string} />
+              </Container>
+            </>
           )}
         </>
       )}
