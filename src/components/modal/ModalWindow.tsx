@@ -1,6 +1,7 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
 import { Modal } from 'react-bootstrap';
+import './ModalWindow.css';
 
 function ModalWindow(props: {
   children: React.ReactNode;
@@ -13,7 +14,14 @@ function ModalWindow(props: {
   const portalContainer = document.body as HTMLElement;
 
   return createPortal(
-    <Modal show={show} onHide={onHide} aria-labelledby="contained-modal-title-vcenter" centered>
+    <Modal
+      show={show}
+      onHide={onHide}
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+      className="modal-height"
+      scrollable
+    >
       <Modal.Header closeButton>
         <Modal.Title>{modalTitle}</Modal.Title>
       </Modal.Header>
