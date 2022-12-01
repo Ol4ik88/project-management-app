@@ -1,29 +1,52 @@
 import { UpdateteBoardForm } from 'components/forms/UpdateBoardForm';
 import ModalWindow from 'components/modal/ModalWindow';
-import React, { useEffect, useState } from 'react';
-import { Button, Col, Container, Navbar, OverlayTrigger, Popover, Row } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Button, Container, Navbar, OverlayTrigger, Popover } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
-import { useSelector, useDispatch } from 'react-redux';
+import { removeBoard } from 'store/boardsSlice';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { AppDispatch } from 'store/store';
 import { Board } from 'store/types';
 import info_icon from '../../assets/info_icon.svg';
+import { DeleteWindow } from 'components/modal/DeleteWindow';
+import PushMessage from 'components/pushMessage/PushMessage';
 
 export const BoardTitle = ({ board }: { board: Board }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
 
-  const [isOpen, setIsOpen] = useState(0);
-  const modalTitle = isOpen === 1 ? t('editBoard') : t('deleteBoard');
+  const [isOpen, setIsOpen] = useState(false);
+  const [modalContent, setModalContent] = useState<React.ReactNode>();
+  const [modalTitle, setModalTitle] = useState<string>('');
+  const [toast, setToast] = useState(false);
 
+  const showToast = () => setToast(!toast);
+  const onHide = () => setIsOpen(false);
   const modifyBoard = () => {
-    setIsOpen(1);
+    setModalTitle(t('board.edit board title') ?? '');
+    setModalContent(<UpdateteBoardForm onClose={onHide} board={board} />);
+    setIsOpen(true);
   };
 
   const deleteBoard = () => {
-    setIsOpen(2);
-    navigate('/boards');
+    setModalTitle(t('board.remove board title') ?? '');
+    setModalContent(
+      <DeleteWindow
+        cancel={onHide}
+        remove={() => {
+          showToast();
+          onHide();
+          setTimeout(() => {
+            navigate('/boards');
+            dispatch(removeBoard({ boardId: board._id }));
+          }, 1600);
+        }}
+        text={t('board.remove board message')}
+      />
+    );
+    setIsOpen(true);
   };
 
   return (
@@ -73,15 +96,10 @@ export const BoardTitle = ({ board }: { board: Board }) => {
           </div>
         </Container>
       </Navbar>
-      {isOpen > 0 && (
-        <ModalWindow modalTitle={modalTitle} show={isOpen > 0} onHide={() => setIsOpen(0)}>
-          {isOpen == 1 ? (
-            <UpdateteBoardForm onClose={() => setIsOpen(0)} board={board} />
-          ) : (
-            <div> Удаление доски </div>
-          )}
-        </ModalWindow>
-      )}
+      <ModalWindow modalTitle={modalTitle} show={isOpen} onHide={onHide}>
+        {modalContent}
+      </ModalWindow>
+      <PushMessage text={t('board.remove board push')} isShow={toast} onHide={showToast} />
     </Container>
   );
 };
