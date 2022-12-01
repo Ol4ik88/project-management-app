@@ -34,7 +34,8 @@
     "create task": "Создать задачу",
     "task title": "Заголовок задачи",
     "task description": "Описание задачи",
-    "add task": "+ Добавить задачу"
+    "add task": "+ Добавить задачу",
+    "remove board push": "Доска удалена"
   },
   "sign-up": {
     "please sign up": "РЕГИСТРАЦИЯ",

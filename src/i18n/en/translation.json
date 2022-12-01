@@ -34,7 +34,8 @@
     "create task": "Create task",
     "task title": "Task title",
     "task description": "Task description",
-    "add task": "+ Add task"
+    "add task": "+ Add task",
+    "remove board push": "Remove board"
   },
   "sign-up": {
     "please sign up": "Please sign up",
