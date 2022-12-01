@@ -65,15 +65,15 @@ export function UserTasks({ userId }: propsType) {
                   {t('task-info.inBoard')} {Object.values(idBoard)}
                 </Button>
               </div>
-              <div className="d-flex justify-content-center">
+              <div className="d-flex justify-content-center flex-wrap">
                 {ids.map(
                   (_id) =>
                     entities[_id]?.boardId === Object.keys(idBoard)[0] && (
-                      <Card key={_id} className="shadow-sm mb-2" style={{ width: '15rem' }}>
-                        <Card.Text className=" text-start mt-2 p-1">
+                      <Card key={_id} className="shadow-sm mb-2" style={{ width: '25rem' }}>
+                        <Card.Text className=" text-start m-2 p-1">
                           {t('task-info.task')} {entities[_id]?.title}
                         </Card.Text>
-                        <Card.Text className="text-start p-1">
+                        <Card.Text className="text-start mx-2 p-1">
                           {t('task-info.description')} {entities[_id]?.description}
                         </Card.Text>
                       </Card>
