@@ -5,11 +5,13 @@ import { AppDispatch } from 'store/store';
 import { Alert, Container } from 'react-bootstrap';
 import { UserInfo } from 'components/userInfo/UserInfo';
 import Loading from 'components/layout/loading/Loading';
+import { useAuthStatus } from 'utils/helpers/authHelper';
 
 export function Profile() {
   const { error, status } = useSelector(selectAuth);
   const dispatch = useDispatch<AppDispatch>();
   const { auth } = useSelector(selectAuth);
+  const { isAuth } = useAuthStatus();
 
   useEffect(() => {
     if (status === 'idle') {
@@ -18,10 +20,10 @@ export function Profile() {
   }, [dispatch, status]);
 
   return (
-    <Container className="mt-5 d-flex justify-content-center">
+    <Container className="mt-5 d-flex justify-content-center flex-column">
       {status === 'failed' && <Alert variant={'danger'}>{error}</Alert>}
       {status === 'loading' && <Loading />}
-      {status === 'succeeded' && <UserInfo />}
+      {status !== 'failed' && isAuth() && <UserInfo />}
     </Container>
   );
 }

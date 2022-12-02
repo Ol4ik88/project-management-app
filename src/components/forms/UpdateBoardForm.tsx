@@ -55,19 +55,19 @@ export function UpdateteBoardForm({ onClose, board }: { onClose: () => void; boa
   return (
     <Form onSubmit={submitHandler}>
       <Form.Group className="mb-3" controlId="createBoardFormTitle">
-        <Form.Label>{t('board.board title')}</Form.Label>
+        <Form.Label>{t('board.title')}</Form.Label>
         <Form.Control
           type="text"
-          placeholder="Enter board title"
+          placeholder={t('board.title placeholder')}
           value={title}
           onChange={(e: ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="createBoardFormDesc">
-        <Form.Label>{t('board.board description')}</Form.Label>
+        <Form.Label>{t('board.description')}</Form.Label>
         <Form.Control
           type="text"
-          placeholder="Enter board description"
+          placeholder={t('board.description placeholder')}
           value={description}
           onChange={(e: ChangeEvent<HTMLInputElement>) => setDescription(e.target.value)}
         />
