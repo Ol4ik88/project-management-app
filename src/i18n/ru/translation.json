@@ -16,26 +16,37 @@
   "back": "НАЗАД",
   "home": "НА ГЛАВНУЮ",
   "board": {
-    "board title": "Заголовок доски",
-    "board description": "Описание доски",
+    "create board": "Добавить доску",
+    "title": "Заголовок доски",
+    "description": "Описание доски",
     "no boards created": "Доски еще не созданы.",
-    "remove board title": "Удалить доску",
-    "edit board title": "Изменить доску",
-    "remove task title": "Удалить задачу",
-    "remove column title": "Удалить столбец",
-    "remove board message": "Вы уверены, что хотите удалить эту доску?",
-    "remove task message": "Вы уверены, что хотите удалить эту задачу?",
-    "remove column message": "Вы уверены, что хотите удалить этот столбец?",
-    "create board push": "Создана новая доска",
-    "create column push": "Создан новый столбец",
-    "create task push": "Создана новая задача",
-    "column title": "Заголовок столбца",
-    "create column": "Создать столбец",
+    "remove title": "Удалить доску",
+    "edit title": "Изменить доску",
+    "remove message": "Вы уверены, что хотите удалить эту доску?",
+    "create push": "Создана новая доска",
+    "remove push": "Доска удалена",
+    "owner": "Владелец",
+    "title placeholder": "Введите название доски",
+    "description placeholder": "Введите описание доски"
+  },
+  "task": {
+    "remove title":"Удаление задачи",
+    "remove message":"Вы уверены, что хотите удалить эту задачу?",
+    "create push": "Создана новая задача",
     "create task": "Создать задачу",
-    "task title": "Заголовок задачи",
-    "task description": "Описание задачи",
+    "title": "Заголовок задачи",
+    "description": "Описание задачи",
     "add task": "+ Добавить задачу",
-    "remove board push": "Доска удалена"
+    "title placeholder": "Введите название задачи",
+    "description placeholder": "Введите описание задачи"
+  },
+  "column": {
+    "remove title": "Удалить столбец",
+    "remove message": "Вы уверены, что хотите удалить этот столбец?",
+    "create push": "Создан новый столбец",
+    "title": "Заголовок столбца",
+    "create column": "Создать столбец",
+    "title placeholder": "Введите название столбца"
   },
   "sign-up": {
     "please sign up": "РЕГИСТРАЦИЯ",
@@ -48,7 +59,10 @@
     "sign up": "РЕГИСТРАЦИЯ",
     "registration error":"Логин уже существует",
     "registration successfull":"Регистрация завершена успешно",
-    "loading":"Загрузка..."
+    "loading":"Загрузка...",
+    "name placeholder": "Введите имя",
+    "login placeholder": "Введите логин",
+    "password placeholder": "Введите пароль"
   },
   "sign-in": {
     "please sign in": "ВХОД",
@@ -94,11 +108,7 @@
     "inColumn": "В Колонке: ",
     "description": "Описание задачи: ",
     "users": "Участники: "
-  },
-  "task": {
-    "delete":"Удаление задачи",
-    "deleteTask":"Вы уверены, что хотите удалить эту задачу?"
-  },
+  },  
   "page404": {
     "title": "Ой! Страница не найдена!",
     "text": "К сожалению мы не можем найти запрошенную вами страницу. Возможно, вы неправильно ввели адрес."

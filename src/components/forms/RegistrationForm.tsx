@@ -60,7 +60,7 @@ function RegistrationForm() {
                 type="text"
                 placeholder="name"
                 {...register('name', {
-                  required: 'Please enter Name',
+                  required: t('required field') ?? 'Please enter name',
                   minLength: { value: 2, message: t('sign-up.error message - name') },
                 })}
               />
@@ -77,7 +77,7 @@ function RegistrationForm() {
                 type="text"
                 placeholder="login"
                 {...register('login', {
-                  required: 'Please enter Login',
+                  required: t('required field') ?? 'Please enter Login',
                   minLength: { value: 2, message: t('sign-up.error message - login') },
                 })}
               />
@@ -90,7 +90,7 @@ function RegistrationForm() {
                 type="password"
                 placeholder="Password"
                 {...register('password', {
-                  required: 'Please enter Password',
+                  required: t('required field') ?? 'Please enter Password',
                   minLength: {
                     value: 5,
                     message: t('sign-up.error message - password'),

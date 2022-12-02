@@ -66,7 +66,7 @@ function LoginForm() {
                 type="text"
                 placeholder="login"
                 {...register('login', {
-                  required: 'Please enter Login',
+                  required: t('required field') ?? 'Please enter login',
                   minLength: { value: 2, message: t('sign-in.error message - login') },
                 })}
               />
@@ -79,7 +79,7 @@ function LoginForm() {
                 type="password"
                 placeholder="Password"
                 {...register('password', {
-                  required: 'Please enter Password',
+                  required: t('required field') ?? 'Please enter password',
                   minLength: {
                     value: 5,
                     message: t('sign-in.error message - password'),

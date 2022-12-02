@@ -6,7 +6,6 @@ import { selectAuth } from 'store/authSlice';
 import { AppDispatch } from 'store/store';
 import { createTask, selectTasksByBoardId } from 'store/taskSlice';
 import { IPropsCreateTaskForm } from './Form.type';
-import PushMessage from 'components/pushMessage/PushMessage';
 
 export function CreateTaskForm({ boardId, columnId, onClose }: IPropsCreateTaskForm) {
   const dispatch = useDispatch<AppDispatch>();
@@ -43,21 +42,21 @@ export function CreateTaskForm({ boardId, columnId, onClose }: IPropsCreateTaskF
   return (
     <Form onSubmit={submitHandler}>
       <Form.Group className="mb-3" controlId="createTaskFormTitle">
-        <Form.Label>{t('board.task title')}</Form.Label>
+        <Form.Label>{t('task.title')}</Form.Label>
         <Form.Control
           required
           type="text"
-          placeholder="Enter task title"
+          placeholder={t('task.title placeholder')}
           value={title}
           onChange={titleChangeHandler}
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="createTaskFormDesc">
-        <Form.Label>{t('board.task description')}</Form.Label>
+        <Form.Label>{t('task.description')}</Form.Label>
         <Form.Control
           required
           type="text"
-          placeholder="Enter task description"
+          placeholder={t('task.description placeholder')}
           value={description}
           onChange={descriptionChangeHandler}
         />
