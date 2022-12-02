@@ -22,6 +22,8 @@
     "create board": "Добавить доску",
     "title": "Заголовок доски",
     "description": "Описание доски",
+    "board users":"Пользователи доски",    
+    "board select":"Произведите выбор",
     "no boards created": "Доски еще не созданы.",
     "remove title": "Удалить доску",
     "edit title": "Изменить доску",

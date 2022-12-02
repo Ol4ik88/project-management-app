@@ -22,6 +22,8 @@
     "create board": "Add board",
     "title": "Board title",
     "description": "Board description",
+    "board users":"Board users",
+    "board select":"Make a selection",
     "no boards created": "There are no boards created yet.",
     "remove title": "Remove board",
     "edit title": "Edit board",
