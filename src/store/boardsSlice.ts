@@ -27,6 +27,7 @@ const initialState = boardsAdapter.getInitialState<BoardsState>({
   ids: [],
   entities: {},
   statuses: {},
+  allBoardLoaded: false,
 });
 
 export const fetchUserBoards = createAsyncThunk<Board[], { userId: string }, { state: RootState }>(
@@ -92,6 +93,7 @@ export const boardsSlice = createSlice({
     builder
       .addCase(fetchUserBoards.fulfilled, (state, action) => {
         state.status = 'succeeded';
+        state.allBoardLoaded = true;
         boardsAdapter.upsertMany(state, action.payload);
       })
       .addCase(fetchBoardById.fulfilled, (state, action) => {

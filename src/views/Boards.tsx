@@ -11,14 +11,14 @@ import Loading from 'components/layout/loading/Loading';
 
 export function Boards() {
   const dispatch = useDispatch<AppDispatch>();
-  const { error, status } = useSelector(selectBoards);
+  const { error, status, allBoardLoaded } = useSelector(selectBoards);
   const authState = useSelector(selectAuth);
   const total = useSelector(boardsSelectors.selectTotal);
   const { t, i18n } = useTranslation();
   const { isAuth } = useAuthStatus();
 
   useEffect(() => {
-    if (status !== 'succeeded' && isAuth()) {
+    if (!allBoardLoaded && status !== 'loading' && isAuth()) {
       dispatch(fetchUserBoards({ userId: authState?.auth._id ?? '' }));
     }
   }, [dispatch, status]);
