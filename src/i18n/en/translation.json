@@ -15,6 +15,9 @@
   "required field": "This is a required field",
   "Back": "Back",
   "home": "Home",
+  "owner": "owner",
+  "users": "users",
+  "none": "none",
   "board": {
     "board title": "Board title",
     "board description": "Board description",
