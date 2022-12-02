@@ -1,26 +1,34 @@
 import { UpdateteBoardForm } from 'components/forms/UpdateBoardForm';
 import ModalWindow from 'components/modal/ModalWindow';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Container, Navbar, OverlayTrigger, Popover } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { removeBoard } from 'store/boardsSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { AppDispatch } from 'store/store';
 import { Board } from 'store/types';
 import info_icon from '../../assets/info_icon.svg';
 import { DeleteWindow } from 'components/modal/DeleteWindow';
 import PushMessage from 'components/pushMessage/PushMessage';
+import { getUsers, selectUsers } from 'store/userSlice';
 
 export const BoardTitle = ({ board }: { board: Board }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
+  const { users } = useSelector(selectUsers);
 
   const [isOpen, setIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState<React.ReactNode>();
   const [modalTitle, setModalTitle] = useState<string>('');
   const [toast, setToast] = useState(false);
+
+  useEffect(() => {
+    if (!users.length) {
+      dispatch(getUsers());
+    }
+  }, [dispatch]);
 
   const showToast = () => setToast(!toast);
   const onHide = () => setIsOpen(false);
@@ -70,19 +78,25 @@ export const BoardTitle = ({ board }: { board: Board }) => {
                     {t('board.description')} : {board.description}
                   </p>
                   <p>
-                    {t('board.owner')} : {board.owner}
+                    {t('board.owner')}: {users.find((user) => user._id === board.owner)?.name ?? ''}
                   </p>
                   <p>
-                    {t('task-info.users')} :
-                    {board.users.map((user) => (
-                      <li key={user.toString()}>{user}</li>
-                    ))}
+                    {t('task-info.users')}:{' '}
+                    {board.users.length ? (
+                      <ul>
+                        {board.users.map((id) => (
+                          <li key={id}>{users.find((user) => user._id === id)?.name ?? ''}</li>
+                        ))}
+                      </ul>
+                    ) : (
+                      t('none')
+                    )}
                   </p>
                 </Popover.Body>
               </Popover>
             }
           >
-            <span>
+            <span role="button">
               <img width="20" src={info_icon} alt="edit" />
             </span>
           </OverlayTrigger>
