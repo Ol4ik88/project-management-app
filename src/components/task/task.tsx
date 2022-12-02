@@ -68,6 +68,7 @@ export const Task = ({
 
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({
     id: task._id,
+    disabled: isOpen > 0,
   });
 
   const style = {
