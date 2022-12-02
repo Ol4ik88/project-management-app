@@ -38,9 +38,9 @@ export function UpdateUserForm({ onClose }: { onClose: () => void }) {
         <Form.Control
           required
           type="text"
-          placeholder="Enter user name"
+          placeholder={t('sign-up.name placeholder')}
           {...register('name', {
-            required: 'Please enter Name',
+            required: t('required field') ?? 'Please enter Name',
             minLength: { value: 2, message: t('sign-up.error message - name') },
           })}
         />
@@ -52,9 +52,9 @@ export function UpdateUserForm({ onClose }: { onClose: () => void }) {
         <Form.Control
           required
           type="text"
-          placeholder="Enter user login"
+          placeholder={t('sign-up.login placeholder')}
           {...register('login', {
-            required: 'Please enter Login',
+            required: t('required field') ?? 'Please enter Login',
             minLength: { value: 2, message: t('sign-up.error message - login') },
           })}
         />
@@ -66,9 +66,9 @@ export function UpdateUserForm({ onClose }: { onClose: () => void }) {
         <Form.Control
           required
           type="password"
-          placeholder="Enter user password"
+          placeholder={t('sign-up.password placeholder')}
           {...register('password', {
-            required: 'Please enter Password',
+            required: t('required field') ?? 'Please enter Password',
             minLength: {
               value: 5,
               message: t('sign-up.error message - password'),

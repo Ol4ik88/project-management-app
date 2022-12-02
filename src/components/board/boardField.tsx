@@ -243,7 +243,7 @@ export const BoardField = ({ boardId }: { boardId: string }) => {
             style={{ width: '272px' }}
             onClick={createColumn}
           >
-            + {t('board.create column')}
+            + {t('column.create column')}
           </Button>
           <DragOverlay>
             {activeColId ? (
@@ -261,7 +261,7 @@ export const BoardField = ({ boardId }: { boardId: string }) => {
           </DragOverlay>
         </DndContext>
       </Container>
-      <ModalWindow modalTitle={t('board.create column')} show={isOpen} onHide={onHide}>
+      <ModalWindow modalTitle={t('column.create column')} show={isOpen} onHide={onHide}>
         <CreateColumnForm boardId={boardId} onClose={onHide} order={colIds.length} />
       </ModalWindow>
     </>

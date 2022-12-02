@@ -23,19 +23,19 @@ export function BoardsList() {
 
   function handleClickDelete(boardId: string, e: MouseEvent) {
     e.preventDefault();
-    setModalTitle(t('board.remove board title') ?? '');
+    setModalTitle(t('board.remove title') ?? '');
     setModalContent(
       <DeleteWindow
         cancel={() => setIsOpen(false)}
         remove={() => dispatch(removeBoard({ boardId }))}
-        text={t('board.remove board message')}
+        text={t('board.remove message')}
       />
     );
     setIsOpen(true);
   }
   function handleClickEdit(board: Board, e: MouseEvent) {
     e.preventDefault();
-    setModalTitle(t('board.edit board title') ?? '');
+    setModalTitle(t('board.edit title') ?? '');
     setModalContent(<UpdateteBoardForm board={board} onClose={() => setIsOpen(false)} />);
     setIsOpen(true);
   }
