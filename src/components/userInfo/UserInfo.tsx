@@ -68,14 +68,14 @@ export function UserInfo() {
             <Button
               variant="primary"
               onClick={handleClickEdit}
-              className="col-12 col-sm-5 mb-2 shadow"
+              className="col-12 col-sm-3 mb-2 me-2 shadow"
             >
               {t('edit')}
-            </Button>{' '}
+            </Button>
             <Button
               variant="warning"
               onClick={handleClickDelete}
-              className="col-12 col-sm-5 mb-2 shadow"
+              className="col-12 col-sm-3 mb-2 shadow"
             >
               {t('delete')}
             </Button>

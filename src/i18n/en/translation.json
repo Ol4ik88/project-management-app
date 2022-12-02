@@ -13,29 +13,43 @@
   "delete": "delete",
   "create": "create",
   "required field": "This is a required field",
-  "Back": "Back",
+  "back": "Back",
   "home": "Home",
+  "owner": "owner",
+  "users": "users",
+  "none": "none",
   "board": {
-    "board title": "Board title",
-    "board description": "Board description",
+    "create board": "Add board",
+    "title": "Board title",
+    "description": "Board description",
     "no boards created": "There are no boards created yet.",
-    "remove board title": "Remove board",
-    "edit board title": "Edit board",
-    "remove task title": "Remove task",
-    "remove column title": "Remove column",
-    "remove board message": "Are you sure you want to remove this board?",
-    "remove task message": "Are you sure you want to remove this task?",
-    "remove column message": "Are you sure you want to remove this column?",
-    "create board push": "New board created",
-    "create column push": "New column created",
-    "create task push": "New task created",
-    "column title": "Column title",
-    "create column": "Create column",
+    "remove title": "Remove board",
+    "edit title": "Edit board",
+    "remove message": "Are you sure you want to remove this board?",
+    "create push": "New board created",
+    "remove push": "Remove board",
+    "owner": "Owner",
+    "title placeholder": "Enter board title",
+    "description placeholder": "Enter board description"
+  },
+  "task": {
+    "remove title":"Remove task",
+    "remove message":"Are you sure you want to remove this task",
+    "create push": "New task created",
     "create task": "Create task",
     "task title": "Task title",
     "task description": "Task description",
     "add task": "+ Add task",
-    "remove board push": "Remove board"
+    "title placeholder": "Enter task title",
+    "description placeholder": "Enter task description"
+  },
+  "column": {
+    "remove title": "Remove column",
+    "remove message": "Are you sure you want to remove this column?",
+    "create push": "New column created",
+    "title": "Column title",
+    "create column": "Create column",
+    "title placeholder": "Enter column title"
   },
   "sign-up": {
     "please sign up": "Please sign up",
@@ -48,7 +62,10 @@
     "sign up": "SIGN UP",
     "registration error": "Login already exist",
     "registration successfull":"Registration is successful",
-    "loading":"Loading..."
+    "loading":"Loading...",
+    "name placeholder": "Введите имя",
+    "login placeholder": "Введите логин",
+    "password placeholder": "Введите пароль"
   },
   "sign-in": {
     "please sign in": "SIGN IN",
@@ -94,10 +111,6 @@
     "inColumn": "In Column: ",
     "description": "Description: ",
     "users": "Users: "
-  },
-  "task": {
-    "delete":"Remove Task",
-    "deleteTask":"Are you sure you want to remove this task?"
   },
   "page404": {
     "title": "Ouch! Page not found!",

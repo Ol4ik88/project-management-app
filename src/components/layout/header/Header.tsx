@@ -141,10 +141,14 @@ function Header() {
         </Container>
       </Navbar>
 
-      <ModalWindow modalTitle={t('addBoard')} show={isOpen} onHide={() => setIsOpen(false)}>
+      <ModalWindow
+        modalTitle={t('board.create board')}
+        show={isOpen}
+        onHide={() => setIsOpen(false)}
+      >
         <CreateBoardForm onClose={() => setIsOpen(false)} showToast={showToast} />
       </ModalWindow>
-      <PushMessage text={t('board.create board push')} isShow={toast} onHide={showToast} />
+      <PushMessage text={t('board.create push')} isShow={toast} onHide={showToast} />
     </>
   );
 }

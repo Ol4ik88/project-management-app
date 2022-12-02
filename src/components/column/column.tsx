@@ -74,14 +74,14 @@ export const Column = ({
   };
 
   const handleClickDelete = () => {
-    setModalTitle(t('board.remove column title') ?? '');
+    setModalTitle(t('column.remove title') ?? '');
     setModalContent(
       <DeleteWindow
         cancel={onHide}
         remove={() => {
           dispatch(removeColumn({ boardId, columnId: _id }));
         }}
-        text={t('board.remove column message')}
+        text={t('column.remove message')}
       />
     );
     setIsOpen(true);
@@ -106,7 +106,7 @@ export const Column = ({
   }
 
   const handleClickCreate = () => {
-    setModalTitle(t('board.create task') ?? '');
+    setModalTitle(t('task.create task') ?? '');
     setModalContent(<CreateTaskForm boardId={boardId} columnId={_id} onClose={onHide} />);
     setIsOpen(true);
   };
@@ -162,7 +162,7 @@ export const Column = ({
 
         <Card.Footer>
           <Button variant="primary" size="sm" className="col-12" onClick={handleClickCreate}>
-            {t('board.add task')}
+            {t('task.add task')}
           </Button>
         </Card.Footer>
       </Card>
