@@ -51,7 +51,7 @@ export function UserInfo() {
 
   return (
     <div className="d-flex flex-column align-items-center w-100">
-      <Card className="mb-2 text-center shadow" style={{ width: '25rem', maxWidth: '100%' }}>
+      <Card className="mb-2 text-center shadow w-100">
         <Card.Body>
           <Card.Title>{t('user-page.info')}</Card.Title>
           <Card.Text>
