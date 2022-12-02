@@ -23,11 +23,11 @@ export function CreateColumnForm({ boardId, onClose, order = 0 }: IPropsCreateCo
   return (
     <Form onSubmit={submitHandler}>
       <Form.Group className="mb-3" controlId="createBoardFormTitle">
-        <Form.Label>{t('board.column title')}</Form.Label>
+        <Form.Label>{t('column.title')}</Form.Label>
         <Form.Control
           required
           type="text"
-          placeholder="Enter column title"
+          placeholder={t('column.title placeholder')}
           value={title}
           onChange={titleChangeHandler}
         />

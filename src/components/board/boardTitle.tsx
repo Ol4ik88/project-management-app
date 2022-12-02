@@ -33,13 +33,13 @@ export const BoardTitle = ({ board }: { board: Board }) => {
   const showToast = () => setToast(!toast);
   const onHide = () => setIsOpen(false);
   const modifyBoard = () => {
-    setModalTitle(t('board.edit board title') ?? '');
+    setModalTitle(t('board.edit title') ?? '');
     setModalContent(<UpdateteBoardForm onClose={onHide} board={board} />);
     setIsOpen(true);
   };
 
   const deleteBoard = () => {
-    setModalTitle(t('board.remove board title') ?? '');
+    setModalTitle(t('board.remove title') ?? '');
     setModalContent(
       <DeleteWindow
         cancel={onHide}
@@ -51,7 +51,7 @@ export const BoardTitle = ({ board }: { board: Board }) => {
             dispatch(removeBoard({ boardId: board._id }));
           }, 1600);
         }}
-        text={t('board.remove board message')}
+        text={t('board.remove message')}
       />
     );
     setIsOpen(true);
@@ -62,7 +62,7 @@ export const BoardTitle = ({ board }: { board: Board }) => {
       <Navbar expand="lg" className="shadow rounded">
         <Container fluid>
           <Button size="sm" className="me-3 shadow" onClick={() => navigate('/boards')}>
-            {t('Back')}
+            {t('back')}
           </Button>
           <Navbar.Brand>{board.title}</Navbar.Brand>
           <OverlayTrigger
@@ -71,17 +71,17 @@ export const BoardTitle = ({ board }: { board: Board }) => {
             overlay={
               <Popover id={`popover-positioned-$"bottom"`} className="col-12">
                 <Popover.Header as="h3">
-                  {t('board.board title')}: {board.title}
+                  {t('board.title')}: {board.title}
                 </Popover.Header>
                 <Popover.Body>
                   <p>
-                    {t('board.board description')}: {board.description}
+                    {t('board.description')} : {board.description}
                   </p>
                   <p>
-                    {t('owner')}: {users.find((user) => user._id === board.owner)?.name ?? ''}
+                    {t('board.owner')}: {users.find((user) => user._id === board.owner)?.name ?? ''}
                   </p>
                   <p>
-                    {t('users')}:{' '}
+                    {t('task-info.users')}:{' '}
                     {board.users.length ? (
                       <ul>
                         {board.users.map((id) => (
@@ -113,7 +113,7 @@ export const BoardTitle = ({ board }: { board: Board }) => {
       <ModalWindow modalTitle={modalTitle} show={isOpen} onHide={onHide}>
         {modalContent}
       </ModalWindow>
-      <PushMessage text={t('board.remove board push')} isShow={toast} onHide={showToast} />
+      <PushMessage text={t('board.remove push')} isShow={toast} onHide={showToast} />
     </Container>
   );
 };

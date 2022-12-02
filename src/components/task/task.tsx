@@ -36,7 +36,7 @@ export const Task = ({
   const [boardsInfo, setBoardsInfo] = useState<idAndTitle[]>([]);
   const [columnsInfo, setColumnsInfo] = useState<idAndTitle[]>([]);
 
-  const modalTitle = isOpen === 1 ? t('task.delete') : t('task-info.task-info');
+  const modalTitle = isOpen === 1 ? t('task.remove title') : t('task-info.task-info');
 
   const boards = useSelector(selectBoards);
   const columns = useSelector(selectColumns);
@@ -99,7 +99,7 @@ export const Task = ({
           <DeleteWindow
             cancel={() => setIsOpen(0)}
             remove={() => dispatch(removeTask({ boardId, columnId, taskId: _id }))}
-            text={t('task.deleteTask')}
+            text={t('task.remove message')}
           />
         ) : (
           <TaskInformation

@@ -51,7 +51,7 @@ export function UserInfo() {
 
   return (
     <div className="d-flex flex-column align-items-center w-100">
-      <Card className="mb-2 text-center shadow" style={{ width: '25rem' }}>
+      <Card className="mb-2 text-center shadow" style={{ width: '100%' }}>
         <Card.Body>
           <Card.Title>{t('user-page.info')}</Card.Title>
           <Card.Text>
@@ -68,14 +68,14 @@ export function UserInfo() {
             <Button
               variant="primary"
               onClick={handleClickEdit}
-              className="col-12 col-sm-5 mb-2 shadow"
+              className="col-12 col-sm-3 mb-2 me-2 shadow"
             >
               {t('edit')}
-            </Button>{' '}
+            </Button>
             <Button
               variant="warning"
               onClick={handleClickDelete}
-              className="col-12 col-sm-5 mb-2 shadow"
+              className="col-12 col-sm-3 mb-2 shadow"
             >
               {t('delete')}
             </Button>
