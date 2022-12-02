@@ -11,7 +11,6 @@ export function UpdateUserForm({ onClose }: { onClose: () => void }) {
   const dispatch = useDispatch<AppDispatch>();
   const authState = useSelector(selectAuth);
   const { t } = useTranslation();
-  const [completed, setCompleted] = useState(false);
   const { auth } = authState;
 
   const {
@@ -28,7 +27,7 @@ export function UpdateUserForm({ onClose }: { onClose: () => void }) {
   const onSubmit: SubmitHandler<IUserDto> = (data) => {
     const userUpdate = { ...data, userId: authState.auth._id ?? '' };
     dispatch(updateUser(userUpdate));
-    setCompleted(true);
+    onClose();
   };
 
   return (
