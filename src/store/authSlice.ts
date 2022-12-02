@@ -106,6 +106,7 @@ export const authSlice = createSlice({
         state.status = 'succeeded';
         state.auth.login = action.payload.login;
         state.auth.name = action.payload.name;
+        authLocalstorage.saveAuth(state.auth.token ?? '', action.payload.name);
       })
       .addCase(removeUser.fulfilled, (state, action) => {
         state.status = 'succeeded';
