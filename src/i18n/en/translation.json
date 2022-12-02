@@ -18,6 +18,8 @@
   "board": {
     "board title": "Board title",
     "board description": "Board description",
+    "board users":"Board users",
+    "board select":"Make a selection",
     "no boards created": "There are no boards created yet.",
     "remove board title": "Remove board",
     "edit board title": "Edit board",
@@ -35,7 +37,7 @@
     "task title": "Task title",
     "task description": "Task description",
     "add task": "+ Add task",
-    "remove board push": "Remove board"
+    "remove board push": "Remove board"    
   },
   "sign-up": {
     "please sign up": "Please sign up",

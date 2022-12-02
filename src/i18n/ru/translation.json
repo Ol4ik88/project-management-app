@@ -18,6 +18,8 @@
   "board": {
     "board title": "Заголовок доски",
     "board description": "Описание доски",
+    "board users":"Пользователи доски",    
+    "board select":"Произведите выбор",
     "no boards created": "Доски еще не созданы.",
     "remove board title": "Удалить доску",
     "edit board title": "Изменить доску",
