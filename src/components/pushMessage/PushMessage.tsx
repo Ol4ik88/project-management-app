@@ -1,11 +1,12 @@
 import React from 'react';
 import Toast from 'react-bootstrap/Toast';
 import { IPushMessage } from './PushMessage.type';
+import './PushMessage.css';
 
 function PushMessage({ text, isShow, onHide }: IPushMessage) {
   return (
     <Toast
-      className="position-fixed bottom-0 end-0 border border-2 border-dark m-2"
+      className="position-fixed bottom-0 end-0 border border-2 border-dark m-2 push"
       onClose={onHide}
       show={isShow}
       delay={1500}
