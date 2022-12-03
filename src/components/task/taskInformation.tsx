@@ -147,7 +147,7 @@ export const TaskInformation = ({ task, userName, columns, usersList, cancel }: 
             >
               <option> {t('task-info.select')}</option>
               {columns.map((column) => (
-                <option key={column.key} value={Object.values(column)}>
+                <option key={Object.keys(column)[0]} value={Object.values(column)}>
                   {Object.values(column)}
                 </option>
               ))}
