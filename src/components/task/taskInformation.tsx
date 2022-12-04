@@ -100,7 +100,7 @@ export const TaskInformation = ({ task, userName, columns, usersList, cancel }: 
   return (
     <>
       <div className="border-bottom h5 pb-2">
-        {t('task-info.user')} {userName}
+        {t('task-info.owner')} {userName}
       </div>
 
       <div className="border-bottom">
@@ -142,7 +142,7 @@ export const TaskInformation = ({ task, userName, columns, usersList, cancel }: 
           <div className="h5 d-flex justify-content-between align-items-center">
             <select
               className="form-select"
-              aria-label="Default select example"
+              aria-label="Select column"
               onChange={(e) => setTaskData({ ...taskData, columnTitle: e.target.value })}
             >
               <option> {t('task-info.select')}</option>
@@ -208,7 +208,7 @@ export const TaskInformation = ({ task, userName, columns, usersList, cancel }: 
           <div className="h5 d-flex justify-content-between align-items-center">
             <select
               className="form-select"
-              aria-label="Default select example"
+              aria-label="select users"
               onChange={(e) =>
                 setTaskData({ ...taskData, users: [...taskData.users, e.target.value] })
               }

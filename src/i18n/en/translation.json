@@ -112,7 +112,8 @@
     "inBoard": "In Board: ",
     "inColumn": "In Column: ",
     "description": "Description: ",
-    "users": "Users: "
+    "users": "Users: ",
+    "owner": "Owner: "
   },
   "page404": {
     "title": "Ouch! Page not found!",
