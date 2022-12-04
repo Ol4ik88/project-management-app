@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch } from 'store/store';
 import delete_icon from '../../assets/delete_icon.svg';
-import { IColumn, ITask } from 'types/Interfaces';
+import { IColumn, ITask, IUser } from 'types/Interfaces';
 import ModalWindow from 'components/modal/ModalWindow';
 import { TaskInformation } from './taskInformation';
 import { selectBoards } from 'store/boardsSlice';
@@ -35,6 +35,8 @@ export const Task = ({
   const [isOpen, setIsOpen] = useState(0);
   const [boardsInfo, setBoardsInfo] = useState<idAndTitle[]>([]);
   const [columnsInfo, setColumnsInfo] = useState<idAndTitle[]>([]);
+  const [usersList, setUsersList] = useState<IUser[]>([]);
+  const [taskOwner, setTaskOwner] = useState<IUser>();
 
   const modalTitle = isOpen === 1 ? t('task.remove title') : t('task-info.task-info');
 
@@ -57,6 +59,18 @@ export const Task = ({
     setBoardsInfo(boardsIdAndTitle);
     setColumnsInfo(columnsIdAndTitle);
   }, [boards.entities, boards.ids, columns.entities, columns.ids]);
+
+  useEffect(() => {
+    if (boards && users) {
+      const userIds: string[] = boards.entities[boardId].users.concat([
+        boards.entities[boardId].owner,
+      ]);
+      setUsersList(users.filter((user) => userIds.includes(user._id)));
+    }
+    if (users) {
+      setTaskOwner(users.filter((user) => user._id === userId)[0]);
+    }
+  }, [users, boards]);
 
   function deleteTask() {
     setIsOpen(1);
@@ -105,8 +119,8 @@ export const Task = ({
         ) : (
           <TaskInformation
             task={task}
-            userName={auth.name || auth.login || userId}
-            usersList={users}
+            userName={taskOwner?.name || taskOwner?.login || auth.name || auth.login || userId}
+            usersList={usersList}
             columns={columnsInfo}
             boards={boardsInfo}
             cancel={() => setIsOpen(0)}

@@ -80,8 +80,8 @@ export const BoardTitle = ({ board }: { board: Board }) => {
                   <p>
                     {t('board.owner')}: {users.find((user) => user._id === board.owner)?.name ?? ''}
                   </p>
-                  <p>
-                    {t('task-info.users')}:{' '}
+                  <div>
+                    {t('task-info.users')}
                     {board.users.length ? (
                       <ul>
                         {board.users.map((id) => (
@@ -91,7 +91,7 @@ export const BoardTitle = ({ board }: { board: Board }) => {
                     ) : (
                       t('none')
                     )}
-                  </p>
+                  </div>
                 </Popover.Body>
               </Popover>
             }
