@@ -5,7 +5,7 @@ import { Alert, Container } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { boardsSelectors, fetchBoardById, selectBoards } from 'store/boardsSlice';
+import { fetchBoardById, selectBoards } from 'store/boardsSlice';
 import { AppDispatch } from 'store/store';
 import { useAuthStatus } from 'utils/helpers/authHelper';
 import './Board.css';

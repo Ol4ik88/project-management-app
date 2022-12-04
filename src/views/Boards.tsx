@@ -14,7 +14,7 @@ export function Boards() {
   const { error, status, allBoardLoaded } = useSelector(selectBoards);
   const authState = useSelector(selectAuth);
   const total = useSelector(boardsSelectors.selectTotal);
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { isAuth } = useAuthStatus();
 
   useEffect(() => {

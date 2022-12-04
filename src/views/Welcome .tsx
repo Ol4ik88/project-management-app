@@ -10,7 +10,7 @@ import el3 from 'assets/3.png';
 import github from 'assets/github.svg';
 
 function Welcome() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const devs = [
     {
       foto: man,

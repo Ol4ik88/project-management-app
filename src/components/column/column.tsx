@@ -27,7 +27,6 @@ const TasksList = React.memo(function TasksList({
 }) {
   const {
     entities: tasksEntities,
-    // ids: tasksIds,
     error: tasksError,
     statuses: tasksStatuses,
   } = useSelector(selectTasks);

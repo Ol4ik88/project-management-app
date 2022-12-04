@@ -1,13 +1,12 @@
 import {
   createAsyncThunk,
   createSlice,
-  PayloadAction,
   createEntityAdapter,
   AnyAction,
   createSelector,
 } from '@reduxjs/toolkit';
 import columnRequest from 'services/Request/columnRequest';
-import { RootState, store } from './store';
+import { RootState } from './store';
 import { Column, ColumnsState, UpdateColumnProps } from './types';
 
 function isRejectedAction(action: AnyAction) {
