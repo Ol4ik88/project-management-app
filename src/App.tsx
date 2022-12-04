@@ -2,8 +2,7 @@ import PrivateRoute from 'components/routing/PrivateRoute';
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import './i18n/config';
-import { useTranslation } from 'react-i18next';
+//import './i18n/config';
 import { Boards } from 'views/Boards';
 import { Board } from 'views/Board';
 import { store } from 'store/store';
@@ -16,12 +15,6 @@ import { Profile } from 'views/Profile';
 import { Page404 } from 'views/Page404';
 
 export default function App() {
-  const { t, i18n } = useTranslation();
-
-  const changeLanguage = (lng: string) => {
-    i18n.changeLanguage(lng);
-  };
-
   return (
     <Provider store={store}>
       <div className="min-vh-100 d-flex flex-column">
@@ -29,7 +22,6 @@ export default function App() {
         <main className="flex-grow-1 px-3">
           <Routes>
             <Route path="/" element={<Welcome />} />
-            <Route path="/welcome" element={<p>Welcome page</p>} />
             <Route path="/login" element={<Login />} />
             <Route path="/registration" element={<Registration />} />
             <Route

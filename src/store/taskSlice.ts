@@ -1,14 +1,13 @@
 import {
   createAsyncThunk,
   createSlice,
-  PayloadAction,
   createEntityAdapter,
   AnyAction,
   createSelector,
 } from '@reduxjs/toolkit';
 import taskRequest from 'services/Request/taskRequest';
 import { signOut } from './authSlice';
-import { RootState, store } from './store';
+import { RootState } from './store';
 import { Task, TasksState, UpdateTaskProps } from './types';
 
 function isRejectedAction(action: AnyAction) {

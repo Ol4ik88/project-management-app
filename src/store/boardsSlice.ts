@@ -1,13 +1,7 @@
-import {
-  createAsyncThunk,
-  createSlice,
-  PayloadAction,
-  createEntityAdapter,
-  AnyAction,
-} from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, createEntityAdapter, AnyAction } from '@reduxjs/toolkit';
 import boardRequest from 'services/Request/boardRequest';
 import { signOut } from './authSlice';
-import { RootState, store } from './store';
+import { RootState } from './store';
 import { Board, BoardsState, UpdateBoardProps } from './types';
 
 function isRejectedAction(action: AnyAction) {

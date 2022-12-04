@@ -1,7 +1,7 @@
 import React, { MouseEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectBoards, removeBoard } from 'store/boardsSlice';
-import { Card, Col, Row, Button, Modal } from 'react-bootstrap';
+import { Card, Col, Row, Button } from 'react-bootstrap';
 import { AppDispatch } from 'store/store';
 import { Link } from 'react-router-dom';
 import ModalWindow from 'components/modal/ModalWindow';

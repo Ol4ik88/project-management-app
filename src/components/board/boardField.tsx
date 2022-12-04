@@ -43,7 +43,6 @@ export const BoardField = ({ boardId }: { boardId: string }) => {
   const dispatch = useDispatch<AppDispatch>();
   const {
     entities: colEntities,
-    // ids: columnsIds,
     error: columnsError,
     statuses: columnsStatuses,
   } = useSelector(selectColumns);
@@ -52,13 +51,10 @@ export const BoardField = ({ boardId }: { boardId: string }) => {
 
   const {
     entities: tasksEntities,
-    // ids: tasksIds,
     error: tasksError,
     statuses: tasksStatuses,
   } = useSelector(selectTasks);
   const tasksIds = useSelector(selectTasksByBoardId(boardId));
-
-  const getTaskByColumnId = useSelector(selectTasksByColumnId);
 
   const [activeColId, setActiveColId] = useState<string | null>(null);
   const [activeTaskId, setActiveTaskId] = useState<string | null>(null);
