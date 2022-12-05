@@ -1,0 +1,72 @@
+.loading {
+  position:relative;
+  width:234px;
+  height:28px;
+  margin:auto;
+}
+
+.fountain{
+  position:absolute;
+  top:0;
+  background-color:#2CD2E8;
+  width:28px;
+  height:28px;
+  animation-name:bounce_fountain;
+  animation-duration:1.235s;
+  animation-iteration-count:infinite;
+  animation-direction:normal;
+  transform:scale(.3);
+  border-radius:19px;
+}
+
+.fountain_1{
+    left:0;
+    animation-delay:0.496s;
+  }
+
+  .fountain_2{
+    left:29px;
+    animation-delay:0.6125s;
+  }
+
+  .fountain_3{
+    left:58px;
+    animation-delay:0.739s;
+  }
+
+  .fountain_4{
+    left:88px;
+    animation-delay:0.8655s;
+  }
+
+  .fountain_5{
+    left:117px;
+    animation-delay:0.992s;
+  }
+
+  .fountain_6{
+    left:146px;
+    animation-delay:1.1085s;
+  }
+
+  .fountain_7{
+    left:175px;
+    animation-delay:1.235s;
+  }
+
+  .fountain_8{
+    left:205px;
+    animation-delay:1.3615s;
+  }
+
+@keyframes bounce_fountain{
+  0%{
+  transform:scale(1);
+  background-color: #0dcaf0;
+  }
+
+  100%{
+  transform:scale(.3);
+    background-color:white;
+  }
+}

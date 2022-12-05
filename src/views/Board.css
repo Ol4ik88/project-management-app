@@ -1,0 +1,7 @@
+.board {
+overflow-x: auto;
+overflow-y: hidden;
+display: flex;
+flex-direction: column;
+flex-wrap: nowrap;
+}
