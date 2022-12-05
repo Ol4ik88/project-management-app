@@ -39,8 +39,8 @@
     "remove message":"Are you sure you want to remove this task",
     "create push": "New task created",
     "create task": "Create task",
-    "task title": "Task title",
-    "task description": "Task description",
+    "title": "Task title",
+    "description": "Task description",
     "add task": "+ Add task",
     "title placeholder": "Enter task title",
     "description placeholder": "Enter task description"
