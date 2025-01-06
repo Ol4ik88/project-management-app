@@ -5,7 +5,7 @@
 2. Screenshot: 
 ![Screenshot from 2022-12-04 19-38-56](https://user-images.githubusercontent.com/99606360/205503987-aee97b5e-b9f8-4c6e-b9f0-a7573db64819.png)
 
-3. Deploy: 
+3. Deploy: https://teamwork-rss.netlify.app/
 4. Done: 08.11.2022 / deadline 06.12.2022
 5. Score: 60/60
 Функционал (все пункты выполнены в полном объёме):
