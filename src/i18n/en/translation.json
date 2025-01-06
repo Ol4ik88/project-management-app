@@ -1,0 +1,122 @@
+{
+  "signIn":"SIGN IN",
+  "signUp":"SIGN UP",
+  "signOut":"SIGN OUT",
+  "boards":"BOARDS",
+  "addBoard":"ADD BOARD",
+  "profile":"PROFILE",
+  "lang": "EN",
+  "close":"close",
+  "cancel": "cancel",
+  "submit": "submit",
+  "edit": "edit",
+  "delete": "delete",
+  "create": "create",
+  "required field": "This is a required field",
+  "back": "Back",
+  "home": "Home",
+  "owner": "owner",
+  "users": "users",
+  "none": "none",
+  "board": {
+    "create board": "Add board",
+    "title": "Board title",
+    "description": "Board description",
+    "board users":"Board users",
+    "board select":"Make a selection",
+    "no boards created": "There are no boards created yet.",
+    "remove title": "Remove board",
+    "edit title": "Edit board",
+    "remove message": "Are you sure you want to remove this board?",
+    "create push": "New board created",
+    "remove push": "Remove board",
+    "owner": "Owner",
+    "title placeholder": "Enter board title",
+    "description placeholder": "Enter board description"
+  },
+  "task": {
+    "remove title":"Remove task",
+    "remove message":"Are you sure you want to remove this task",
+    "create push": "New task created",
+    "create task": "Create task",
+    "title": "Task title",
+    "description": "Task description",
+    "add task": "+ Add task",
+    "title placeholder": "Enter task title",
+    "description placeholder": "Enter task description"
+  },
+  "column": {
+    "remove title": "Remove column",
+    "remove message": "Are you sure you want to remove this column?",
+    "create push": "New column created",
+    "title": "Column title",
+    "create column": "Create column",
+    "title placeholder": "Enter column title"
+  },
+  "sign-up": {
+    "please sign up": "Please sign up",
+    "name": "Name",
+    "login": "Login",
+    "password": "Password",
+    "error message - name": "Your Name must contain at least 2 letters",
+    "error message - login": "Your Login must contain at least 2 letters",
+    "error message - password": "Your Password must contain at least 5 letters symbols",
+    "sign up": "SIGN UP",
+    "registration error": "Login already exist",
+    "registration successfull":"Registration is successful",
+    "loading":"Loading...",
+    "name placeholder": "Введите имя",
+    "login placeholder": "Введите логин",
+    "password placeholder": "Введите пароль"
+  },
+  "sign-in": {
+    "please sign in": "SIGN IN",
+    "login": "Login",
+    "password": "Password",
+    "error message - name": "Your Name must contain at least 2 letters",
+    "error message - login": "Your Login must contain at least 2 letters",
+    "error message - password": "Your Password must contain at least 5 letters symbols",
+    "sign in": "SIGN IN",
+    "error": "Authorization error",
+    "successfull":"Authorization is successful",
+    "loading":"Loading..."
+  },
+  "welcome": {
+    "pms": "Project management system",
+    "definition": " is an application that helps a team or group of developers achieve their goals.",
+    "description": "Our app will help you collaborate on your projects.",
+    "course": "This application is the result of the collaboration of three developers, students of the React 2022 Q3 course.",
+    "RSS": "RS School is free-of-charge and community-based education program conducted by The Rolling Scopes developer community since 2013."
+  },
+  "teamDevs": {
+    "team": "Development Team",
+    "nameGR": "Gleb",
+    "nameYL": "Yura",
+    "nameOS": "Оlga"
+  },
+  "user-page": {
+    "remove message": "Are you sure you want to remove this user?",
+    "info": "Profile Information",
+    "update title": "Change user data",
+    "remove title": "Delete user",
+    "remove push": "User deleted",
+    "tasks":"User tasks",
+    "noTasks":"There are no user tasks"
+  },
+  "task-info": {
+    "task-info":"Task",
+    "select":"Make a selection",
+    "task": "Title: ",
+    "order":"Order: ",
+    "user": "User: ",
+    "inBoard": "In Board: ",
+    "inColumn": "In Column: ",
+    "description": "Description: ",
+    "users": "Users: ",
+    "owner": "Owner: "
+  },
+  "page404": {
+    "title": "Ouch! Page not found!",
+    "text": "Sorry, we can't find the page you requested. You may have entered the address incorrectly."
+  }
+}

@@ -1,0 +1,13 @@
+.column__content {
+  max-height: calc(100vh - 21rem);
+}
+
+@media (max-width: 450px) {
+  .column__content {
+    height: calc(100vh - 23rem);
+  }
+}
+.column {
+  overflow-y: auto;
+  overflow-x: hidden;
+}

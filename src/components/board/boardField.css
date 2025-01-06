@@ -1,0 +1,10 @@
+.board__content {
+  height: calc(100vh - 14rem);
+  width: auto !important;
+}
+
+@media (max-width: 450px) {
+  .board__content {
+    height: calc(100vh - 16rem);
+  }
+}
